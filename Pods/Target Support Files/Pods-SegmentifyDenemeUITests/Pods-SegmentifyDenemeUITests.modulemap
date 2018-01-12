@@ -1,0 +1,6 @@
+framework module Pods_SegmentifyDenemeUITests {
+  umbrella header "Pods-SegmentifyDenemeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
