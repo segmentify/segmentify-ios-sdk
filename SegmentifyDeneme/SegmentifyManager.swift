@@ -301,7 +301,7 @@ class SegmentifyManager {
         if validStaticItem {
             self.recommendationArray["products"] = staticItems as AnyObject
         }
-        var newRecArray = [RecommendationModel]()
+        var newRecArray = [[RecommendationModel]]()
 
         if dynamicItemsArray.count > 0 {
             for dynObj in dynamicItemsArray {
@@ -311,18 +311,21 @@ class SegmentifyManager {
                     if products.count > 0 {
                         
                         
-                        //var newRecArray2 = [RecommendationModel]()
+                        var newRecArray2 = [RecommendationModel]()
                         
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
-                        //recommendations.append(currentRecModel.copy() as! RecommendationModel)
+                        newRecArray2.append(currentRecModel.copy() as! RecommendationModel)
+                        newRecArray.append(newRecArray2)
+                        recommendations.append(currentRecModel.copy() as! RecommendationModel)
                         
-                        newRecArray.append(currentRecModel.copy() as! RecommendationModel)
+                
                         self.products.removeAll()
                         
                         currentRecModel = RecommendationModel()
                     }
                 }
             }
+            
 
         }
     }
