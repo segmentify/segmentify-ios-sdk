@@ -47,9 +47,15 @@ final class SegmentifyAnalyticWrapper {
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setLoginEvent(username: "aaturgay", userId: "1234")
         let obj = SegmentifyObject()
         obj.username = "aaturgay"
-        obj.userID = "1234"
+        //obj.userID = "1234"
         //TODO SegmentifyManager.config = Config(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).userLogin(segmentifyObject: obj)
+    }
+    
+    func sendUserChangeEvent() {
+        let obj = SegmentifyObject()
+        obj.userID = "1234"
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setChangeUserEvent(segmentifyObject: obj)
     }
     
     func sendRegisterEvent() {
@@ -129,10 +135,6 @@ final class SegmentifyAnalyticWrapper {
         productsArray.append(productsDict)
         
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPurchaseEvent(totalPrice: 78, currency: nil, basketID: nil, orderNo: nil, products: productsArray)
-    }
-    
-    func sendUserchangeEvent() {
-        //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setChangeUserEvent()
     }
     
     func sendCustomevent() {

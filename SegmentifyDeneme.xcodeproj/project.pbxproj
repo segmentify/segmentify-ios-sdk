@@ -14,6 +14,7 @@
 		573DE8732003A1B600DE57DA /* RecommendationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573DE8722003A1B600DE57DA /* RecommendationModel.swift */; };
 		573DE8752003A23A00DE57DA /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573DE8742003A23A00DE57DA /* ProductModel.swift */; };
 		575BF4CF1FEBA436007B4354 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575BF4CE1FEBA436007B4354 /* Constant.swift */; };
+		576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576C51D5200F8C470027691F /* CustomTableViewCell.swift */; };
 		57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */; };
 		57893D801FF6332000AA8D67 /* UserSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7F1FF6332000AA8D67 /* UserSteps.swift */; };
 		57893D821FF6339400AA8D67 /* CheckoutSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D811FF6339400AA8D67 /* CheckoutSteps.swift */; };
@@ -62,6 +63,7 @@
 		573DE8742003A23A00DE57DA /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		575BF4791FE7B19A007B4354 /* SegmentifyDeneme-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SegmentifyDeneme-Bridging.h"; sourceTree = "<group>"; };
 		575BF4CE1FEBA436007B4354 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		576C51D5200F8C470027691F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyObject.swift; sourceTree = "<group>"; };
 		57893D7F1FF6332000AA8D67 /* UserSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSteps.swift; sourceTree = "<group>"; };
 		57893D811FF6339400AA8D67 /* CheckoutSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutSteps.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		57FFD4C11FD9A814008B1486 = {
 			isa = PBXGroup;
 			children = (
+				576C51D5200F8C470027691F /* CustomTableViewCell.swift */,
 				57FFD4CC1FD9A814008B1486 /* SegmentifyDeneme */,
 				57FFD4E11FD9A814008B1486 /* SegmentifyDenemeTests */,
 				57FFD4EC1FD9A814008B1486 /* SegmentifyDenemeUITests */,
@@ -545,6 +548,7 @@
 				57FFD5041FD9ACCF008B1486 /* SegmentifyTools.swift in Sources */,
 				57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */,
 				57FFD5021FD9AC96008B1486 /* SegmentifyRequestProtocol.swift in Sources */,
+				576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */,
 				57893D841FF6362700AA8D67 /* BasketSteps.swift in Sources */,
 				57FFD4D01FD9A814008B1486 /* ViewController.swift in Sources */,
 				57FFD4FC1FD9A854008B1486 /* SegmentifyManager.swift in Sources */,

@@ -450,20 +450,11 @@ class SegmentifyManager {
     
     //Login Event
     func userLogin(segmentifyObject : SegmentifyObject) {
-        /*if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) == nil {
-            UserDefaults.standard.set(Constant.IS_USER_LOGIN, forKey: Constant.IS_USER_LOGIN)
-        }
-        if UserDefaults.standard.object(forKey: "LAST_GENERATED_USER_ID") != nil {
-            //TODO silince old user id uçuyormu
-            UserDefaults.standard.removeObject(forKey: "LAST_GENERATED_USER_ID")
-        }
-        //TODO her login uygulama tarafının backendten gelen(gelirse?) user id set edilecek mi?
-        UserDefaults.standard.set(segmentifyObject.userID, forKey: "LAST_GENERATED_USER_ID")
-        */
+      
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.signInStep
         eventRequest.username = segmentifyObject.username!
-        eventRequest.userID = segmentifyObject.userID!
+
         if segmentifyObject.userID != nil {
             UserDefaults.standard.set(Constant.IS_USER_SENT_USER_ID, forKey: Constant.IS_USER_SENT_USER_ID)
             UserDefaults.standard.set(segmentifyObject.userID, forKey: "UserSentUserId")
@@ -520,8 +511,12 @@ class SegmentifyManager {
     }
     
     //Change User Event
-    func setChangeUserEvent() {
+    func setChangeUserEvent(segmentifyObject : SegmentifyObject) {
         eventRequest.eventName = SegmentifyManager.userChangeEventName
+        eventRequest.userID = segmentifyObject.userID
+        if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+            eventRequest.oldUserId = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+        }
         setIDAndSendEvent()
     }
     

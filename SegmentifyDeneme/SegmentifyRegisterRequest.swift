@@ -79,6 +79,7 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var type:String?
     var params:AnyObject?
     
+    
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
     init() {
