@@ -90,8 +90,12 @@ class SegmentifyManager {
         eventRequest.sdkVersion = SegmentifyManager.sdkVersion
         eventRequest.token = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.tokenKey) as? String
         
-        if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
+        /*if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
             UserDefaults.standard.removeObject(forKey:  Constant.IS_USER_SENT_USER_ID)
+        }*/
+        
+        if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
         }
         /*if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) != nil {
             eventRequest.oldUserId = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
@@ -1017,7 +1021,7 @@ class SegmentifyManager {
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
         var requestURL = NSURL()
-        if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
+        if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=1")!
         } else {
             requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=2")!
