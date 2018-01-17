@@ -51,7 +51,7 @@ class SegmentifyManager {
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
     private var recommendationArray = [AnyHashable : Any]()
-    private var recommendations : [RecommendationModel] = []
+    private var recommendations :[[[RecommendationModel]]] = []
     private var staticItemsRecommendationarray : [ProductModel] = []
     //private var testStaticItems : [ProductModel] = []
     private var currentKey : String?
@@ -108,21 +108,21 @@ class SegmentifyManager {
     // MARK: Request Builders
     func setIDAndSendEvent() {
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            self.sendEvent(callback: { (response: [RecommendationModel]) in
+            self.sendEvent(callback: { (response: [[[RecommendationModel]]]) in
                 //self.testFunc()
             })
         })
     }
     
-    func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [[[RecommendationModel]]]) -> Void) {
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            self.sendEvent(callback: { (response: [RecommendationModel]) in
+            self.sendEvent(callback: { (response: [[[RecommendationModel]]]) in
                 callback(response)
             })
         })
     }
     
-    func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func sendEvent(callback: @escaping (_ recommendation: [[[RecommendationModel]]]) -> Void) {
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
 
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -268,7 +268,7 @@ class SegmentifyManager {
             /*self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
             self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)*/
             //self.createRecommendationArray(recommendationArray: self.recommendations)
-            self.loadArray(recommendations: [self.recommendations])
+//            self.loadArray(recommendations: [self.recommendations])
             callback(self.recommendations)
             
         }, failure: {(error: Error) in
@@ -316,15 +316,15 @@ class SegmentifyManager {
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
                         newRecArray2.append(currentRecModel.copy() as! RecommendationModel)
                         newRecArray.append(newRecArray2)
-                        recommendations.append(currentRecModel.copy() as! RecommendationModel)
                         
-                
                         self.products.removeAll()
                         
                         currentRecModel = RecommendationModel()
                     }
                 }
             }
+            
+            recommendations.append(newRecArray)
             
 
         }
@@ -613,7 +613,7 @@ class SegmentifyManager {
     }
     
     //Checkout View Basket Event
-    func setViewBasketEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func setViewBasketEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [[[RecommendationModel]]]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = segmentifyObject.totalPrice
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
@@ -701,7 +701,7 @@ class SegmentifyManager {
     }
     
     //Page View Event
-    func setPageViewEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func setPageViewEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [[[RecommendationModel]]]) -> Void) {
         
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = segmentifyObject.category
@@ -1029,7 +1029,7 @@ class SegmentifyManager {
             
             if response == nil {
                 self.getUserIdAndSessionIdRequest( success: { () -> Void in
-                    self.sendEvent(callback: { (response: [RecommendationModel]) in
+                    self.sendEvent(callback: { (response: [[[RecommendationModel]]]) in
                         //callback(response)
                     })
                 })
