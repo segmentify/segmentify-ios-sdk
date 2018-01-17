@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ProductModel {
+class ProductModel : NSCopying {
+    
     var brand:String?
     var currency:String?
     var image:String?
@@ -22,4 +23,32 @@ class ProductModel {
     var priceText:String?
     var url:String?
     var productId:String?
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = ProductModel(brand: brand!, currency: currency!, image: image!, inStock: inStock!, inserTime: insertTime!, language: language!, lastUpdateTime: lastUpdateTime!, name: name!, oldPriceText: oldPriceText!, price: price, priceText: priceText!, url: url, productId: productId!)
+        return copy
+    }
+    
+    init() {
+        
+    }
+    
+    init(brand: String, currency: String, image: String, inStock: Bool, inserTime: Int, language: String, lastUpdateTime:Int?, name: String, oldPriceText: String, price: Int?, priceText: String, url: String?, productId: String) {
+      
+        self.brand = brand
+        self.currency = currency
+        self.image = image
+        self.inStock = inStock
+        self.insertTime = inserTime
+        self.language = language
+        self.lastUpdateTime = lastUpdateTime
+        self.name = name
+        self.oldPriceText = oldPriceText
+        self.price = price
+        self.priceText = priceText
+        self.url = url
+        self.productId = productId
+    }
+    
+ 
 }

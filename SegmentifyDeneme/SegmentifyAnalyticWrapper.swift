@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SegmentifyAnalyticWrapper {
     
@@ -28,10 +29,18 @@ final class SegmentifyAnalyticWrapper {
         
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(category: "Product Page", subCategory: nil, pageUrl: "https://www.mobilecp.boyner.com.tr/mobile2/mbProduct/GetCombinedProducts?ProductID=658386")
         let obj = SegmentifyObject()
-        obj.category = "Category Page"
-
-        obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj)
+        obj.category = "Search Page"
+        //obj.subCategory = "Womenswear"
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+            var idArray = [String]()
+            for obj in response {
+                //idArray.append(obj.products)
+                for id in obj.products! {
+                    idArray.append(id.productId!)
+                }
+            }
+            (UIApplication.shared.delegate as! AppDelegate).showAlert(title: "OK", message: "products: \(idArray)", actions: nil)
+        })
     }
     
     func sendLoginEvent() {
@@ -91,8 +100,8 @@ final class SegmentifyAnalyticWrapper {
         obj.products = productsArray
         obj.userID = "1234"
         
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: RecommendationModel) in
-            print("rec model : \(String(describing: (response.products![0].brand)!))")
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+            print("rec model : \(String(describing: (response[0].notificationTitle)!))")
         })
 
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(totalPrice: 78, currency: nil, basketID: nil, orderNo: nil, products: productsArray)
@@ -136,7 +145,8 @@ final class SegmentifyAnalyticWrapper {
 
 extension SegmentifyAnalyticWrapper : SegmentifyManagerDelegate {
     func segmentifyCallback(recommendation: RecommendationModel) {
-        print("rec delegate works")
+        print("rec obj : \(recommendation.products![0])")
+        
     }
 }
 

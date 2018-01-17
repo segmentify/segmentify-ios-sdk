@@ -1,4 +1,4 @@
-//
+ //
 //  RecommendationModel.swift
 //  SegmentifyDeneme
 //
@@ -8,8 +8,29 @@
 
 import Foundation
 
-class RecommendationModel {
+class RecommendationModel : NSCopying {
     var notificationTitle:String?
     var products:[ProductModel]?
     var errorString:String?
+    
+    init() {
+        
+    }
+    
+    init(notificationTitle: String, products: [ProductModel], errorString: String?) {
+        self.notificationTitle = notificationTitle
+        self.products = products
+        self.errorString = errorString
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        var mProducts = [ProductModel]()
+        for p in products! {
+            mProducts.append(p.copy() as! ProductModel)
+        }
+        let copy = RecommendationModel(notificationTitle: notificationTitle!, products: mProducts, errorString: errorString)
+        return copy
+    }
+    
+    
 }

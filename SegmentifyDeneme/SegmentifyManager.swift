@@ -41,6 +41,8 @@ class SegmentifyManager {
     
     static let startIndex = 0
     
+    private var params : Dictionary<AnyHashable, Any>?
+    private var paramsArr : [[AnyHashable:Any]]?
     private var validStaticItem : Bool = false
     private var staticItems : [AnyHashable : Any]?
     private var recommendationSourceKeys : [String] = []
@@ -50,10 +52,22 @@ class SegmentifyManager {
     private var dynamicItemsArray : [DynamicItemsModel] = []
     private var recommendationArray = [AnyHashable : Any]()
     private var recommendations : [RecommendationModel] = []
-    private var recModel : RecommendationModel?
+    private var staticItemsRecommendationarray : [ProductModel] = []
+    //private var testStaticItems : [ProductModel] = []
+    private var currentKey : String?
+    private var staticItemsArrayCount : Int = Int()
+    private var currentNewArray : [RecommendationModel]?
+    
+    private var newRecommendationArray : [RecommendationModel] = []
+    
+    private var testStaticProducts : [AnyHashable:Any]?
+    private var testOtherProducts : [AnyHashable:Any]?
+
+    private var currentRecModel = RecommendationModel()
     private var products : [ProductModel] = []
     private static var segmentifySharedInstance: SegmentifyManager?
     private var eventRequest = SegmentifyRegisterRequest()
+    //let recModel = RecommendationModel()
     
     class func sharedManager(appKey: String, dataCenterUrl: String, subDomain: String) -> SegmentifyManager {
         if segmentifySharedInstance == nil {
@@ -76,6 +90,9 @@ class SegmentifyManager {
         eventRequest.sdkVersion = SegmentifyManager.sdkVersion
         eventRequest.token = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.tokenKey) as? String
         
+        if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
+            UserDefaults.standard.removeObject(forKey:  Constant.IS_USER_SENT_USER_ID)
+        }
         /*if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) != nil {
             eventRequest.oldUserId = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
         }*/
@@ -84,25 +101,28 @@ class SegmentifyManager {
             let lastRequest = SegmentifyRegisterRequest.init(withJsonString: lastRegister as! String)
             eventRequest.extra = (lastRequest?.extra)!
         }
+        
+        self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
     }
 
     // MARK: Request Builders
     func setIDAndSendEvent() {
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            self.sendEvent(callback: { (response: RecommendationModel) in
+            self.sendEvent(callback: { (response: [RecommendationModel]) in
+                //self.testFunc()
             })
         })
     }
     
-    func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: RecommendationModel) -> Void) {
+    func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            self.sendEvent(callback: { (response: RecommendationModel) in
+            self.sendEvent(callback: { (response: [RecommendationModel]) in
                 callback(response)
             })
         })
     }
     
-    func sendEvent(callback: @escaping (_ recommendation: RecommendationModel) -> Void) {
+    func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
 
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -110,38 +130,122 @@ class SegmentifyManager {
                 return
             }
             
+            //for (index,obj) in responses.enumerated() {
+            for (index, obj) in responses[0].enumerated() {
+                guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
+                    return
+                }
+                self.params = params
+                //print("params = \(params)")
+                
+                guard let dynamicItems = self.params!["dynamicItems"] as? String else {
+                    print("params['dynamicItems'] is not valid")
+                    return
+                }
+                
+                guard let dynamicDic = self.convertStringToDictionary(text: dynamicItems) else {
+                    print("cannot converted string to json")
+                    return
+                }
+                
+                guard let recommendedProducts = self.params!["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
+                    print("params['recommendedProducts'] is not valid")
+                    return
+                }
+                self.recommendationArray = recommendedProducts
+                
+                guard let notificationTitle = self.params!["notificationTitle"] as? String else {
+                    print("params['notificationTitle'] is not valid")
+                    return
+                }
+                
+                guard let staticItems = self.params!["staticItems"] as? String else {
+                    print("params['dynamicItems'] is not valid")
+                    return
+                }
+                
+                guard let staticItemsDic = self.convertStringToDictionary(text: staticItems) else {
+                    print("cannot converted string to json")
+                    return
+                }
+                
+                if staticItemsDic.count > 0 {
+                    self.validStaticItem = true
+                }
+                
+                for object in dynamicDic {
+                    let dynObj = DynamicItemsModel()
+                    if let recoomendationSource = object["recommendationSource"] {
+                        self.recommendationSourceKeys.append(recoomendationSource as! String)
+                        dynObj.recommendationSource = recoomendationSource as? String
+                    }
+                    if let timeFrameKey = object["timeFrame"] {
+                        self.timeFrameKeys.append(timeFrameKey as! String)
+                        dynObj.timeFrame = timeFrameKey as? String
+                    }
+                    if let itemCount = object["itemCount"] {
+                        self.itemCounts.append(itemCount as! String)
+                        dynObj.itemCount = Int(itemCount as! String)
+                    }
+                    let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
+                    dynObj.key = key
+                    self.keys.append(key)
+                    self.dynamicItemsArray.append(dynObj)
+                }
+                
+                self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
+                
+                self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)
+            }
+            
             //TODO responses'ın 0 ın 0 nı kaldır. çünkü 1 den fazla gelebilir.
-            guard let params = responses[0][0]["params"] as? Dictionary<AnyHashable, Any> else {
+            /*guard let params = responses[0][0]["params"] as? Dictionary<AnyHashable, Any> else {
                 print("responses['params'] is not valid")
                 return
-            }
+             }*/
 
-            guard let dynamicItems = params["dynamicItems"] as? String else {
+            /*guard let dynamicItems = self.params!["dynamicItems"] as? String else {
                 print("params['dynamicItems'] is not valid")
                 return
-            }
+            }*/
             
-            guard let dynamicDic = self.convertStringToDictionary(text: dynamicItems) else {
+            /*guard let dynamicDic = self.convertStringToDictionary(text: dynamicItems) else {
                 print("cannot converted string to json")
                 return
-            }
+            }*/
 
-            guard let recommendedProducts = params["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
+            /*guard let recommendedProducts = self.params!["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
                 print("params['recommendedProducts'] is not valid")
                 return
-            }
+            }*/
+            //self.recommendationArray = recommendedProducts
             
-            guard let notificationTitle = params["notificationTitle"] as? String else {
+            /*guard let notificationTitle = self.params!["notificationTitle"] as? String else {
                 print("params['notificationTitle'] is not valid")
                 return
-            }
+            }*/
             
-            if let staticItems = params["staticItems"] as? Dictionary<AnyHashable, Any> {
+            /*guard let staticItems = self.params!["staticItems"] as? String else {
+                print("params['dynamicItems'] is not valid")
+                return
+            }*/
+            
+            /*guard let staticItemsDic = self.convertStringToDictionary(text: staticItems) else {
+                print("cannot converted string to json")
+                return
+            }*/
+            
+            /*if staticItemsDic.count > 0 {
+                self.validStaticItem = true
+            }*/
+            
+            /*if let staticItems = params["staticItems"] as? Dictionary<AnyHashable, Any> {
                 self.staticItems = staticItems
                 self.validStaticItem = true
-            }
+                
+            }*/
             
-            for object in dynamicDic {
+            /*for object in dynamicDic {
                 let dynObj = DynamicItemsModel()
                 if let recoomendationSource = object["recommendationSource"] {
                     self.recommendationSourceKeys.append(recoomendationSource as! String)
@@ -159,9 +263,13 @@ class SegmentifyManager {
                 dynObj.key = key
                 self.keys.append(key)
                 self.dynamicItemsArray.append(dynObj)
-            }
-            self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: self.validStaticItem == true ? self.staticItems : nil, keys: self.keys)
-            callback(self.recModel!)
+            }*/
+            
+            /*self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
+            self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)*/
+            //self.createRecommendationArray(recommendationArray: self.recommendations)
+            self.loadArray(recommendations: [self.recommendations])
+            callback(self.recommendations)
             
         }, failure: {(error: Error) in
             if (self.debugMode) {
@@ -169,32 +277,66 @@ class SegmentifyManager {
             }
             let errorRecModel = RecommendationModel()
             errorRecModel.errorString = "error"
-            callback(errorRecModel)
+            callback(self.recommendations)
         })
     }
     
-    private func getRecommendations(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,  keys : [String]) {
-        if validStaticItem {
-            self.recommendationArray["products"] = staticItems as AnyObject
-        }
-        //self.recommendationArray["notificationTitle"] = notificationTitle
+    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?) {
 
+        self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
         if dynamicItemsArray.count > 0 {
             for dynObj in dynamicItemsArray {
-                if let products = recommendedProducts[dynObj.key!] as? [[AnyHashable:Any]] {
+                if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
                     if products.count > 0 {
-                        let rModel = self.createRecomendation(title: notificationTitle, itemCopunt: dynObj.itemCount!, products: products)
-                        self.recModel = rModel
+                        
+                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
+                        self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
                     }
                 }
             }
         }
     }
     
-    private func createRecomendation(title:String, itemCopunt:Int, products:[[AnyHashable:Any]]) -> RecommendationModel {
+    private func getRecommendations(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,  keys : [String]) {
+        if validStaticItem {
+            self.recommendationArray["products"] = staticItems as AnyObject
+        }
+        var newRecArray = [RecommendationModel]()
+
+        if dynamicItemsArray.count > 0 {
+            for dynObj in dynamicItemsArray {
+                
+                self.currentKey = dynObj.key
+                if let products = recommendedProducts[dynObj.key!] as? [[AnyHashable:Any]] {
+                    if products.count > 0 {
+                        
+                        
+                        //var newRecArray2 = [RecommendationModel]()
+                        
+                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
+                        //recommendations.append(currentRecModel.copy() as! RecommendationModel)
+                        
+                        newRecArray.append(currentRecModel.copy() as! RecommendationModel)
+                        self.products.removeAll()
+                        
+                        currentRecModel = RecommendationModel()
+                    }
+                }
+            }
+
+        }
+    }
+    
+    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]]) {
+        var staticProducts = [ProductModel]()
+        if !self.products.isEmpty {
+            for staticProduct in self.products{
+                staticProducts.append(staticProduct.copy() as! ProductModel)
+            }
+        }
         
         for (index, obj) in products.enumerated() {
-            
+
             let proObj = ProductModel()
             if let brand = obj["brand"] {
                 proObj.brand = brand as? String
@@ -232,16 +374,33 @@ class SegmentifyManager {
             if let lastUpdateTime = obj["lastUpdateTime"] {
                 proObj.lastUpdateTime = lastUpdateTime as? Int
             }
-            if index == (self.validStaticItem ? itemCopunt + 1 : itemCopunt) {
+
+            if index == (self.validStaticItem ? (itemCount - 1) + self.staticItemsArrayCount : itemCount) {
                 break
             }
-            self.products.append(proObj)
+  
+            if self.products.contains(where: {$0.productId == proObj.productId}) {
+                
+            } else {
+                if !staticProducts.isEmpty{
+                    var flag = true
+                    for staticProduct in staticProducts{
+                        if staticProduct.productId == proObj.productId{
+                            flag = false
+                            break
+                        }
+                    }
+                    if flag{
+                        self.products.append(proObj)
+                    }
+                }else{
+                    self.products.append(proObj)
+                }
+                self.currentRecModel.products = self.products
+            }
         }
         
-        let recModel = RecommendationModel()
-        recModel.products = self.products
-        recModel.notificationTitle = title
-        return recModel
+        self.currentRecModel.notificationTitle = title
     }
     
     //EVENTS
@@ -284,7 +443,7 @@ class SegmentifyManager {
     
     //Login Event
     func userLogin(segmentifyObject : SegmentifyObject) {
-        if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) == nil {
+        /*if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) == nil {
             UserDefaults.standard.set(Constant.IS_USER_LOGIN, forKey: Constant.IS_USER_LOGIN)
         }
         if UserDefaults.standard.object(forKey: "LAST_GENERATED_USER_ID") != nil {
@@ -293,11 +452,15 @@ class SegmentifyManager {
         }
         //TODO her login uygulama tarafının backendten gelen(gelirse?) user id set edilecek mi?
         UserDefaults.standard.set(segmentifyObject.userID, forKey: "LAST_GENERATED_USER_ID")
-        
+        */
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.signInStep
         eventRequest.username = segmentifyObject.username!
-        //eventRequest.userID = segmentifyObject.userID!
+        eventRequest.userID = segmentifyObject.userID!
+        if segmentifyObject.userID != nil {
+            UserDefaults.standard.set(Constant.IS_USER_SENT_USER_ID, forKey: Constant.IS_USER_SENT_USER_ID)
+            UserDefaults.standard.set(segmentifyObject.userID, forKey: "UserSentUserId")
+        }
         setIDAndSendEvent()
     }
     
@@ -447,7 +610,7 @@ class SegmentifyManager {
     }
     
     //Checkout View Basket Event
-    func setViewBasketEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: RecommendationModel) -> Void) {
+    func setViewBasketEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = segmentifyObject.totalPrice
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
@@ -535,7 +698,8 @@ class SegmentifyManager {
     }
     
     //Page View Event
-    func setPageViewEvent(segmentifyObject : SegmentifyObject) {
+    func setPageViewEvent(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+        
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = segmentifyObject.category
         
@@ -551,7 +715,8 @@ class SegmentifyManager {
         if let categories = segmentifyObject.categories {
             eventRequest.categories = categories
         }
-        setIDAndSendEvent()
+        //setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Custom Event
@@ -604,6 +769,7 @@ class SegmentifyManager {
          eventRequest.eventName = SegmentifyManager.userOperationEventName
          eventRequest.userOperationStep = SegmentifyManager.signInStep
          eventRequest.username = username
+         eventRequest.userID = userId
          setIDAndSendEvent()
      }
      
@@ -848,7 +1014,7 @@ class SegmentifyManager {
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
         var requestURL = NSURL()
-        if UserDefaults.standard.object(forKey: Constant.IS_USER_ID_GENERATED) != nil {
+        if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
             requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=1")!
         } else {
             requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=2")!
@@ -858,33 +1024,41 @@ class SegmentifyManager {
         let task = session.dataTask(with: urlRequest as URLRequest) {
             (data, response, error) -> Void in
             
-            let httpResponse = response as! HTTPURLResponse
-            let statusCode = httpResponse.statusCode
-            
-            if (statusCode == 200) {
-                do{
-                    if let jsonArray = try JSONSerialization.jsonObject(with: data!, options: []) as? NSArray {
-                        
-                        if jsonArray.count > 1 {
-                            self.eventRequest.userID = jsonArray[0] as? String
-                            self.eventRequest.sessionID = jsonArray[1] as? String
-                            UserDefaults.standard.set(Constant.IS_USER_ID_GENERATED, forKey: Constant.IS_USER_ID_GENERATED)
-                            UserDefaults.standard.set(self.eventRequest.userID!, forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID")
-                        } else {
-                            if UserDefaults.standard.object(forKey: "LAST_GENERATED_USER_ID") != nil {
-                                //self.eventRequest.oldUserId = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
-                                self.eventRequest.userID = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
+            if response == nil {
+                self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                    self.sendEvent(callback: { (response: [RecommendationModel]) in
+                        //callback(response)
+                    })
+                })
+            } else {
+                let httpResponse = response as! HTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                
+                if (statusCode == 200) {
+                    do{
+                        if let jsonArray = try JSONSerialization.jsonObject(with: data!, options: []) as? NSArray {
+                            
+                            if jsonArray.count > 1 {
+                                self.eventRequest.userID = jsonArray[0] as? String
+                                self.eventRequest.sessionID = jsonArray[1] as? String
+                                UserDefaults.standard.set(self.eventRequest.userID, forKey: "SEGMENTIFY_USER_ID")
+                            } else {
+                                /*if UserDefaults.standard.object(forKey: "LAST_GENERATED_USER_ID") != nil {
+
+                                    self.eventRequest.userID = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
+                                }*/
+                                self.eventRequest.sessionID = jsonArray[0] as? String
                             }
-                            self.eventRequest.sessionID = jsonArray[0] as? String
                         }
+                        success()
+                    }catch {
+                        print("Error with Json: \(error)")
                     }
-                   success()
-                }catch {
-                    print("Error with Json: \(error)")
                 }
             }
-        }
-        task.resume()
+            
+            }
+            task.resume()
     }
     
     func convertStringToDictionary(text: String) -> [[String:AnyObject]]? {
@@ -898,7 +1072,16 @@ class SegmentifyManager {
         }
         return nil
     }
+    
+    func loadArray(recommendations : [[RecommendationModel]]) {
+        for recs in recommendations {
+            for recObj in recs {
+                
+            }
+        }
+    }
 }
+
 
 
 

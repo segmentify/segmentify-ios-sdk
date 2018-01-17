@@ -104,26 +104,9 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                         
                         do {
                             let jsonObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String:AnyObject]
-                            //print(jsonObject!["statusCode"])
-                            
+
                             print("response : \(String(describing: jsonObject))")
 
-                            /*let jsonObject = try JSONDecoder().decode([[SegModel]].self, from: data!)
-                            print("responses : \(jsonObject)")*/
-                            
-                            /*for obj in jsonObject {
-                                print("obj : \(obj)")
-                            }*/
-                            //dump(jsonObject.first?.type)
-                            
-                            
-                            /*if (self.debugMode) {
-                                print("Server response with success : \(String(describing: jsonObject))")
-                            }*/
-                            
-                            
-                            //success(jsonObject!["responses"] as AnyObject:String)
-                            //success(jsonObject as AnyObject)
                             success(jsonObject!)
                             
                         } catch {

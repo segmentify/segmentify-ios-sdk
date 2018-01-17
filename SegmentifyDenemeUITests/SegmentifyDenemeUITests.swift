@@ -8,6 +8,7 @@
 
 import XCTest
 
+
 class SegmentifyDenemeUITests: XCTestCase {
         
     override func setUp() {
@@ -21,6 +22,26 @@ class SegmentifyDenemeUITests: XCTestCase {
         XCUIApplication().launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    }
+    
+    func testHome() {
+        
+        let app = XCUIApplication()
+        Thread.sleep(forTimeInterval: 5)
+        app.launch()
+        
+        
+        /*let app = XCUIApplication()
+        NSThread.sleepForTimeInterval(10)
+        app.tabBars.buttons["Mağazalar"].tap()
+        app.buttons["Daha sonra izin verin"].tap()
+        
+        app.scrollViews.staticTexts["BEYMEN MAĞAZALARI"].swipeUp()
+        app.scrollViews.childrenMatchingType(.TextField).element.tap()
+        app.pickers.pickerWheels["Ankara"].tap()
+        app.buttons["Tamam"].tap()
+        app.scrollViews.tables.cells.staticTexts["Armada AVM Eskişehir Yolu No:6 Söğütözü"].tap()*/
+        
     }
     
     override func tearDown() {

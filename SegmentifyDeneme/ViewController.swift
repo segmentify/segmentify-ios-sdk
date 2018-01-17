@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //SegmentifyAnalyticWrapper.shared.sendPageViewEvent()
+        SegmentifyAnalyticWrapper.shared.sendPageViewEvent()
         //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
         //SegmentifyAnalyticWrapper.shared.sendLogoutEvent()
         //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         //SegmentifyAnalyticWrapper.shared.sendRegisterEvent()
         //SegmentifyAnalyticWrapper.shared.sendUserchangeEvent()
         //SegmentifyAnalyticWrapper.shared.sendUserUpdateEvent()
-        SegmentifyAnalyticWrapper.shared.sendCustomevent()
+        //SegmentifyAnalyticWrapper.shared.sendCustomevent()
     }
 
     override func didReceiveMemoryWarning() {
