@@ -39,7 +39,6 @@ final class SegmentifyAnalyticWrapper {
                   //  idArray.append(id.productId!)
                 //}
             }
-            (UIApplication.shared.delegate as! AppDelegate).showAlert(title: "OK", message: "products: \(idArray)", actions: nil)
         })
     }
     

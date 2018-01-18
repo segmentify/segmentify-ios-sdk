@@ -55,7 +55,6 @@ class ViewController: UIViewController {
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-            //(UIApplication.shared.delegate as! AppDelegate).showAlert(title: "OK", message: "products: \(idArray)", actions: nil)
         })
     }
 
@@ -76,9 +75,7 @@ class ViewController: UIViewController {
         }
         self.tableview.reloadData()
     }
-    
-    
-    
+
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
             print("rec obj : \(String(describing: recObj.notificationTitle))")
@@ -89,33 +86,6 @@ class ViewController: UIViewController {
         }
     }
 }
-
-
-extension UIImageView {
-    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() {
-                self.image = image
-            }
-            }.resume()
-    }
-    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloadedFrom(url: url, contentMode: mode)
-    }
-}
-
-
-
-
-
 
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -143,10 +113,6 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
             SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
 
-        
-
-        //cell.oldPriceLabel.text = String(self.oldPrices[indexPath.row])
-        
         if let imageURL = URL(string:  self.images[indexPath.row]) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
@@ -154,23 +120,11 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
                     let image = UIImage(data: data)
                     DispatchQueue.main.async {
                         cell.imgDeneme.image = image
-                        
                     }
                 }
             }
         }
-        
-//        let url = URL(string:self.images[index])
-//            if let data = try? Data(contentsOf: url!)
-//            {
-//                let image: UIImage = UIImage(data: data)!
-//                cell.imgDeneme.image = image
-//            }
-//
-        //cell.imgDeneme.image = self.images[]
-        
         return cell
-        
     }
 }
 

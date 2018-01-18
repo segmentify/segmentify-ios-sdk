@@ -144,13 +144,6 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		57893D871FFC2C4500AA8D67 /* Connection */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Connection;
-			sourceTree = "<group>";
-		};
 		57893DB31FFFAA7F00AA8D67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,7 +190,6 @@
 			children = (
 				57AD771E20078A51009384E8 /* Extensions */,
 				57893DB31FFFAA7F00AA8D67 /* Model */,
-				57893D871FFC2C4500AA8D67 /* Connection */,
 				57893D7E1FF632ED00AA8D67 /* Enums */,
 				57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */,
 				57FFD4CF1FD9A814008B1486 /* ViewController.swift */,
