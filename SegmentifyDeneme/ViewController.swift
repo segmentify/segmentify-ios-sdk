@@ -52,9 +52,9 @@ class ViewController: UIViewController {
         let obj = SegmentifyObject()
         obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [[[RecommendationModel]]]) in
-            self.recommendations = response
-            self.createProducts(recommendations: self.recommendations)
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [[RecommendationModel]]) in
+            //self.recommendations = response
+            //self.createProducts(recommendations: self.recommendations)
             //(UIApplication.shared.delegate as! AppDelegate).showAlert(title: "OK", message: "products: \(idArray)", actions: nil)
         })
     }
