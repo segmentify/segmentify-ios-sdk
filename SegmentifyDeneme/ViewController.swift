@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     var titles : [String] = []
     var prices : [Int] = []
     var oldPrices : [String] = []
+    var productIds : [String] = []
+    
     var recommendations : [[[RecommendationModel]]] = []
     
     var appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
@@ -64,10 +66,14 @@ class ViewController: UIViewController {
 
     func setProductInfos(products : [ProductModel]) {
         for product in products {
+            self.productIds.append(product.productId!)
             self.titles.append(product.name!)
-            self.images.append(product.image!)
-            //self.prices.append(product.price!)
-            self.oldPrices.append(product.oldPriceText!)
+            self.images.append("https:" + product.image!)
+            self.prices.append(product.price!)
+            if(product.oldPriceText != nil){
+                self.oldPrices.append(product.oldPriceText!)
+            }
+            
         }
         self.tableview.reloadData()
     }
@@ -85,8 +91,40 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+
+    
 
 }
+
+
+
+
+extension UIImageView {
+    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() {
+                self.image = image
+            }
+            }.resume()
+    }
+    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url, contentMode: mode)
+    }
+}
+
+
+
+
+
 
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -105,15 +143,39 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell") as! CustomTableViewCell
         cell.nameLabel.text = self.titles[indexPath.row]
+        cell.priceLabel.text = String(self.prices[indexPath.row])
+        cell.oldPriceLabel.text=String(self.oldPrices[indexPath.row])
         
+        cell.onButtonTapped = {
+            print(self.productIds[indexPath.row])
+    
+            SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
+        }
+
         
-        let url = URL(string:self.images[index])
-            if let data = try? Data(contentsOf: url!)
-            {
-                let image: UIImage = UIImage(data: data)!
-                cell.imgDeneme.image = image
+
+        //cell.oldPriceLabel.text = String(self.oldPrices[indexPath.row])
+        
+        if let imageURL = URL(string:  self.images[indexPath.row]) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell.imgDeneme.image = image
+                        
+                    }
+                }
             }
+        }
         
+//        let url = URL(string:self.images[index])
+//            if let data = try? Data(contentsOf: url!)
+//            {
+//                let image: UIImage = UIImage(data: data)!
+//                cell.imgDeneme.image = image
+//            }
+//
         //cell.imgDeneme.image = self.images[]
         
         return cell

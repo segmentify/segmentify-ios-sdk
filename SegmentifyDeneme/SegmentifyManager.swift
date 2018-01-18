@@ -328,8 +328,13 @@ class SegmentifyManager {
                 }
             }
             
-            recommendations.append(newRecArray)
             
+//            for arr in newRecArray {
+//              print(newRecArray)
+//            }
+            
+            recommendations.append(newRecArray)
+            print(newRecArray)
 
         }
     }
@@ -645,12 +650,6 @@ class SegmentifyManager {
         if let quantity = segmentifyObject.quantity {
             eventRequest.quantity = quantity
         }
-        if let basketID = segmentifyObject.basketID {
-            eventRequest.basketID = basketID
-        }
-        if let lang = segmentifyObject.lang {
-            eventRequest.lang = lang
-        }
         setIDAndSendEvent()
     }
     
@@ -918,7 +917,7 @@ class SegmentifyManager {
     }
     
     //Add or Remove Basket Event
-    func setAddOrRemoveBasketStepEvent(basketStep : String, productID : String, price : NSNumber?, quantity : NSNumber?, basketID : String?) {
+    func setAddOrRemoveBasketStepEvent(basketStep : String, productID : String, price : NSNumber?, quantity : NSNumber?) {
         eventRequest.eventName = SegmentifyManager.basketOperationsEventName
         eventRequest.basketStep = basketStep
         eventRequest.productID = productID
@@ -927,9 +926,6 @@ class SegmentifyManager {
         }
         if let quantity = quantity {
             eventRequest.quantity = quantity
-        }
-        if let basketID = basketID {
-            eventRequest.basketID = basketID
         }
         setIDAndSendEvent()
     }

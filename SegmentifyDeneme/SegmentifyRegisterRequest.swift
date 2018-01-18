@@ -281,6 +281,10 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
             dictionary["step"] = checkoutStep
         }
         
+        if let basketStep = self.basketStep {
+            dictionary["step"] = basketStep
+        }
+        
         if let orderNo = self.orderNo {
             dictionary["orderNo"] = orderNo
         }
