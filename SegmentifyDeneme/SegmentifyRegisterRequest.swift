@@ -303,6 +303,10 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
             dictionary["instanceId"] = instanceId
         }
         
+        if let type = self.type {
+            dictionary["type"] = type
+        }
+        
         dictionary["extra"] = extra as Any?
 
         return dictionary

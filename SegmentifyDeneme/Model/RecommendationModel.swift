@@ -12,15 +12,19 @@ class RecommendationModel : NSCopying {
     var notificationTitle:String?
     var products:[ProductModel]?
     var errorString:String?
+    var instanceId:String?
+    var interactionId:String?
     
     init() {
         
     }
     
-    init(notificationTitle: String, products: [ProductModel], errorString: String?) {
+    init(notificationTitle: String, products: [ProductModel], errorString: String?, instanceId: String?, interactionId: String?) {
         self.notificationTitle = notificationTitle
         self.products = products
         self.errorString = errorString
+        self.instanceId = instanceId
+        self.interactionId = interactionId
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
@@ -28,7 +32,7 @@ class RecommendationModel : NSCopying {
         for p in products! {
             mProducts.append(p.copy() as! ProductModel)
         }
-        let copy = RecommendationModel(notificationTitle: notificationTitle!, products: mProducts, errorString: errorString)
+        let copy = RecommendationModel(notificationTitle: notificationTitle!, products: mProducts, errorString: errorString, instanceId: instanceId, interactionId: interactionId)
         return copy
     }
     
