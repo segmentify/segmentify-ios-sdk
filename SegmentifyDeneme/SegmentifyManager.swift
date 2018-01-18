@@ -51,7 +51,7 @@ class SegmentifyManager {
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
     private var recommendationArray = [AnyHashable : Any]()
-    private var recommendations :[[[RecommendationModel]]] = []
+    private var recommendations :[[RecommendationModel]] = []
     private var staticItemsRecommendationarray : [ProductModel] = []
     //private var testStaticItems : [ProductModel] = []
     private var currentKey : String?
@@ -201,79 +201,12 @@ class SegmentifyManager {
                 
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)
             }
+      
             
-            //TODO responses'ın 0 ın 0 nı kaldır. çünkü 1 den fazla gelebilir.
-            /*guard let params = responses[0][0]["params"] as? Dictionary<AnyHashable, Any> else {
-                print("responses['params'] is not valid")
-                return
-             }*/
-
-            /*guard let dynamicItems = self.params!["dynamicItems"] as? String else {
-                print("params['dynamicItems'] is not valid")
-                return
-            }*/
+ 
             
-            /*guard let dynamicDic = self.convertStringToDictionary(text: dynamicItems) else {
-                print("cannot converted string to json")
-                return
-            }*/
-
-            /*guard let recommendedProducts = self.params!["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
-                print("params['recommendedProducts'] is not valid")
-                return
-            }*/
-            //self.recommendationArray = recommendedProducts
             
-            /*guard let notificationTitle = self.params!["notificationTitle"] as? String else {
-                print("params['notificationTitle'] is not valid")
-                return
-            }*/
-            
-            /*guard let staticItems = self.params!["staticItems"] as? String else {
-                print("params['dynamicItems'] is not valid")
-                return
-            }*/
-            
-            /*guard let staticItemsDic = self.convertStringToDictionary(text: staticItems) else {
-                print("cannot converted string to json")
-                return
-            }*/
-            
-            /*if staticItemsDic.count > 0 {
-                self.validStaticItem = true
-            }*/
-            
-            /*if let staticItems = params["staticItems"] as? Dictionary<AnyHashable, Any> {
-                self.staticItems = staticItems
-                self.validStaticItem = true
-                
-            }*/
-            
-            /*for object in dynamicDic {
-                let dynObj = DynamicItemsModel()
-                if let recoomendationSource = object["recommendationSource"] {
-                    self.recommendationSourceKeys.append(recoomendationSource as! String)
-                    dynObj.recommendationSource = recoomendationSource as? String
-                }
-                if let timeFrameKey = object["timeFrame"] {
-                    self.timeFrameKeys.append(timeFrameKey as! String)
-                    dynObj.timeFrame = timeFrameKey as? String
-                }
-                if let itemCount = object["itemCount"] {
-                    self.itemCounts.append(itemCount as! String)
-                    dynObj.itemCount = Int(itemCount as! String)
-                }
-                let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
-                dynObj.key = key
-                self.keys.append(key)
-                self.dynamicItemsArray.append(dynObj)
-            }*/
-            
-            /*self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
-            self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)*/
-            //self.createRecommendationArray(recommendationArray: self.recommendations)
-//            self.loadArray(recommendations: [self.recommendations])
-            callback(self.recommendations)
+            callback([self.recommendations])
             
         }, failure: {(error: Error) in
             if (self.debugMode) {
@@ -281,7 +214,7 @@ class SegmentifyManager {
             }
             let errorRecModel = RecommendationModel()
             errorRecModel.errorString = "error"
-            callback(self.recommendations)
+            callback([self.recommendations])
         })
     }
     
@@ -305,7 +238,7 @@ class SegmentifyManager {
         if validStaticItem {
             self.recommendationArray["products"] = staticItems as AnyObject
         }
-        var newRecArray = [[RecommendationModel]]()
+        var newProdArray = [ProductModel]()
 
         if dynamicItemsArray.count > 0 {
             for dynObj in dynamicItemsArray {
@@ -315,12 +248,14 @@ class SegmentifyManager {
                     if products.count > 0 {
                         
                         
-                        var newRecArray2 = [RecommendationModel]()
-                        
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
-                        newRecArray2.append(currentRecModel.copy() as! RecommendationModel)
-                        newRecArray.append(newRecArray2)
                         
+
+                        for product in currentRecModel.products!{
+                                newProdArray.append(product)
+                        }
+
+                    
                         self.products.removeAll()
                         
                         currentRecModel = RecommendationModel()
@@ -329,13 +264,40 @@ class SegmentifyManager {
             }
             
             
-//            for arr in newRecArray {
-//              print(newRecArray)
-//            }
             
-            recommendations.append(newRecArray)
-            print(newRecArray)
+            
+   
+            
+            
+            
+            var newRecArray = RecommendationModel()
+            newRecArray.notificationTitle = notificationTitle
+            newRecArray.products = newProdArray
+            
+            
+            
+            
 
+            recommendations.append([newRecArray])
+            
+            
+            print(recommendations)
+
+            
+            
+            
+//            for arr in newRecArray {
+//                for arr2 in arr {
+//                    for arr3 in arr2.products!{
+//                        print(arr3)
+//                    }
+//
+//                }
+//            }
+//
+//
+//            recommendations.append(newRecArray)
+      
         }
     }
     
