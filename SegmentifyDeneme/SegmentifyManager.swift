@@ -249,7 +249,11 @@ class SegmentifyManager {
                         
 
                         for product in currentRecModel.products!{
+                            if newProdArray.contains(where: {$0.productId==product.productId}){ }
+                            else{
                                 newProdArray.append(product)
+                            }
+                            
                         }
 
                     
