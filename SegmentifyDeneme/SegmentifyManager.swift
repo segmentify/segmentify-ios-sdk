@@ -68,6 +68,7 @@ class SegmentifyManager {
     
     private var testStaticProducts : [AnyHashable:Any]?
     private var testOtherProducts : [AnyHashable:Any]?
+    private var minusIndex : Int?
 
     private var currentRecModel = RecommendationModel()
     private var products : [ProductModel] = []
@@ -142,6 +143,7 @@ class SegmentifyManager {
             
             //for (index,obj) in responses.enumerated() {
             for (index, obj) in responses[0].enumerated() {
+                self.minusIndex = Int()
                 guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
                     return
                 }
@@ -224,6 +226,7 @@ class SegmentifyManager {
             }
       
 
+            
             callback(self.recommendations)
             
         }, failure: {(error: Error) in
@@ -265,40 +268,28 @@ class SegmentifyManager {
                 if let products = recommendedProducts[dynObj.key!] as? [[AnyHashable:Any]] {
                     if products.count > 0 {
                         
-                        
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
-                        
-
                         for product in currentRecModel.products!{
                             if newProdArray.contains(where: {$0.productId==product.productId}){ }
                             else{
-                                newProdArray.append(product)
+                                if newProdArray.count <= (validStaticItem ? staticItemsArrayCount +  dynObj.itemCount! - 1 : dynObj.itemCount! - 1) {
+                                    newProdArray.append(product)
+                                }
                             }
-                            
                         }
-
-                    
                         self.products.removeAll()
-                        
                         currentRecModel = RecommendationModel()
                     }
                 }
             }
-            
-            
-            
-            
             var newRecModel = RecommendationModel()
             newRecModel.notificationTitle = notificationTitle
             newRecModel.products = newProdArray
             recommendations.append(newRecModel)
-            
-            
-            //print(recommendations)
-        
-
         }
     }
+    
+    
     
     private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]]) {
         var staticProducts = [ProductModel]()
@@ -348,12 +339,12 @@ class SegmentifyManager {
                 proObj.lastUpdateTime = lastUpdateTime as? Int
             }
 
-            if index == (self.validStaticItem ? (itemCount - 1) + self.staticItemsArrayCount : itemCount) {
+            /*if index == (self.validStaticItem ? (itemCount - 1) + self.staticItemsArrayCount : itemCount) {
                 break
-            }
+            }*/
   
             if self.products.contains(where: {$0.productId == proObj.productId}) {
-                
+                minusIndex = minusIndex! - 1
             } else {
                 if !staticProducts.isEmpty{
                     var flag = true
@@ -957,7 +948,7 @@ class SegmentifyManager {
         setIDAndSendEvent()
     }
     
-    func setClickView(instanceId : String, interactionId : String) {
+    func setClickViewEvent(instanceId : String, interactionId : String) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
         eventRequest.type = SegmentifyManager.widgetViewStep
         eventRequest.instanceId = instanceId
