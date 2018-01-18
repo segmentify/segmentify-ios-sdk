@@ -78,6 +78,8 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var segments:[String]?
     var type:String?
     var params:AnyObject?
+    var instanceId:String?
+    var interactionId:String?
     
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
@@ -293,6 +295,14 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
             dictionary["oldUserId"] = oldUserId
         }
 
+        if let interactionId = self.interactionId {
+            dictionary["interactionId"] = interactionId
+        }
+        
+        if let instanceId = self.instanceId {
+            dictionary["instanceId"] = instanceId
+        }
+        
         dictionary["extra"] = extra as Any?
 
         return dictionary

@@ -29,6 +29,7 @@ class SegmentifyManager {
     static let customEventName = "CUSTOM_EVENT"
     static let interactionEventName = "INTERACTION"
     
+    
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
     static let paymentInformationStep = "payment"
@@ -38,9 +39,14 @@ class SegmentifyManager {
     static let registerStep = "signup"
     static let logoutStep = "signout"
     static let updateUserStep = "update"
+    static let impressionStep = "impression"
+    static let widgetViewStep = "widget_view"
+    static let clickStep = "click"
     
     static let startIndex = 0
     
+    private var instanceId:String?
+    private var interactionId:String?
     private var params : Dictionary<AnyHashable, Any>?
     private var paramsArr : [[AnyHashable:Any]]?
     private var validStaticItem : Bool = false
@@ -176,6 +182,21 @@ class SegmentifyManager {
                 if staticItemsDic.count > 0 {
                     self.validStaticItem = true
                 }
+                
+                
+                    self.instanceId = String()
+                    if let instanceId = self.params!["instanceId"] as? String {
+                        self.instanceId = instanceId
+                    }
+                    self.interactionId = String()
+                    if let interactionId = self.params!["actionId"] as? String {
+                        self.interactionId = interactionId
+                    }
+                    
+                    if self.instanceId != nil && self.interactionId != nil {
+                        self.setImpressionEvent(instanceId: self.instanceId!, interactionId: self.interactionId!)
+                    }
+
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -916,8 +937,32 @@ class SegmentifyManager {
         setIDAndSendEvent()
     }
     
-    func setInteractionEvent() {
+    /*func setInteractionEvent() {
         eventRequest.eventName = SegmentifyManager.interactionEventName
+    }*/
+    
+    func setImpressionEvent(instanceId : String, interactionId : String) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.type = SegmentifyManager.impressionStep
+        eventRequest.instanceId = instanceId
+        eventRequest.interactionId = interactionId
+        setIDAndSendEvent()
+    }
+    
+    func setWidgetViewEvent(instanceId : String, interactionId : String) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.type = SegmentifyManager.widgetViewStep
+        eventRequest.instanceId = instanceId
+        eventRequest.interactionId = interactionId
+        setIDAndSendEvent()
+    }
+    
+    func setClickView(instanceId : String, interactionId : String) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.type = SegmentifyManager.widgetViewStep
+        eventRequest.instanceId = instanceId
+        eventRequest.interactionId = interactionId
+        setIDAndSendEvent()
     }
     
     func setAdvertisingIdentifier(adIdentifier: String?) {

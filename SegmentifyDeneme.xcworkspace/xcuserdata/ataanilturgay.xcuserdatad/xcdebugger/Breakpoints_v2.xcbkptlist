@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "537972680.875894"
+            timestampString = "537975736.026584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "SegmentifyManager"
-            landmarkType = "3">
+            startingLineNumber = "743"
+            endingLineNumber = "743"
+            landmarkName = "setLogoutEvent(username:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
