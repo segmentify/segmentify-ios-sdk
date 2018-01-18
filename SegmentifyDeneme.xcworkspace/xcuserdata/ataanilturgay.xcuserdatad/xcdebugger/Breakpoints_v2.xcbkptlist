@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "537892811.935084"
+            timestampString = "537972680.875894"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "771"
-            endingLineNumber = "771"
-            landmarkName = "setLoginEvent(username:userId:)"
-            landmarkType = "7">
+            startingLineNumber = "722"
+            endingLineNumber = "722"
+            landmarkName = "SegmentifyManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyAnalyticWrapper.swift"
-            timestampString = "537892811.935155"
+            timestampString = "537972680.875981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"

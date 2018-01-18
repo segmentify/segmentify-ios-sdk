@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var oldPrices : [String] = []
     var productIds : [String] = []
     
-    var recommendations : [[[RecommendationModel]]] = []
+    var recommendations : [RecommendationModel] = []
     
     var appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
     var subDomain = "segmentify-shop.myshopify.com"
@@ -52,9 +52,9 @@ class ViewController: UIViewController {
         let obj = SegmentifyObject()
         obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [[RecommendationModel]]) in
-            //self.recommendations = response
-            //self.createProducts(recommendations: self.recommendations)
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+            self.recommendations = response
+            self.createProducts(recommendations: self.recommendations)
             //(UIApplication.shared.delegate as! AppDelegate).showAlert(title: "OK", message: "products: \(idArray)", actions: nil)
         })
     }
@@ -73,31 +73,22 @@ class ViewController: UIViewController {
             if(product.oldPriceText != nil){
                 self.oldPrices.append(product.oldPriceText!)
             }
-            
         }
         self.tableview.reloadData()
     }
     
     
     
-    func createProducts(recommendations : [[[RecommendationModel]]]) {
-        for recommendation in recommendations {
-            for recObjects in recommendation {
-                for index in 0...recObjects.count - 1 {
-                    if recObjects[index].notificationTitle == "Deneme" {
-                        self.setProductInfos(products: recObjects[index].products!)
-                    }
-                }
+    func createProducts(recommendations : [RecommendationModel]) {
+        for recObj in recommendations {
+            print("rec obj : \(String(describing: recObj.notificationTitle))")
+            print("rec obj : \(String(describing: recObj.products))")
+            if recObj.notificationTitle == "Deneme" {
+                self.setProductInfos(products: recObj.products!)
             }
         }
     }
-    
-
-    
-
 }
-
-
 
 
 extension UIImageView {
