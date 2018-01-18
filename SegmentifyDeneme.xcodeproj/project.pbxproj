@@ -16,9 +16,6 @@
 		575BF4CF1FEBA436007B4354 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575BF4CE1FEBA436007B4354 /* Constant.swift */; };
 		576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576C51D5200F8C470027691F /* CustomTableViewCell.swift */; };
 		57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */; };
-		57893D801FF6332000AA8D67 /* UserSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7F1FF6332000AA8D67 /* UserSteps.swift */; };
-		57893D821FF6339400AA8D67 /* CheckoutSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D811FF6339400AA8D67 /* CheckoutSteps.swift */; };
-		57893D841FF6362700AA8D67 /* BasketSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D831FF6362700AA8D67 /* BasketSteps.swift */; };
 		57AD772020078A61009384E8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AD771F20078A61009384E8 /* Array.swift */; };
 		57E926DA1FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */; };
 		57FFD4CE1FD9A814008B1486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */; };
@@ -65,9 +62,6 @@
 		575BF4CE1FEBA436007B4354 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		576C51D5200F8C470027691F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyObject.swift; sourceTree = "<group>"; };
-		57893D7F1FF6332000AA8D67 /* UserSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSteps.swift; sourceTree = "<group>"; };
-		57893D811FF6339400AA8D67 /* CheckoutSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutSteps.swift; sourceTree = "<group>"; };
-		57893D831FF6362700AA8D67 /* BasketSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketSteps.swift; sourceTree = "<group>"; };
 		57AD771F20078A61009384E8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyUrlSessionDelegate.swift; sourceTree = "<group>"; };
 		57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyDeneme.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,16 +128,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		57893D7E1FF632ED00AA8D67 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				57893D7F1FF6332000AA8D67 /* UserSteps.swift */,
-				57893D811FF6339400AA8D67 /* CheckoutSteps.swift */,
-				57893D831FF6362700AA8D67 /* BasketSteps.swift */,
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
 		57893DB31FFFAA7F00AA8D67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,7 +174,6 @@
 			children = (
 				57AD771E20078A51009384E8 /* Extensions */,
 				57893DB31FFFAA7F00AA8D67 /* Model */,
-				57893D7E1FF632ED00AA8D67 /* Enums */,
 				57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */,
 				57FFD4CF1FD9A814008B1486 /* ViewController.swift */,
 				57FFD4D11FD9A814008B1486 /* Main.storyboard */,
@@ -535,20 +518,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57893D821FF6339400AA8D67 /* CheckoutSteps.swift in Sources */,
 				57E926DA1FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift in Sources */,
 				57FFD5041FD9ACCF008B1486 /* SegmentifyTools.swift in Sources */,
 				57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */,
 				57FFD5021FD9AC96008B1486 /* SegmentifyRequestProtocol.swift in Sources */,
 				576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */,
-				57893D841FF6362700AA8D67 /* BasketSteps.swift in Sources */,
 				57FFD4D01FD9A814008B1486 /* ViewController.swift in Sources */,
 				57FFD4FC1FD9A854008B1486 /* SegmentifyManager.swift in Sources */,
 				57AD772020078A61009384E8 /* Array.swift in Sources */,
 				57FFD4CE1FD9A814008B1486 /* AppDelegate.swift in Sources */,
 				573DE8712002B5C600DE57DA /* DynamicItemsModel.swift in Sources */,
 				57FFD4FE1FD9ABC1008B1486 /* SegmentifyAnalyticWrapper.swift in Sources */,
-				57893D801FF6332000AA8D67 /* UserSteps.swift in Sources */,
 				573DE8752003A23A00DE57DA /* ProductModel.swift in Sources */,
 				57FFD5061FDA0589008B1486 /* SegmentifyConnectionManager.swift in Sources */,
 				573DE8732003A1B600DE57DA /* RecommendationModel.swift in Sources */,

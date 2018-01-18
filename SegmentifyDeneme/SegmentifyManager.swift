@@ -90,6 +90,10 @@ class SegmentifyManager {
     }
     
     init(appKey: String, dataCenterUrl: String, subDomain: String) {
+        
+        UserDefaults.standard.set(appKey, forKey: "appKey_seg")
+        UserDefaults.standard.set(dataCenterUrl, forKey: "dataCenterUrl_Seg")
+        UserDefaults.standard.set(subDomain, forKey: "subDomain_Seg")
 
         eventRequest.appKey = appKey
         eventRequest.subdomain = subDomain
@@ -185,6 +189,7 @@ class SegmentifyManager {
                     self.validStaticItem = true
                 }
                 
+                    self.eventRequest = SegmentifyRegisterRequest()
                 
                     self.instanceId = String()
                     if let instanceId = self.params!["instanceId"] as? String {
@@ -196,9 +201,24 @@ class SegmentifyManager {
                     }
                     
                     if self.instanceId != nil && self.interactionId != nil {
+                        if UserDefaults.standard.object(forKey: "appKey_seg") != nil {
+                            self.eventRequest.appKey = UserDefaults.standard.object(forKey: "appKey_seg") as? String
+                        }
+                        if UserDefaults.standard.object(forKey: "dataCenterUrl_Seg") != nil {
+                            self.eventRequest.dataCenterUrl = UserDefaults.standard.object(forKey: "dataCenterUrl_Seg") as! String
+                        }
+                        if UserDefaults.standard.object(forKey: "subDomain_Seg") != nil {
+                            self.eventRequest.subdomain = UserDefaults.standard.object(forKey: "subDomain_Seg") as! String
+                        }
+                        
+                        //self.eventRequest.appKey = UserDefaults.standard.object(forKey: "appKey_seg") as? String
+                        //self.eventRequest.dataCenterUrl = UserDefaults.standard.object(forKey: "dataCenterUrl_Seg") as! String
+                        //self.eventRequest.subdomain = UserDefaults.standard.object(forKey: "subDomain_Seg") as! String
+                        if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                            self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+                        }
                         self.setImpressionEvent(instanceId: self.instanceId!, interactionId: self.interactionId!)
                     }
-
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
