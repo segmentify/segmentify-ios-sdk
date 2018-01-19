@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05B27F3EB526CE26A15E67FF /* Pods_SegmentifyDenemeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527DE52835D30D2497E60321 /* Pods_SegmentifyDenemeUITests.framework */; };
-		0F2D1B7886E8E5B3AA0A8056 /* Pods_SegmentifyDenemeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C34AD6383BDA4EFE6DD8C0B /* Pods_SegmentifyDenemeTests.framework */; };
-		4AB3E3818EF9C6ECF34E3770 /* Pods_SegmentifyDeneme.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5684A885140CE5E541F011 /* Pods_SegmentifyDeneme.framework */; };
 		573DE8712002B5C600DE57DA /* DynamicItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573DE8702002B5C600DE57DA /* DynamicItemsModel.swift */; };
 		573DE8732003A1B600DE57DA /* RecommendationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573DE8722003A1B600DE57DA /* RecommendationModel.swift */; };
 		573DE8752003A23A00DE57DA /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573DE8742003A23A00DE57DA /* ProductModel.swift */; };
@@ -58,10 +55,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F5684A885140CE5E541F011 /* Pods_SegmentifyDeneme.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SegmentifyDeneme.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		265AA8C0BE99AC4EC0E8E9B9 /* Pods-SegmentifyDeneme.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDeneme.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDeneme/Pods-SegmentifyDeneme.debug.xcconfig"; sourceTree = "<group>"; };
-		2B5B110FEF9061F8B5404EF9 /* Pods-SegmentifyDenemeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDenemeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDenemeTests/Pods-SegmentifyDenemeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		527DE52835D30D2497E60321 /* Pods_SegmentifyDenemeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SegmentifyDenemeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		573DE8702002B5C600DE57DA /* DynamicItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicItemsModel.swift; sourceTree = "<group>"; };
 		573DE8722003A1B600DE57DA /* RecommendationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationModel.swift; sourceTree = "<group>"; };
 		573DE8742003A23A00DE57DA /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
@@ -97,11 +90,6 @@
 		57FFD5011FD9AC96008B1486 /* SegmentifyRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyRequestProtocol.swift; sourceTree = "<group>"; };
 		57FFD5031FD9ACCF008B1486 /* SegmentifyTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyTools.swift; sourceTree = "<group>"; };
 		57FFD5051FDA0589008B1486 /* SegmentifyConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyConnectionManager.swift; sourceTree = "<group>"; };
-		67A0443BD11F0B79C9F095B9 /* Pods-SegmentifyDenemeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDenemeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDenemeUITests/Pods-SegmentifyDenemeUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7DB2B4590B51F4ED3EDB4F7E /* Pods-SegmentifyDenemeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDenemeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDenemeTests/Pods-SegmentifyDenemeTests.release.xcconfig"; sourceTree = "<group>"; };
-		8C34AD6383BDA4EFE6DD8C0B /* Pods_SegmentifyDenemeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SegmentifyDenemeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CE7BF131AE6764CFA74D331 /* Pods-SegmentifyDeneme.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDeneme.release.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDeneme/Pods-SegmentifyDeneme.release.xcconfig"; sourceTree = "<group>"; };
-		AB4975E8839912076A04C888 /* Pods-SegmentifyDenemeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SegmentifyDenemeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SegmentifyDenemeUITests/Pods-SegmentifyDenemeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +97,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AB3E3818EF9C6ECF34E3770 /* Pods_SegmentifyDeneme.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +104,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F2D1B7886E8E5B3AA0A8056 /* Pods_SegmentifyDenemeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,23 +111,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05B27F3EB526CE26A15E67FF /* Pods_SegmentifyDenemeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		159B21A6CC8F825DD845232E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0F5684A885140CE5E541F011 /* Pods_SegmentifyDeneme.framework */,
-				8C34AD6383BDA4EFE6DD8C0B /* Pods_SegmentifyDenemeTests.framework */,
-				527DE52835D30D2497E60321 /* Pods_SegmentifyDenemeUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		57893DB31FFFAA7F00AA8D67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,8 +158,6 @@
 				57FFD4E11FD9A814008B1486 /* SegmentifyDenemeTests */,
 				57FFD4EC1FD9A814008B1486 /* SegmentifyDenemeUITests */,
 				57FFD4CB1FD9A814008B1486 /* Products */,
-				6A58D6748C328286EC884A23 /* Pods */,
-				159B21A6CC8F825DD845232E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,19 +214,6 @@
 			path = SegmentifyDenemeUITests;
 			sourceTree = "<group>";
 		};
-		6A58D6748C328286EC884A23 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				265AA8C0BE99AC4EC0E8E9B9 /* Pods-SegmentifyDeneme.debug.xcconfig */,
-				9CE7BF131AE6764CFA74D331 /* Pods-SegmentifyDeneme.release.xcconfig */,
-				2B5B110FEF9061F8B5404EF9 /* Pods-SegmentifyDenemeTests.debug.xcconfig */,
-				7DB2B4590B51F4ED3EDB4F7E /* Pods-SegmentifyDenemeTests.release.xcconfig */,
-				AB4975E8839912076A04C888 /* Pods-SegmentifyDenemeUITests.debug.xcconfig */,
-				67A0443BD11F0B79C9F095B9 /* Pods-SegmentifyDenemeUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,12 +221,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57FFD4F21FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDeneme" */;
 			buildPhases = (
-				58AFDFD211660D808E9176F7 /* [CP] Check Pods Manifest.lock */,
 				57FFD4C61FD9A814008B1486 /* Sources */,
 				57FFD4C71FD9A814008B1486 /* Frameworks */,
 				57FFD4C81FD9A814008B1486 /* Resources */,
-				98211F63DEEE6B1FF0B80642 /* [CP] Embed Pods Frameworks */,
-				73A078BBC0BA9610F768A08C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,12 +238,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57FFD4F51FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeTests" */;
 			buildPhases = (
-				2C34C899C7E92BFCCEAF237C /* [CP] Check Pods Manifest.lock */,
 				57FFD4DA1FD9A814008B1486 /* Sources */,
 				57FFD4DB1FD9A814008B1486 /* Frameworks */,
 				57FFD4DC1FD9A814008B1486 /* Resources */,
-				A25C27845E164E4497BD56C2 /* [CP] Embed Pods Frameworks */,
-				03450BE15D72B08A6C385362 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -302,12 +256,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57FFD4F81FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeUITests" */;
 			buildPhases = (
-				7F149E9E0BE7F5A352993834 /* [CP] Check Pods Manifest.lock */,
 				57FFD4E51FD9A814008B1486 /* Sources */,
 				57FFD4E61FD9A814008B1486 /* Frameworks */,
 				57FFD4E71FD9A814008B1486 /* Resources */,
-				C78371A57C69F04C0614F6D7 /* [CP] Embed Pods Frameworks */,
-				7D174E43E9C820B444E73F89 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -391,156 +342,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		03450BE15D72B08A6C385362 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDenemeTests/Pods-SegmentifyDenemeTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2C34C899C7E92BFCCEAF237C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SegmentifyDenemeTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		58AFDFD211660D808E9176F7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SegmentifyDeneme-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		73A078BBC0BA9610F768A08C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDeneme/Pods-SegmentifyDeneme-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7D174E43E9C820B444E73F89 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDenemeUITests/Pods-SegmentifyDenemeUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7F149E9E0BE7F5A352993834 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SegmentifyDenemeUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		98211F63DEEE6B1FF0B80642 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDeneme/Pods-SegmentifyDeneme-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDeneme/Pods-SegmentifyDeneme-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A25C27845E164E4497BD56C2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDenemeTests/Pods-SegmentifyDenemeTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C78371A57C69F04C0614F6D7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SegmentifyDenemeUITests/Pods-SegmentifyDenemeUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		57FFD4C61FD9A814008B1486 /* Sources */ = {
@@ -733,7 +534,6 @@
 		};
 		57FFD4F31FD9A814008B1486 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 265AA8C0BE99AC4EC0E8E9B9 /* Pods-SegmentifyDeneme.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -750,7 +550,6 @@
 		};
 		57FFD4F41FD9A814008B1486 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9CE7BF131AE6764CFA74D331 /* Pods-SegmentifyDeneme.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -767,7 +566,6 @@
 		};
 		57FFD4F61FD9A814008B1486 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B5B110FEF9061F8B5404EF9 /* Pods-SegmentifyDenemeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -785,7 +583,6 @@
 		};
 		57FFD4F71FD9A814008B1486 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DB2B4590B51F4ED3EDB4F7E /* Pods-SegmentifyDenemeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -803,7 +600,6 @@
 		};
 		57FFD4F91FD9A814008B1486 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB4975E8839912076A04C888 /* Pods-SegmentifyDenemeUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -820,7 +616,6 @@
 		};
 		57FFD4FA1FD9A814008B1486 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67A0443BD11F0B79C9F095B9 /* Pods-SegmentifyDenemeUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
