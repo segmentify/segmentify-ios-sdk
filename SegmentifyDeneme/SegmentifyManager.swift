@@ -116,16 +116,7 @@ class SegmentifyManager {
             fatalError("Error - you must fill dataCenterUrl before accessing SegmentifyManager.shared")
         }
         eventRequest.dataCenterUrl = dataCenterUrl!
-        
-        
-        
-        //UserDefaults.standard.set(appKey, forKey: "appKey_seg")
-        //UserDefaults.standard.set(dataCenterUrl, forKey: "dataCenterUrl_Seg")
-        //UserDefaults.standard.set(subDomain, forKey: "subDomain_Seg")
 
-        //eventRequest.appKey = appKey
-        //eventRequest.subdomain = subDomain
-        //eventRequest.dataCenterUrl = dataCenterUrl
         eventRequest.sdkVersion = SegmentifyManager.sdkVersion
         eventRequest.token = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.tokenKey) as? String
         
@@ -737,7 +728,6 @@ class SegmentifyManager {
         if let categories = segmentifyObject.categories {
             eventRequest.categories = categories
         }
-        //setIDAndSendEvent()
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -748,7 +738,6 @@ class SegmentifyManager {
         if let params = segmentifyObject.params {
             eventRequest.params = params
         }
-        //setIDAndSendEvent()
         setIDAndSendEventWithCallback(callback: callback)
     }
    
@@ -777,13 +766,6 @@ class SegmentifyManager {
          if let birthdate = birthdate {
              eventRequest.birthdate = birthdate
          }
-        
-         /*if let isRegistered = isRegistered {
-             eventRequest.isRegistered = isRegistered
-         }
-         if let isLogin = isLogin {
-             eventRequest.isLogin = isLogin
-         }*/
          setIDAndSendEvent()
      }
      
@@ -874,7 +856,8 @@ class SegmentifyManager {
         if let products = products {
             eventRequest.products = products
         }
-       setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
+        
     }
     
     //Checkout Payment Event
@@ -894,7 +877,7 @@ class SegmentifyManager {
         if let products = products {
             eventRequest.products = products
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Customer Information Event
@@ -914,7 +897,7 @@ class SegmentifyManager {
         if let products = products {
             eventRequest.products = products
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout View Basket Event
@@ -935,7 +918,7 @@ class SegmentifyManager {
         if let products = products {
             eventRequest.products = products
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Add or Remove Basket Event
@@ -971,7 +954,7 @@ class SegmentifyManager {
         if let stock = stock {
             eventRequest.stock = stock
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
 
     //Page View Event
@@ -984,7 +967,7 @@ class SegmentifyManager {
         if let pageUrl = pageUrl {
             eventRequest.pageUrl = pageUrl
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
 
     func setCustomEvent(params : AnyObject?, type : String, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
@@ -993,7 +976,7 @@ class SegmentifyManager {
         if let params = params {
             eventRequest.params = params as? [String : AnyObject]
         }
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     func setImpressionEvent(instanceId : String, interactionId : String) {
@@ -1081,10 +1064,6 @@ class SegmentifyManager {
                                 self.eventRequest.sessionID = jsonArray[1] as? String
                                 UserDefaults.standard.set(self.eventRequest.userID, forKey: "SEGMENTIFY_USER_ID")
                             } else {
-                                /*if UserDefaults.standard.object(forKey: "LAST_GENERATED_USER_ID") != nil {
-
-                                    self.eventRequest.userID = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
-                                }*/
                                 self.eventRequest.sessionID = jsonArray[0] as? String
                             }
                         }
