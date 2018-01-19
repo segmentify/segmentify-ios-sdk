@@ -21,6 +21,7 @@
 		57D547C72011EC2A004FC06C /* PurchaseSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C62011EC2A004FC06C /* PurchaseSuccessViewController.swift */; };
 		57D547CB201209B6004FC06C /* NotFoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547CA201209B6004FC06C /* NotFoundViewController.swift */; };
 		57D547CD20120D9C004FC06C /* CustomEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547CC20120D9C004FC06C /* CustomEventViewController.swift */; };
+		57D547CF201284DE004FC06C /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547CE201284DE004FC06C /* ConfigModel.swift */; };
 		57E926DA1FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */; };
 		57FFD4CE1FD9A814008B1486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */; };
 		57FFD4D01FD9A814008B1486 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CF1FD9A814008B1486 /* SearchViewController.swift */; };
@@ -70,6 +71,7 @@
 		57D547C62011EC2A004FC06C /* PurchaseSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSuccessViewController.swift; sourceTree = "<group>"; };
 		57D547CA201209B6004FC06C /* NotFoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundViewController.swift; sourceTree = "<group>"; };
 		57D547CC20120D9C004FC06C /* CustomEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventViewController.swift; sourceTree = "<group>"; };
+		57D547CE201284DE004FC06C /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyUrlSessionDelegate.swift; sourceTree = "<group>"; };
 		57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyDeneme.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				573DE8702002B5C600DE57DA /* DynamicItemsModel.swift */,
 				573DE8722003A1B600DE57DA /* RecommendationModel.swift */,
 				573DE8742003A23A00DE57DA /* ProductModel.swift */,
+				57D547CE201284DE004FC06C /* ConfigModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				57D547C72011EC2A004FC06C /* PurchaseSuccessViewController.swift in Sources */,
 				573DE8752003A23A00DE57DA /* ProductModel.swift in Sources */,
 				57FFD5061FDA0589008B1486 /* SegmentifyConnectionManager.swift in Sources */,
+				57D547CF201284DE004FC06C /* ConfigModel.swift in Sources */,
 				573DE8732003A1B600DE57DA /* RecommendationModel.swift in Sources */,
 				57FFD5001FD9AC4C008B1486 /* SegmentifyRegisterRequest.swift in Sources */,
 				575BF4CF1FEBA436007B4354 /* Constant.swift in Sources */,

@@ -74,10 +74,10 @@ class PurchaseSuccessViewController: UIViewController {
         let obj = SegmentifyObject()
         obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        })
+        })*/
     }
     
     func setProductInfos(products : [ProductModel]) {
@@ -127,7 +127,7 @@ extension PurchaseSuccessViewController : UITableViewDelegate, UITableViewDataSo
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
             
-            SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
+            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {

@@ -73,13 +73,21 @@ class SegmentifyManager {
     private var products : [ProductModel] = []
     private static var segmentifySharedInstance: SegmentifyManager?
     private var eventRequest = SegmentifyRegisterRequest()
-    //let recModel = RecommendationModel()
-    
-    class func sharedManager(appKey: String, dataCenterUrl: String, subDomain: String) -> SegmentifyManager {
+    private static let setup = ConfigModel()
+
+    //class func sharedManager(appKey: String, dataCenterUrl: String, subDomain: String) -> SegmentifyManager {
+    class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
-            segmentifySharedInstance = SegmentifyManager.init(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
+            //segmentifySharedInstance = SegmentifyManager.init(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
+            segmentifySharedInstance = SegmentifyManager.init()
         }
         return segmentifySharedInstance!
+    }
+    
+    class func config(appkey: String, dataCenterUrl: String, subDomain: String){
+        SegmentifyManager.setup.appKey = appkey
+        SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
+        SegmentifyManager.setup.subDomain = subDomain
     }
     
     var debugMode = false {
@@ -88,16 +96,36 @@ class SegmentifyManager {
         }
     }
     
-    init(appKey: String, dataCenterUrl: String, subDomain: String) {
-        
+    //init(appKey: String, dataCenterUrl: String, subDomain: String) {
+    init() {
         self.eventRequest = SegmentifyRegisterRequest()
-        UserDefaults.standard.set(appKey, forKey: "appKey_seg")
-        UserDefaults.standard.set(dataCenterUrl, forKey: "dataCenterUrl_Seg")
-        UserDefaults.standard.set(subDomain, forKey: "subDomain_Seg")
+        let appkey = SegmentifyManager.setup.appKey
+        guard appkey != nil else {
+            fatalError("Error - you must fill appKey before accessing SegmentifyManager.shared")
+        }
+        eventRequest.appKey = appkey
+        
+        let subDomain = SegmentifyManager.setup.subDomain
+        guard subDomain != nil else {
+            fatalError("Error - you must fill subdomain before accessing SegmentifyManager.shared")
+        }
+        eventRequest.subdomain = subDomain!
+        
+        let dataCenterUrl = SegmentifyManager.setup.dataCenterUrl
+        guard dataCenterUrl != nil else {
+            fatalError("Error - you must fill dataCenterUrl before accessing SegmentifyManager.shared")
+        }
+        eventRequest.dataCenterUrl = dataCenterUrl!
+        
+        
+        
+        //UserDefaults.standard.set(appKey, forKey: "appKey_seg")
+        //UserDefaults.standard.set(dataCenterUrl, forKey: "dataCenterUrl_Seg")
+        //UserDefaults.standard.set(subDomain, forKey: "subDomain_Seg")
 
-        eventRequest.appKey = appKey
-        eventRequest.subdomain = subDomain
-        eventRequest.dataCenterUrl = dataCenterUrl
+        //eventRequest.appKey = appKey
+        //eventRequest.subdomain = subDomain
+        //eventRequest.dataCenterUrl = dataCenterUrl
         eventRequest.sdkVersion = SegmentifyManager.sdkVersion
         eventRequest.token = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.tokenKey) as? String
         
@@ -110,6 +138,34 @@ class SegmentifyManager {
             eventRequest.extra = (lastRequest?.extra)!
         }
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: .UIApplicationDidBecomeActive,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeDeactive),
+                                               name: .UIApplicationDidEnterBackground,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .UIApplicationDidBecomeActive,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .UIApplicationDidEnterBackground,
+                                                  object: nil)
+    }
+    
+    @objc private func applicationDidBecomeActive() {
+        self.getUserIdAndSessionIdRequest( success: { () -> Void in
+            
+        })
+    }
+    
+    @objc private func applicationDidBecomeDeactive() {
+        self.eventRequest.sessionID = nil
     }
 
     // MARK: Request Builders
@@ -121,11 +177,19 @@ class SegmentifyManager {
     }
     
     func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-        self.getUserIdAndSessionIdRequest( success: { () -> Void in
+        // TODO : burada eger id varsa direk gonderebilir
+        if self.eventRequest.sessionID == nil {
+            self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                self.sendEvent(callback: { (response: [RecommendationModel]) in
+                    callback(response)
+                })
+            })
+        } else {
             self.sendEvent(callback: { (response: [RecommendationModel]) in
                 callback(response)
             })
-        })
+        }
+        
     }
     
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
@@ -983,7 +1047,7 @@ class SegmentifyManager {
     func removeUserParameters() {
         eventRequest.extra.removeAll()
     }
-    //TODO user id session id gelene kadar çağıran method yaz
+    
     //private func
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {

@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/ViewControllers/CategoryViewController.swift"
-            timestampString = "538060217.971284"
+            timestampString = "538085417.36234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/ViewControllers/NotFoundViewController.swift"
-            timestampString = "538055842.411642"
+            timestampString = "538085417.363345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/ViewControllers/NotFoundViewController.swift"
-            timestampString = "538055842.411693"
+            timestampString = "538085417.3636661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "106"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/ViewControllers/NotFoundViewController.swift"
-            timestampString = "538055842.4117399"
+            timestampString = "538085417.364012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
@@ -86,48 +86,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "538060217.97141"
+            timestampString = "538085417.365543"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "591"
-            endingLineNumber = "591"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
             landmarkName = "setViewBasketEvent(segmentifyObject:callback:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "538060217.971875"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
-            landmarkName = "setPageViewEvent(segmentifyObject:callback:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "538060217.972163"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "689"
-            endingLineNumber = "689"
-            landmarkName = "setPageViewEvent(segmentifyObject:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "538060217.972427"
+            timestampString = "538085417.36742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "607"
-            endingLineNumber = "607"
-            landmarkName = "setViewBasketEvent(segmentifyObject:callback:)"
+            startingLineNumber = "737"
+            endingLineNumber = "737"
+            landmarkName = "setPageViewEvent(segmentifyObject:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +122,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SegmentifyDeneme/SegmentifyManager.swift"
-            timestampString = "538060217.972695"
+            timestampString = "538085417.368212"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "606"
-            endingLineNumber = "606"
-            landmarkName = "setViewBasketEvent(segmentifyObject:callback:)"
+            startingLineNumber = "753"
+            endingLineNumber = "753"
+            landmarkName = "setCustomEvent(segmentifyObject:callback:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SegmentifyDeneme/SegmentifyManager.swift"
+            timestampString = "538085417.369084"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "671"
+            endingLineNumber = "671"
+            landmarkName = "setAddOrRemoveBasketStepEvent(segmentifyObject:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SegmentifyDeneme/SegmentifyManager.swift"
+            timestampString = "538085417.369864"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "670"
+            endingLineNumber = "670"
+            landmarkName = "setAddOrRemoveBasketStepEvent(segmentifyObject:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

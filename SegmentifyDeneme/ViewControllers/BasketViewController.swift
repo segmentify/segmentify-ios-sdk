@@ -83,10 +83,10 @@ class BasketViewController: UIViewController {
         obj.products = productsArray
         obj.totalPrice = 100.20
         
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        })
+        })*/
     }
     
     func sendPageViewEvent() {
@@ -94,10 +94,10 @@ class BasketViewController: UIViewController {
         let obj = SegmentifyObject()
         obj.category = "Basket Page"
         //obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        })
+        })*/
     }
     
     func setProductInfos(products : [ProductModel]) {
@@ -148,7 +148,7 @@ extension BasketViewController : UITableViewDelegate, UITableViewDataSource {
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
             
-            SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
+            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {

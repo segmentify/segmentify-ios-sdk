@@ -56,10 +56,10 @@ class CustomEventViewController : UIViewController {
         
         obj.type = "deneme"
         obj.params = productDict as [String : AnyObject]
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setCustomEvent(segmentifyObject: obj, callback: {(response: [RecommendationModel]) in
-            self.recommendations = response
-            self.createProducts(recommendations: self.recommendations)
-        })
+        //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setCustomEvent(segmentifyObject: obj, callback: {(response: [RecommendationModel]) in
+            //self.recommendations = response
+            //self.createProducts(recommendations: self.recommendations)
+        //})
     }
     
     override func didReceiveMemoryWarning() {
@@ -114,7 +114,7 @@ extension CustomEventViewController : UITableViewDelegate, UITableViewDataSource
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
             
-            SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
+            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {
