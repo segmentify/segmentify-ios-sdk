@@ -17,9 +17,16 @@
 		576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576C51D5200F8C470027691F /* CustomTableViewCell.swift */; };
 		57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */; };
 		57AD772020078A61009384E8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AD771F20078A61009384E8 /* Array.swift */; };
+		57D547BA2011E14E004FC06C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547B92011E14E004FC06C /* HomeViewController.swift */; };
+		57D547C12011E534004FC06C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C02011E534004FC06C /* HomePageViewController.swift */; };
+		57D547C32011E5E3004FC06C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C22011E5E3004FC06C /* CategoryViewController.swift */; };
+		57D547C52011E888004FC06C /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C42011E888004FC06C /* BasketViewController.swift */; };
+		57D547C72011EC2A004FC06C /* PurchaseSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C62011EC2A004FC06C /* PurchaseSuccessViewController.swift */; };
+		57D547CB201209B6004FC06C /* NotFoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547CA201209B6004FC06C /* NotFoundViewController.swift */; };
+		57D547CD20120D9C004FC06C /* CustomEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547CC20120D9C004FC06C /* CustomEventViewController.swift */; };
 		57E926DA1FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */; };
 		57FFD4CE1FD9A814008B1486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */; };
-		57FFD4D01FD9A814008B1486 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CF1FD9A814008B1486 /* ViewController.swift */; };
+		57FFD4D01FD9A814008B1486 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4CF1FD9A814008B1486 /* SearchViewController.swift */; };
 		57FFD4D31FD9A814008B1486 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D11FD9A814008B1486 /* Main.storyboard */; };
 		57FFD4D51FD9A814008B1486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D41FD9A814008B1486 /* Assets.xcassets */; };
 		57FFD4D81FD9A814008B1486 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D61FD9A814008B1486 /* LaunchScreen.storyboard */; };
@@ -63,10 +70,17 @@
 		576C51D5200F8C470027691F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyObject.swift; sourceTree = "<group>"; };
 		57AD771F20078A61009384E8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		57D547B92011E14E004FC06C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		57D547C02011E534004FC06C /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
+		57D547C22011E5E3004FC06C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		57D547C42011E888004FC06C /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
+		57D547C62011EC2A004FC06C /* PurchaseSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSuccessViewController.swift; sourceTree = "<group>"; };
+		57D547CA201209B6004FC06C /* NotFoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundViewController.swift; sourceTree = "<group>"; };
+		57D547CC20120D9C004FC06C /* CustomEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventViewController.swift; sourceTree = "<group>"; };
 		57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyUrlSessionDelegate.swift; sourceTree = "<group>"; };
 		57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyDeneme.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		57FFD4CF1FD9A814008B1486 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		57FFD4CF1FD9A814008B1486 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		57FFD4D21FD9A814008B1486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		57FFD4D41FD9A814008B1486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57FFD4D71FD9A814008B1486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -146,6 +160,21 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		57D547BD2011E2E2004FC06C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				57D547B92011E14E004FC06C /* HomeViewController.swift */,
+				57FFD4CF1FD9A814008B1486 /* SearchViewController.swift */,
+				57D547C02011E534004FC06C /* HomePageViewController.swift */,
+				57D547C22011E5E3004FC06C /* CategoryViewController.swift */,
+				57D547C42011E888004FC06C /* BasketViewController.swift */,
+				57D547C62011EC2A004FC06C /* PurchaseSuccessViewController.swift */,
+				57D547CA201209B6004FC06C /* NotFoundViewController.swift */,
+				57D547CC20120D9C004FC06C /* CustomEventViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		57FFD4C11FD9A814008B1486 = {
 			isa = PBXGroup;
 			children = (
@@ -172,10 +201,10 @@
 		57FFD4CC1FD9A814008B1486 /* SegmentifyDeneme */ = {
 			isa = PBXGroup;
 			children = (
+				57D547BD2011E2E2004FC06C /* ViewControllers */,
 				57AD771E20078A51009384E8 /* Extensions */,
 				57893DB31FFFAA7F00AA8D67 /* Model */,
 				57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */,
-				57FFD4CF1FD9A814008B1486 /* ViewController.swift */,
 				57FFD4D11FD9A814008B1486 /* Main.storyboard */,
 				57FFD4D41FD9A814008B1486 /* Assets.xcassets */,
 				57FFD4D61FD9A814008B1486 /* LaunchScreen.storyboard */,
@@ -521,19 +550,26 @@
 				57E926DA1FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift in Sources */,
 				57FFD5041FD9ACCF008B1486 /* SegmentifyTools.swift in Sources */,
 				57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */,
+				57D547C32011E5E3004FC06C /* CategoryViewController.swift in Sources */,
+				57D547BA2011E14E004FC06C /* HomeViewController.swift in Sources */,
 				57FFD5021FD9AC96008B1486 /* SegmentifyRequestProtocol.swift in Sources */,
 				576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */,
-				57FFD4D01FD9A814008B1486 /* ViewController.swift in Sources */,
+				57D547CD20120D9C004FC06C /* CustomEventViewController.swift in Sources */,
+				57D547CB201209B6004FC06C /* NotFoundViewController.swift in Sources */,
+				57FFD4D01FD9A814008B1486 /* SearchViewController.swift in Sources */,
 				57FFD4FC1FD9A854008B1486 /* SegmentifyManager.swift in Sources */,
 				57AD772020078A61009384E8 /* Array.swift in Sources */,
+				57D547C52011E888004FC06C /* BasketViewController.swift in Sources */,
 				57FFD4CE1FD9A814008B1486 /* AppDelegate.swift in Sources */,
 				573DE8712002B5C600DE57DA /* DynamicItemsModel.swift in Sources */,
 				57FFD4FE1FD9ABC1008B1486 /* SegmentifyAnalyticWrapper.swift in Sources */,
+				57D547C72011EC2A004FC06C /* PurchaseSuccessViewController.swift in Sources */,
 				573DE8752003A23A00DE57DA /* ProductModel.swift in Sources */,
 				57FFD5061FDA0589008B1486 /* SegmentifyConnectionManager.swift in Sources */,
 				573DE8732003A1B600DE57DA /* RecommendationModel.swift in Sources */,
 				57FFD5001FD9AC4C008B1486 /* SegmentifyRegisterRequest.swift in Sources */,
 				575BF4CF1FEBA436007B4354 /* Constant.swift in Sources */,
+				57D547C12011E534004FC06C /* HomePageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

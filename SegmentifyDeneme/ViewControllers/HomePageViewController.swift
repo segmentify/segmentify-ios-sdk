@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  HomePageViewController.swift
 //  SegmentifyDeneme
 //
-//  Created by Ata Anıl Turgay on 7.12.2017.
-//  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
+//  Created by Ata Anıl Turgay on 19.01.2018.
+//  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomePageViewController : UIViewController {
     
     var images : [String] = []
     var names : [String] = []
@@ -22,8 +22,8 @@ class ViewController: UIViewController {
     var appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
     var subDomain = "segmentify-shop.myshopify.com"
     var dataCenterUrl = "https://dce1.segmentify.com"
-
-
+    
+    
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,8 @@ class ViewController: UIViewController {
         //SegmentifyAnalyticWrapper.shared.sendPageViewEvent()
         //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
         /*SegmentifyTools.delay(delay: 3) {
-            SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
-        }*/
+         SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
+         }*/
         //SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
         //SegmentifyAnalyticWrapper.shared.sendLogoutEvent()
         //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
@@ -48,21 +48,21 @@ class ViewController: UIViewController {
     }
     
     func sendPageViewEvent() {
-
+        
         let obj = SegmentifyObject()
-        obj.category = "Search Page"
+        obj.category = "Home Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         })
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func setProductInfos(products : [ProductModel]) {
         for product in products {
             self.productIds.append(product.productId!)
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         }
         self.tableview.reloadData()
     }
-
+    
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
             print("rec obj : \(String(describing: recObj.notificationTitle))")
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
+extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
@@ -101,7 +101,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell") as! CustomTableViewCell
         cell.nameLabel.text = self.titles[indexPath.row]
         cell.priceLabel.text = String(self.prices[indexPath.row])
@@ -109,10 +109,10 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
-    
+            
             SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
-
+        
         if let imageURL = URL(string:  self.images[indexPath.row]) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
@@ -127,4 +127,5 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
 

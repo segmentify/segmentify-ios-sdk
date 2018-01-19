@@ -45,8 +45,8 @@ class SegmentifyManager {
     
     static let startIndex = 0
     
-    private var instanceId:String?
-    private var interactionId:String?
+    private var instanceId = String()
+    private var interactionId = String()
     private var params : Dictionary<AnyHashable, Any>?
     private var paramsArr : [[AnyHashable:Any]]?
     private var validStaticItem : Bool = false
@@ -124,7 +124,6 @@ class SegmentifyManager {
     func setIDAndSendEvent() {
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
             self.sendEvent(callback: { (response: [RecommendationModel]) in
-                //self.testFunc()
             })
         })
     }
@@ -145,7 +144,6 @@ class SegmentifyManager {
                 return
             }
             
-            //for (index,obj) in responses.enumerated() {
             for (index, obj) in responses[0].enumerated() {
                 self.minusIndex = Int()
                 guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
@@ -189,18 +187,24 @@ class SegmentifyManager {
                     self.validStaticItem = true
                 }
                 
+                DispatchQueue.main.async {
+                    
+                    var instance = String()
+                    var interaction = String()
+                    
                     self.eventRequest = SegmentifyRegisterRequest()
-                
                     self.instanceId = String()
                     if let instanceId = self.params!["instanceId"] as? String {
                         self.instanceId = instanceId
+                        instance = instanceId
                     }
                     self.interactionId = String()
                     if let interactionId = self.params!["actionId"] as? String {
                         self.interactionId = interactionId
+                        interaction = interactionId
                     }
                     
-                    if self.instanceId != nil && self.interactionId != nil {
+                    if instance != nil && interaction != nil {
                         if UserDefaults.standard.object(forKey: "appKey_seg") != nil {
                             self.eventRequest.appKey = UserDefaults.standard.object(forKey: "appKey_seg") as? String
                         }
@@ -210,15 +214,17 @@ class SegmentifyManager {
                         if UserDefaults.standard.object(forKey: "subDomain_Seg") != nil {
                             self.eventRequest.subdomain = UserDefaults.standard.object(forKey: "subDomain_Seg") as! String
                         }
-                        
-                        //self.eventRequest.appKey = UserDefaults.standard.object(forKey: "appKey_seg") as? String
-                        //self.eventRequest.dataCenterUrl = UserDefaults.standard.object(forKey: "dataCenterUrl_Seg") as! String
-                        //self.eventRequest.subdomain = UserDefaults.standard.object(forKey: "subDomain_Seg") as! String
                         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                             self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
                         }
-                        self.setImpressionEvent(instanceId: self.instanceId!, interactionId: self.interactionId!)
+                        self.setImpressionEvent(instanceId: instance, interactionId: interaction)
+                        
+                        
                     }
+                    
+                }
+                
+                
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -246,6 +252,7 @@ class SegmentifyManager {
             }
       
 
+            
             
             callback(self.recommendations)
             
@@ -936,9 +943,7 @@ class SegmentifyManager {
         }
         setIDAndSendEvent()
     }
-    
-    //TODO custom event
-    
+
     func setCustomEvent(params : AnyObject?, type : String) {
         eventRequest.eventName = SegmentifyManager.customEventName
         eventRequest.type = type
@@ -947,10 +952,6 @@ class SegmentifyManager {
         }
         setIDAndSendEvent()
     }
-    
-    /*func setInteractionEvent() {
-        eventRequest.eventName = SegmentifyManager.interactionEventName
-    }*/
     
     func setImpressionEvent(instanceId : String, interactionId : String) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
