@@ -82,16 +82,11 @@ class BasketViewController: UIViewController {
         let obj = SegmentifyObject()
         obj.products = productsArray
         obj.totalPrice = 100.20
-
-        
         
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
-            //print("rec model : \(String(describing: (response[0].notificationTitle)!))")
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         })
-        
-        
     }
     
     func sendPageViewEvent() {

@@ -59,7 +59,6 @@ class SegmentifyManager {
     private var recommendationArray = [AnyHashable : Any]()
     private var recommendations :[RecommendationModel] = []
     private var staticItemsRecommendationarray : [ProductModel] = []
-    //private var testStaticItems : [ProductModel] = []
     private var currentKey : String?
     private var staticItemsArrayCount : Int = Int()
     private var currentNewArray : [RecommendationModel]?
@@ -91,6 +90,7 @@ class SegmentifyManager {
     
     init(appKey: String, dataCenterUrl: String, subDomain: String) {
         
+        self.eventRequest = SegmentifyRegisterRequest()
         UserDefaults.standard.set(appKey, forKey: "appKey_seg")
         UserDefaults.standard.set(dataCenterUrl, forKey: "dataCenterUrl_Seg")
         UserDefaults.standard.set(subDomain, forKey: "subDomain_Seg")
@@ -101,22 +101,14 @@ class SegmentifyManager {
         eventRequest.sdkVersion = SegmentifyManager.sdkVersion
         eventRequest.token = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.tokenKey) as? String
         
-        /*if UserDefaults.standard.object(forKey: Constant.IS_USER_SENT_USER_ID) != nil {
-            UserDefaults.standard.removeObject(forKey:  Constant.IS_USER_SENT_USER_ID)
-        }*/
-        
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
         }
-        /*if UserDefaults.standard.object(forKey: Constant.IS_USER_LOGIN) != nil {
-            eventRequest.oldUserId = UserDefaults.standard.object(forKey: "LAST_GENERATED_FROM_SEGMENTIFY_USER_ID") as? String
-        }*/
-        
+
         if let lastRegister = SegmentifyTools.retrieveUserDefaults(userKey: SegmentifyManager.registerKey) {
             let lastRequest = SegmentifyRegisterRequest.init(withJsonString: lastRegister as! String)
             eventRequest.extra = (lastRequest?.extra)!
         }
-        
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
     }
 
@@ -138,7 +130,7 @@ class SegmentifyManager {
     
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
-
+            
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
                 print("error : \(response["statusCode"]! as Any)")
                 return
@@ -192,7 +184,7 @@ class SegmentifyManager {
                     var instance = String()
                     var interaction = String()
                     
-                    self.eventRequest = SegmentifyRegisterRequest()
+                    
                     self.instanceId = String()
                     if let instanceId = self.params!["instanceId"] as? String {
                         self.instanceId = instanceId
@@ -218,13 +210,8 @@ class SegmentifyManager {
                             self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
                         }
                         self.setImpressionEvent(instanceId: instance, interactionId: interaction)
-                        
-                        
                     }
-                    
                 }
-                
-                
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -245,15 +232,9 @@ class SegmentifyManager {
                     self.keys.append(key)
                     self.dynamicItemsArray.append(dynObj)
                 }
-                
                 self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
-                
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)
             }
-      
-
-            
-            
             callback(self.recommendations)
             
         }, failure: {(error: Error) in
@@ -390,7 +371,6 @@ class SegmentifyManager {
                 self.currentRecModel.products = self.products
             }
         }
-        
         self.currentRecModel.notificationTitle = title
     }
     
@@ -545,7 +525,6 @@ class SegmentifyManager {
         if let lang = segmentifyObject.lang {
             eventRequest.lang = lang
         }
-
         setIDAndSendEvent()
     }
     
@@ -1051,7 +1030,6 @@ class SegmentifyManager {
                     }
                 }
             }
-            
             }
             task.resume()
     }
@@ -1066,14 +1044,6 @@ class SegmentifyManager {
             }
         }
         return nil
-    }
-    
-    func loadArray(recommendations : [[RecommendationModel]]) {
-        for recs in recommendations {
-            for recObj in recs {
-                
-            }
-        }
     }
 }
 
