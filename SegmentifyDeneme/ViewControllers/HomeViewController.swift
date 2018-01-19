@@ -11,6 +11,8 @@ import UIKit
 class HomeViewController: UIViewController {
 
     @IBAction func customEventButton(_ sender: Any) {
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CustomEventViewController") as? CustomEventViewController
+        self.navigationController?.pushViewController(viewController!, animated: true)
     }
     @IBAction func notFoundButton(_ sender: Any) {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "NotFoundViewController") as? NotFoundViewController

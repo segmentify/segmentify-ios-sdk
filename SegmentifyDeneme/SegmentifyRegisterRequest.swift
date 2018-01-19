@@ -77,7 +77,7 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var location:String?
     var segments:[String]?
     var type:String?
-    var params:AnyObject?
+    var params:[String:AnyObject]?
     var instanceId:String?
     var interactionId:String?
     
@@ -305,6 +305,10 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         if let type = self.type {
             dictionary["type"] = type
+        }
+        
+        if let params = self.params {
+            dictionary["params"] = params
         }
         
         dictionary["extra"] = extra as Any?

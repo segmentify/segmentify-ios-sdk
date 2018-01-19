@@ -117,7 +117,7 @@ final class SegmentifyAnalyticWrapper {
      
     }*/
     
-    func sendPurchaseEvent() {
+    /*func sendPurchaseEvent() {
         var productsArray = [Any]()
         let productsDict = ["price":"78","productId":"25799809929","quantity":"1"]
         productsArray.append(productsDict)
@@ -126,7 +126,7 @@ final class SegmentifyAnalyticWrapper {
         obj.products = productsArray
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPurchaseEvent(segmentifyObject: obj)
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPurchaseEvent(totalPrice: 100, currency: nil, basketID: nil, orderNo: "BEY-20171227-1149208", products: productsArray)
-    }
+    }*/
     
     func sendPaymentSuccessEvent() {
         var productsArray = [Any]()
@@ -136,11 +136,11 @@ final class SegmentifyAnalyticWrapper {
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPurchaseEvent(totalPrice: 78, currency: nil, basketID: nil, orderNo: nil, products: productsArray)
     }
     
-    func sendCustomevent() {
+    /*func sendCustomevent() {
         let obj = SegmentifyObject()
         obj.type = "deneme"
-        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setCustomEvent(segmentifyObject: obj)
-    }
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setCustomEvent(segmentifyObject: obj, callback: <#T##([RecommendationModel]) -> Void#>)
+    }*/
 
 }
 

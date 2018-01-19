@@ -56,6 +56,6 @@ class SegmentifyObject {
     var location:String?
     var segments:[String]?
     var type:String?
-    var params:AnyObject?
+    var params:[String:AnyObject]?
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
 }

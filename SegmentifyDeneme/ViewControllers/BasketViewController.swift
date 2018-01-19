@@ -51,6 +51,7 @@ class BasketViewController: UIViewController {
         //SegmentifyAnalyticWrapper.shared.sendUserUpdateEvent()
         //SegmentifyAnalyticWrapper.shared.sendCustomevent()
         self.sendPageViewEvent()
+        self.sendViewBasketEvent()
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,10 +70,34 @@ class BasketViewController: UIViewController {
     }
     */
     
+    func sendViewBasketEvent() {
+
+        var productsArray = [Any]()
+        let firstProduct = ["price":"78","productId":"25799809929","quantity":"1"]
+        let secondProduct = ["price":"168","productId":"25799929929","quantity":"2"]
+        
+        productsArray.append(firstProduct)
+        productsArray.append(secondProduct)
+        
+        let obj = SegmentifyObject()
+        obj.products = productsArray
+        obj.totalPrice = 100.20
+
+        
+        
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+            //print("rec model : \(String(describing: (response[0].notificationTitle)!))")
+            self.recommendations = response
+            self.createProducts(recommendations: self.recommendations)
+        })
+        
+        
+    }
+    
     func sendPageViewEvent() {
         
         let obj = SegmentifyObject()
-        obj.category = "Search Page"
+        obj.category = "Basket Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -97,7 +122,7 @@ class BasketViewController: UIViewController {
         for recObj in recommendations {
             print("rec obj : \(String(describing: recObj.notificationTitle))")
             print("rec obj : \(String(describing: recObj.products))")
-            if recObj.notificationTitle == "Deneme" {
+            if recObj.notificationTitle == "People also bought" {
                 self.setProductInfos(products: recObj.products!)
             }
         }
