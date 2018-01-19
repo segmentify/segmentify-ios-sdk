@@ -13,5 +13,7 @@ class Constant : NSObject {
     static let IS_USER_ID_GENERATED = "IS_USER_ID_GENERATED"
     static let IS_USER_LOGIN = "IS_USER_LOGIN"
     static let IS_USER_SENT_USER_ID = "IS_USER_SENT_USER_ID"
-    
+    static let segmentifyAppKey : String = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
+    static let segmentifySubDomain : String = "segmentify-shop.myshopify.com"
+    static let segmentifyDataCenterUrl : String = "https://dce1.segmentify.com"
 }

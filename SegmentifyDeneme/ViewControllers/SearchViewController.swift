@@ -19,43 +19,23 @@ class SearchViewController : UIViewController {
     
     var recommendations : [RecommendationModel] = []
     
-    var appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
-    var subDomain = "segmentify-shop.myshopify.com"
-    var dataCenterUrl = "https://dce1.segmentify.com"
-
-
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        //SegmentifyAnalyticWrapper.shared.sendPageViewEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
-        /*SegmentifyTools.delay(delay: 3) {
-            SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
-        }*/
-        //SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLogoutEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
-        //SegmentifyAnalyticWrapper.shared.sendViewBasketEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPurchaseEvent()
-        //SegmentifyAnalyticWrapper.shared.sendRegisterEvent()
-        //SegmentifyAnalyticWrapper.shared.sendUserchangeEvent()
-        //SegmentifyAnalyticWrapper.shared.sendUserUpdateEvent()
-        //SegmentifyAnalyticWrapper.shared.sendCustomevent()
         self.sendPageViewEvent()
     }
     
     func sendPageViewEvent() {
 
+         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = SegmentifyObject()
         obj.category = "Search Page"
-        //obj.subCategory = "Womenswear"
-        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        })*/
+        }
+        //obj.subCategory = "Womenswear"
     }
 
     override func didReceiveMemoryWarning() {

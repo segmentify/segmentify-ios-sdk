@@ -28,28 +28,8 @@ class PurchaseSuccessViewController: UIViewController {
     
     var recommendations : [RecommendationModel] = []
     
-    var appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
-    var subDomain = "segmentify-shop.myshopify.com"
-    var dataCenterUrl = "https://dce1.segmentify.com"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //SegmentifyAnalyticWrapper.shared.sendPageViewEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
-        /*SegmentifyTools.delay(delay: 3) {
-         SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
-         }*/
-        //SegmentifyAnalyticWrapper.shared.sendUserChangeEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLogoutEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
-        //SegmentifyAnalyticWrapper.shared.sendViewBasketEvent()
-        //SegmentifyAnalyticWrapper.shared.sendLoginEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPaymentSuccessEvent()
-        //SegmentifyAnalyticWrapper.shared.sendPurchaseEvent()
-        //SegmentifyAnalyticWrapper.shared.sendRegisterEvent()
-        //SegmentifyAnalyticWrapper.shared.sendUserchangeEvent()
-        //SegmentifyAnalyticWrapper.shared.sendUserUpdateEvent()
-        //SegmentifyAnalyticWrapper.shared.sendCustomevent()
         self.sendPageViewEvent()
     }
     
@@ -71,13 +51,15 @@ class PurchaseSuccessViewController: UIViewController {
     
     func sendPageViewEvent() {
         
+         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = SegmentifyObject()
         obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
-        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        })*/
+        }
     }
     
     func setProductInfos(products : [ProductModel]) {
@@ -123,12 +105,6 @@ extension PurchaseSuccessViewController : UITableViewDelegate, UITableViewDataSo
         cell.nameLabel.text = self.titles[indexPath.row]
         cell.priceLabel.text = String(self.prices[indexPath.row])
         cell.oldPriceLabel.text=String(self.oldPrices[indexPath.row])
-        
-        cell.onButtonTapped = {
-            print(self.productIds[indexPath.row])
-            
-            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
-        }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {
             DispatchQueue.global().async {
