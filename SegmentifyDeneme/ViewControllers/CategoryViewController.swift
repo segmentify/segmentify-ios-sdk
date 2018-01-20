@@ -59,8 +59,6 @@ class CategoryViewController : UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            print("rec obj : \(String(describing: recObj.notificationTitle))")
-            print("rec obj : \(String(describing: recObj.products))")
             if recObj.notificationTitle == "Test" {
                 self.setProductInfos(products: recObj.products!)
             }

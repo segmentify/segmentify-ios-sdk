@@ -143,11 +143,4 @@ final class SegmentifyAnalyticWrapper {
 
 }
 
-extension SegmentifyAnalyticWrapper : SegmentifyManagerDelegate {
-    func segmentifyCallback(recommendation: RecommendationModel) {
-        print("rec obj : \(recommendation.products![0])")
-        
-    }
-}
-
 

@@ -97,8 +97,6 @@ class BasketViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            print("rec obj : \(String(describing: recObj.notificationTitle))")
-            print("rec obj : \(String(describing: recObj.products))")
             if recObj.notificationTitle == "People also bought" {
                 self.setProductInfos(products: recObj.products!)
             }

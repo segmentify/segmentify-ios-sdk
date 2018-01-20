@@ -8,12 +8,8 @@
 
 import Foundation
 
-protocol SegmentifyManagerDelegate {
-    func segmentifyCallback(recommendation : RecommendationModel)
-}
-
 class SegmentifyManager {
-    private var delegate : SegmentifyManagerDelegate?
+
     static let sdkVersion = "1.0"
     
     static let tokenKey = "SEGMENTIFY_TOKEN_KEY"
