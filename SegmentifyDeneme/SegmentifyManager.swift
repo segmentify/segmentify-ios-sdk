@@ -78,10 +78,12 @@ class SegmentifyManager {
         return segmentifySharedInstance!
     }
     
-    class func config(appkey: String, dataCenterUrl: String, subDomain: String){
+    class func config(appkey: String, dataCenterUrl: String, subDomain: String) {
         SegmentifyManager.setup.appKey = appkey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
+        
+        _ = sharedManager()
     }
     
     var debugMode = false {
@@ -143,12 +145,14 @@ class SegmentifyManager {
     }
     
     @objc private func applicationDidBecomeActive() {
+        print("applicationDidBecomeActive")
         self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            
+            print("received user id and session id")
         })
     }
     
     @objc private func applicationDidBecomeDeactive() {
+        print("applicationDidBecomeDeactive")
         self.eventRequest.sessionID = nil
     }
 
@@ -161,7 +165,6 @@ class SegmentifyManager {
     }
     
     func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-        // TODO : burada eger id varsa direk gonderebilir
         if self.eventRequest.sessionID == nil {
             self.getUserIdAndSessionIdRequest( success: { () -> Void in
                 self.sendEvent(callback: { (response: [RecommendationModel]) in
@@ -184,7 +187,7 @@ class SegmentifyManager {
                 return
             }
             
-            for (index, obj) in responses[0].enumerated() {
+            for (_, obj) in responses[0].enumerated() {
                 self.minusIndex = Int()
                 guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
                     return
@@ -197,7 +200,7 @@ class SegmentifyManager {
                     return
                 }
                 
-                guard let dynamicDic = self.convertStringToDictionary(text: dynamicItems) else {
+                guard let dynamicDic = SegmentifyTools.convertStringToDictionary(text: dynamicItems) else {
                     print("cannot converted string to json")
                     return
                 }
@@ -218,7 +221,7 @@ class SegmentifyManager {
                     return
                 }
                 
-                guard let staticItemsDic = self.convertStringToDictionary(text: staticItems) else {
+                guard let staticItemsDic = SegmentifyTools.convertStringToDictionary(text: staticItems) else {
                     print("cannot converted string to json")
                     return
                 }
@@ -326,7 +329,7 @@ class SegmentifyManager {
                     }
                 }
             }
-            var newRecModel = RecommendationModel()
+            let newRecModel = RecommendationModel()
             newRecModel.notificationTitle = notificationTitle
             newRecModel.products = newProdArray
             recommendations.append(newRecModel)
@@ -343,7 +346,7 @@ class SegmentifyManager {
             }
         }
         
-        for (index, obj) in products.enumerated() {
+        for (_, obj) in products.enumerated() {
 
             let proObj = ProductModel()
             if let brand = obj["brand"] {
@@ -1015,13 +1018,13 @@ class SegmentifyManager {
     //private func
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
-        var requestURL = NSURL()
+        var requestURL : URL!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
-            requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=1")!
+            requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=1")!
         } else {
-            requestURL = NSURL(string: "https://dce1.segmentify.com/get/key?count=2")!
+            requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=2")!
         }
-        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL as URL)
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest as URLRequest) {
             (data, response, error) -> Void in
@@ -1058,17 +1061,7 @@ class SegmentifyManager {
             task.resume()
     }
     
-    func convertStringToDictionary(text: String) -> [[String:AnyObject]]? {
-        if let data = text.data(using: String.Encoding.utf8) {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String:AnyObject]]
-                return json
-            } catch {
-                print("Something went wrong")
-            }
-        }
-        return nil
-    }
+    
 }
 
 

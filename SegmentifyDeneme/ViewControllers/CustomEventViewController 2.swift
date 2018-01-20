@@ -1,5 +1,5 @@
 //
-//  HomePageViewController.swift
+//  CustomEventViewController.swift
 //  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomePageViewController : UIViewController {
+class CustomEventViewController : UIViewController {
     
     var images : [String] = []
     var names : [String] = []
@@ -22,17 +22,23 @@ class HomePageViewController : UIViewController {
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sendPageViewEvent()
+        self.sendCustomEvent()
     }
     
-    func sendPageViewEvent() {
+    func sendCustomEvent() {
+        
+        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = SegmentifyObject()
-        obj.category = "Home Page"
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        let productDict = ["PRICE":"200-500"]
+        
+        obj.type = "deneme"
+        obj.params = productDict as [String : AnyObject]
+        
+        SegmentifyManager.sharedManager().setCustomEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
-        //obj.subCategory = "Womenswear"
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,7 +68,7 @@ class HomePageViewController : UIViewController {
     }
 }
 
-extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
+extension CustomEventViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
@@ -102,5 +108,7 @@ extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
+
 
 

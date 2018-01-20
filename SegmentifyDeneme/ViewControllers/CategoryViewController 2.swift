@@ -1,5 +1,5 @@
 //
-//  HomePageViewController.swift
+//  CategoryViewController.swift
 //  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomePageViewController : UIViewController {
+class CategoryViewController : UIViewController {
     
     var images : [String] = []
     var names : [String] = []
@@ -22,17 +22,21 @@ class HomePageViewController : UIViewController {
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         self.sendPageViewEvent()
     }
     
     func sendPageViewEvent() {
+        
+        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = SegmentifyObject()
-        obj.category = "Home Page"
+        obj.category = "Category Page"
+        obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
-        //obj.subCategory = "Womenswear"
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,14 +59,14 @@ class HomePageViewController : UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.notificationTitle == "Deneme" {
+            if recObj.notificationTitle == "Test" {
                 self.setProductInfos(products: recObj.products!)
             }
         }
     }
 }
 
-extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
+extension CategoryViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
@@ -81,12 +85,7 @@ extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
         cell.nameLabel.text = self.titles[indexPath.row]
         cell.priceLabel.text = String(self.prices[indexPath.row])
         cell.oldPriceLabel.text=String(self.oldPrices[indexPath.row])
-        
-        cell.onButtonTapped = {
-            print(self.productIds[indexPath.row])
-            
-            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
-        }
+    
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {
             DispatchQueue.global().async {
@@ -102,5 +101,6 @@ extension HomePageViewController : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
 
 

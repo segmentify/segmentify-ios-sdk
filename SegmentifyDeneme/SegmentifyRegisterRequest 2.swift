@@ -151,7 +151,9 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         }
         
         dictionary["os"] = "ios"
+        
         dictionary["device"] = "ios"
+        
         
         if let osVersion = self.osVersion {
             dictionary["osversion"] = osVersion as Any?

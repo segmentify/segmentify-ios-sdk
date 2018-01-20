@@ -19,7 +19,6 @@ final class SegmentifyAnalyticWrapper {
         appKey = "8157d334-f8c9-4656-a6a4-afc8b1846e4c"
         subDomain = "segmentify-shop.myshopify.com"
         dataCenterUrl = "https://dce1.segmentify.com"
-        SegmentifyManager.config(appkey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
     }
     
     static let shared = SegmentifyAnalyticWrapper()
@@ -32,11 +31,14 @@ final class SegmentifyAnalyticWrapper {
         let obj = SegmentifyObject()
         obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
-        
-        
-        
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
-            
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+            /*var idArray = [String]()
+            for obj in response {
+                //idArray.append(obj.products)
+                //for id in obj.products! {
+                  //  idArray.append(id.productId!)
+                //}
+            }*/
         })
     }
     
@@ -46,13 +48,13 @@ final class SegmentifyAnalyticWrapper {
         obj.username = "aaturgay"
         //obj.userID = "1234"
         //TODO SegmentifyManager.config = Config(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
-        //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).userLogin(segmentifyObject: obj)
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).userLogin(segmentifyObject: obj)
     }
     
     func sendUserChangeEvent() {
         let obj = SegmentifyObject()
         obj.userID = "1234"
-        //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setChangeUserEvent(segmentifyObject: obj)
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setChangeUserEvent(segmentifyObject: obj)
     }
     
     func sendRegisterEvent() {
@@ -103,9 +105,9 @@ final class SegmentifyAnalyticWrapper {
         obj.products = productsArray
         obj.userID = "1234"
         
-        /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             //print("rec model : \(String(describing: (response[0].notificationTitle)!))")
-        })*/
+        })
 
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(totalPrice: 78, currency: nil, basketID: nil, orderNo: nil, products: productsArray)
     }
@@ -140,6 +142,13 @@ final class SegmentifyAnalyticWrapper {
         SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setCustomEvent(segmentifyObject: obj, callback: <#T##([RecommendationModel]) -> Void#>)
     }*/
 
+}
+
+extension SegmentifyAnalyticWrapper : SegmentifyManagerDelegate {
+    func segmentifyCallback(recommendation: RecommendationModel) {
+        print("rec obj : \(recommendation.products![0])")
+        
+    }
 }
 
 
