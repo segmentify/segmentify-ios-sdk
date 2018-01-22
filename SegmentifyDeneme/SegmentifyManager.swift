@@ -89,11 +89,10 @@ class SegmentifyManager {
     }
     
     init() {
-        
         self.eventRequest = SegmentifyRegisterRequest()
-        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+        /*if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }
+        }*/
         let appkey = SegmentifyManager.setup.appKey
         guard appkey != nil else {
             fatalError("Error - you must fill appKey before accessing SegmentifyManager.shared")
@@ -458,7 +457,6 @@ class SegmentifyManager {
         if let username = segmentifyObject.username {
             eventRequest.username = username
         }
-        
         setIDAndSendEvent()
     }
     
@@ -480,7 +478,6 @@ class SegmentifyManager {
         if let username = segmentifyObject.username {
             eventRequest.username = username
         }
-        
         if let fullName = segmentifyObject.fullName {
             eventRequest.fullName = fullName
         }
@@ -518,10 +515,20 @@ class SegmentifyManager {
     func sendChangeUser(segmentifyObject : SegmentifyObject) {
         eventRequest.eventName = SegmentifyManager.userChangeEventName
         UserDefaults.standard.set(Constant.IS_USER_SENT_USER_ID, forKey: Constant.IS_USER_SENT_USER_ID)
-        UserDefaults.standard.set(segmentifyObject.userID, forKey: "UserSentUserId")
-        if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
-            eventRequest.oldUserId = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+
+        let userId = segmentifyObject.userID
+        guard userId != nil else {
+            fatalError("Error - you must fill userId before accessing change user event")
         }
+        eventRequest.userID = userId
+        let lastUserID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        eventRequest.oldUserId = lastUserID
+        UserDefaults.standard.set(segmentifyObject.userID, forKey: "UserSentUserId")
+        //eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        
+        /*if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+            eventRequest.oldUserId = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+        }*/
         setIDAndSendEvent()
     }
     

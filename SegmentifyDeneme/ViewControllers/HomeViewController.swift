@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
         
         
         let obj2 = SegmentifyObject()
-        obj2.userID = "1234"
+        obj2.userID = "181111111"
         SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)
     }
     @IBAction func customEventButton(_ sender: Any) {
