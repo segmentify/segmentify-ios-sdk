@@ -511,6 +511,9 @@ class SegmentifyManager {
     func sendChangeUser(segmentifyObject : SegmentifyObject) {
         eventRequest.eventName = SegmentifyManager.userChangeEventName
         //eventRequest.userID = segmentifyObject.userID
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        }
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             eventRequest.oldUserId = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
         }
