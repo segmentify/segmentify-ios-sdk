@@ -40,8 +40,6 @@ class SegmentifyManager {
     
     static let startIndex = 0
     
-    private var instanceId = String()
-    private var interactionId = String()
     private var params : Dictionary<AnyHashable, Any>?
     private var paramsArr : [[AnyHashable:Any]]?
     private var validStaticItem : Bool = false
@@ -68,7 +66,7 @@ class SegmentifyManager {
     private static var segmentifySharedInstance: SegmentifyManager?
     private var eventRequest = SegmentifyRegisterRequest()
     private static let setup = ConfigModel()
-
+    
     class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
             segmentifySharedInstance = SegmentifyManager.init()
@@ -156,10 +154,15 @@ class SegmentifyManager {
 
     // MARK: Request Builders
     func setIDAndSendEvent() {
-        self.getUserIdAndSessionIdRequest( success: { () -> Void in
+        if self.eventRequest.sessionID == nil {
+            self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                self.sendEvent(callback: { (response: [RecommendationModel]) in
+                })
+            })
+        } else {
             self.sendEvent(callback: { (response: [RecommendationModel]) in
             })
-        })
+        }
     }
     
     func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
@@ -190,8 +193,7 @@ class SegmentifyManager {
                     return
                 }
                 self.params = params
-                //print("params = \(params)")
-                
+
                 guard let dynamicItems = self.params!["dynamicItems"] as? String else {
                     print("params['dynamicItems'] is not valid")
                     return
@@ -227,27 +229,25 @@ class SegmentifyManager {
                     self.validStaticItem = true
                 }
                 
-                DispatchQueue.main.async {
-                    
-                    var instance = String()
-                    var interaction = String()
-                    
-                    self.instanceId = String()
+                
+                
+                var insId : String = String()
+                var interId : String = String()
                     if let instanceId = self.params!["instanceId"] as? String {
-                        self.instanceId = instanceId
-                        instance = instanceId
+                        print("instanceId : \(instanceId)")
+                        //UserDefaults.standard.set(instanceId, forKey: "instanceId")
+                        insId = instanceId
                     }
-                    self.interactionId = String()
+                
                     if let interactionId = self.params!["actionId"] as? String {
-                        self.interactionId = interactionId
-                        interaction = interactionId
+                        //UserDefaults.standard.set(interactionId, forKey: ",interactionId")
+                        interId = interactionId
                     }
-                    
+                
                     if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                         self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
                     }
-                    self.sendImpression(instanceId: instance, interactionId: interaction)
-                }
+                self.sendImpression(instanceId: insId, interactionId: interId)
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -333,8 +333,6 @@ class SegmentifyManager {
         }
     }
     
-    
-    
     private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]]) {
         var staticProducts = [ProductModel]()
         if !self.products.isEmpty {
@@ -383,10 +381,6 @@ class SegmentifyManager {
                 proObj.lastUpdateTime = lastUpdateTime as? Int
             }
 
-            /*if index == (self.validStaticItem ? (itemCount - 1) + self.staticItemsArrayCount : itemCount) {
-                break
-            }*/
-  
             if self.products.contains(where: {$0.productId == proObj.productId}) {
                 minusIndex = minusIndex! - 1
             } else {
@@ -467,7 +461,6 @@ class SegmentifyManager {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.logoutStep
         eventRequest.username = segmentifyObject.username
-        //eventRequest.userID = segmentifyObject.userID
         setIDAndSendEvent()
     }
     
@@ -626,10 +619,7 @@ class SegmentifyManager {
         if let lang = segmentifyObject.lang {
             eventRequest.lang = lang
         }
-        //setIDAndSendEvent()
         setIDAndSendEventWithCallback(callback: callback)
-
-        //callback(self.recModel!)
     }
     
     //Add or Remove Basket Event

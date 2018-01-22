@@ -10,6 +10,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    @IBAction func loginButtonAction(_ sender: Any) {
+        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
+        let obj = SegmentifyObject()
+        obj.username = "dlakfds@gmail.com"
+        obj.email = "sdnflqmg@com"
+        SegmentifyManager.sharedManager().sendUserLogin(segmentifyObject: obj)
+        
+        
+        let obj2 = SegmentifyObject()
+        obj2.userID = "1234"
+        SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)
+    }
     @IBAction func customEventButton(_ sender: Any) {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CustomEventViewController") as? CustomEventViewController
         self.navigationController?.pushViewController(viewController!, animated: true)
