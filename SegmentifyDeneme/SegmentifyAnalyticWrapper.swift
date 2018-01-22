@@ -35,7 +35,7 @@ final class SegmentifyAnalyticWrapper {
         
         
         
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             
         })
     }

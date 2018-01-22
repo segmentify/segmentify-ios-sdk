@@ -28,7 +28,7 @@ class HomePageViewController : UIViewController {
     func sendPageViewEvent() {
         let obj = SegmentifyObject()
         obj.category = "Home Page"
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }

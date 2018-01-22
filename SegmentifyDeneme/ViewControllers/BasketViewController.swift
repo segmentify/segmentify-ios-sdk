@@ -56,7 +56,7 @@ class BasketViewController: UIViewController {
         
         let obj = SegmentifyObject()
         obj.category = "Basket Page"
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
@@ -76,7 +76,7 @@ class BasketViewController: UIViewController {
         obj.products = productsArray
         obj.totalPrice = 100.20
         
-        SegmentifyManager.sharedManager().setViewBasketEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendViewBasket(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }

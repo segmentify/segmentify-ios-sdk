@@ -32,7 +32,7 @@ class NotFoundViewController : UIViewController {
         let obj = SegmentifyObject()
         obj.category = "404 Page"
         //obj.subCategory = "Womenswear"
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }

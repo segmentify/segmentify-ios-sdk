@@ -31,7 +31,7 @@ class SearchViewController : UIViewController {
         
         let obj = SegmentifyObject()
         obj.category = "Search Page"
-        SegmentifyManager.sharedManager().setPageViewEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }

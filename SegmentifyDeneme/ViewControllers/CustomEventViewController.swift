@@ -35,7 +35,7 @@ class CustomEventViewController : UIViewController {
         obj.type = "deneme"
         obj.params = productDict as [String : AnyObject]
         
-        SegmentifyManager.sharedManager().setCustomEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendCustomEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
