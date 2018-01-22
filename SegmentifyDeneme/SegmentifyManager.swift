@@ -89,6 +89,10 @@ class SegmentifyManager {
     }
     
     init() {
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        }
+        
         self.eventRequest = SegmentifyRegisterRequest()
         let appkey = SegmentifyManager.setup.appKey
         guard appkey != nil else {
