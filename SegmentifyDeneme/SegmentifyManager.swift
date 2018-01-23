@@ -89,9 +89,7 @@ class SegmentifyManager {
     
     init() {
         self.eventRequest = SegmentifyRegisterRequest()
-        /*if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
-            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }*/
+        
         let appkey = SegmentifyManager.setup.appKey
         guard appkey != nil else {
             //fatalError("Error - you must fill appKey before accessing SegmentifyManager.shared")
@@ -239,18 +237,13 @@ class SegmentifyManager {
                     self.validStaticItem = true
                 }
                 
-                
-                
                 var insId : String = String()
                 var interId : String = String()
                     if let instanceId = self.params!["instanceId"] as? String {
-                        print("instanceId : \(instanceId)")
-                        //UserDefaults.standard.set(instanceId, forKey: "instanceId")
                         insId = instanceId
                     }
                 
                     if let interactionId = self.params!["actionId"] as? String {
-                        //UserDefaults.standard.set(interactionId, forKey: ",interactionId")
                         interId = interactionId
                     }
                 
@@ -429,6 +422,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -448,6 +445,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -464,6 +465,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -480,6 +485,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -519,6 +528,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -540,6 +553,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -561,6 +578,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -582,6 +603,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -607,6 +632,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -657,6 +686,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEvent()
     }
@@ -673,6 +706,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -687,6 +724,10 @@ class SegmentifyManager {
         }
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
