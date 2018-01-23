@@ -13,13 +13,15 @@ class HomeViewController: UIViewController {
     @IBAction func loginButtonAction(_ sender: Any) {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = SegmentifyObject()
+        let obj = SegmentifyUserObject()
+        //let obj = SegmentifyObject()
         obj.username = "dlakfds@gmail.com"
         obj.email = "sdnflqmg@com"
         SegmentifyManager.sharedManager().sendUserLogin(segmentifyObject: obj)
         
         
-        let obj2 = SegmentifyObject()
+        //let obj2 = SegmentifyObject()
+        let obj2 = SegmentifyUserObject()
         obj2.userID = "181111111"
         SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)
     }

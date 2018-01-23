@@ -405,7 +405,8 @@ class SegmentifyManager {
     
     //EVENTS
     //Register Event
-    func sendUserRegister(segmentifyObject : SegmentifyObject) {
+    //func sendUserRegister(segmentifyObject : SegmentifyObject) {
+    func sendUserRegister(segmentifyObject: SegmentifyUserObject) {
         
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.registerStep
@@ -445,7 +446,7 @@ class SegmentifyManager {
     }
     
     //Login Event
-    func sendUserLogin(segmentifyObject : SegmentifyObject) {
+    func sendUserLogin(segmentifyObject : SegmentifyUserObject) {
       
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.signInStep
@@ -461,7 +462,8 @@ class SegmentifyManager {
     }
     
     //Logout Event
-    func sendUserLogout(segmentifyObject : SegmentifyObject) {
+    //func sendUserLogout(segmentifyObject : SegmentifyObject) {
+    func sendUserLogout(segmentifyObject : SegmentifyUserObject) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.logoutStep
         if let username = segmentifyObject.username {
@@ -471,7 +473,8 @@ class SegmentifyManager {
     }
     
     //User Update Event
-    func sendUserUpdate(segmentifyObject : SegmentifyObject) {
+    //func sendUserUpdate(segmentifyObject : SegmentifyObject) {
+    func sendUserUpdate(segmentifyObject : SegmentifyUserObject) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.updateUserStep
         eventRequest.oldUserId = nil
@@ -512,7 +515,8 @@ class SegmentifyManager {
     }
     
     //Change User Event
-    func sendChangeUser(segmentifyObject : SegmentifyObject) {
+    //func sendChangeUser(segmentifyObject : SegmentifyObject) {
+    func sendChangeUser(segmentifyObject : SegmentifyUserObject) {
         eventRequest.eventName = SegmentifyManager.userChangeEventName
         UserDefaults.standard.set(Constant.IS_USER_SENT_USER_ID, forKey: Constant.IS_USER_SENT_USER_ID)
 

@@ -13,6 +13,7 @@
 		575BF4CF1FEBA436007B4354 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575BF4CE1FEBA436007B4354 /* Constant.swift */; };
 		576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576C51D5200F8C470027691F /* CustomTableViewCell.swift */; };
 		57893D7D1FF51FF400AA8D67 /* SegmentifyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */; };
+		57909C61201740EC00903E2A /* SegmentifyUserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57909C60201740EC00903E2A /* SegmentifyUserObject.swift */; };
 		57AD772020078A61009384E8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AD771F20078A61009384E8 /* Array.swift */; };
 		57D547BA2011E14E004FC06C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547B92011E14E004FC06C /* HomeViewController.swift */; };
 		57D547C12011E534004FC06C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D547C02011E534004FC06C /* HomePageViewController.swift */; };
@@ -63,6 +64,7 @@
 		575BF4CE1FEBA436007B4354 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		576C51D5200F8C470027691F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyObject.swift; sourceTree = "<group>"; };
+		57909C60201740EC00903E2A /* SegmentifyUserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyUserObject.swift; sourceTree = "<group>"; };
 		57AD771F20078A61009384E8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		57D547B92011E14E004FC06C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		57D547C02011E534004FC06C /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				575BF4791FE7B19A007B4354 /* SegmentifyDeneme-Bridging.h */,
 				575BF4CE1FEBA436007B4354 /* Constant.swift */,
 				57893D7C1FF51FF400AA8D67 /* SegmentifyObject.swift */,
+				57909C60201740EC00903E2A /* SegmentifyUserObject.swift */,
 			);
 			path = SegmentifyDeneme;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				57FFD5021FD9AC96008B1486 /* SegmentifyRequestProtocol.swift in Sources */,
 				576C51D6200F8C470027691F /* CustomTableViewCell.swift in Sources */,
 				57D547CD20120D9C004FC06C /* CustomEventViewController.swift in Sources */,
+				57909C61201740EC00903E2A /* SegmentifyUserObject.swift in Sources */,
 				57D547CB201209B6004FC06C /* NotFoundViewController.swift in Sources */,
 				57FFD4D01FD9A814008B1486 /* SearchViewController.swift in Sources */,
 				57FFD4FC1FD9A854008B1486 /* SegmentifyManager.swift in Sources */,

@@ -28,23 +28,23 @@ class SegmentifyObject {
     var orderNo:String?
     var products:[Any]?
     var checkoutStep:String?
-    var username:String?
-    var userID:String?
+    //var username:String?
+    //var userID:String?
     var sessionID:String?
-    var email:String?
-    var age:String?
-    var birthdate:String?
-    var gender:String?
-    var fullName:String?
-    var mobilePhone:String?
-    var isRegistered:Bool?
-    var isLogin:Bool?
-    var userOperationStep:String?
+    //var email:String?
+    //var age:String?
+    //var birthdate:String?
+    //var gender:String?
+    //var fullName:String?
+    //var mobilePhone:String?
+    //var isRegistered:Bool?
+    //var isLogin:Bool?
+    //var userOperationStep:String?
     var pageUrl:String?
     var image:String?
     var url:String?
-    var memberSince:String?
-    var oldUserId:String?
+    //var memberSince:String?
+    //var oldUserId:String?
     var mUrl:String?
     var imageXS:String?
     var imageS:String?
@@ -53,9 +53,10 @@ class SegmentifyObject {
     var colors:[String]?
     var sizes:[String]?
     var labels:[String]?
-    var location:String?
-    var segments:[String]?
+    //var location:String?
+    //var segments:[String]?
     var type:String?
     var params:[String:AnyObject]?
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
+    //var user: UserModel?
 }

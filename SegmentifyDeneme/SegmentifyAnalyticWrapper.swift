@@ -42,7 +42,9 @@ final class SegmentifyAnalyticWrapper {
     
     func sendLoginEvent() {
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setLoginEvent(username: "aaturgay", userId: "1234")
-        let obj = SegmentifyObject()
+        let obj = SegmentifyUserObject()
+        //let obj = SegmentifyObject()
+        //obj.username = "aaturgay"
         obj.username = "aaturgay"
         //obj.userID = "1234"
         //TODO SegmentifyManager.config = Config(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain)
@@ -50,7 +52,9 @@ final class SegmentifyAnalyticWrapper {
     }
     
     func sendUserChangeEvent() {
-        let obj = SegmentifyObject()
+        let obj = SegmentifyUserObject()
+        //let obj = SegmentifyObject()
+        //obj.userID = "1234"
         obj.userID = "1234"
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setChangeUserEvent(segmentifyObject: obj)
     }
@@ -73,7 +77,8 @@ final class SegmentifyAnalyticWrapper {
     
     func sendLogoutEvent() {
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setLogoutEvent(username: "aaturgay")
-        let obj = SegmentifyObject()
+        let obj = SegmentifyUserObject()
+        //let obj = SegmentifyObject()
         obj.username = "aaturgay"
         obj.userID = "aatur"
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setLogoutEvent(segmentifyObject: obj)
@@ -81,7 +86,8 @@ final class SegmentifyAnalyticWrapper {
     
     func sendUserUpdateEvent() {
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setUserUpdateEvent(username: "aaturgay", fullName: "ata anil turgay", email: "aturgay@com", mobilePhone: "05423949939", gender: "Male", age: "50", birthdate: "01.01.2017", isRegistered: true, isLogin: true)
-        let obj = SegmentifyObject()
+        //let obj = SegmentifyObject()
+        let obj = SegmentifyUserObject()
         obj.username = "aaturgay"
         obj.email = "aturgay@mynetçcm"
         obj.fullName = "adfssd"
@@ -101,7 +107,7 @@ final class SegmentifyAnalyticWrapper {
         
         let obj = SegmentifyObject()
         obj.products = productsArray
-        obj.userID = "1234"
+        //obj.userID = "1234"
         
         /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in
             //print("rec model : \(String(describing: (response[0].notificationTitle)!))")
