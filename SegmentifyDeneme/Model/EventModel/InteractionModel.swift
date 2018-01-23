@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImpressionModel: SegmentifyObject {
+class InteractionModel: SegmentifyObject {
     var interactionId:String?
     var impressionId:String?
     var type:String?

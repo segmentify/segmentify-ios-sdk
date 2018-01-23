@@ -690,6 +690,16 @@ class SegmentifyManager {
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
+    
+    func sendWidgetView(segmentifyObject: InteractionModel) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.userOperationStep = SegmentifyManager.widgetViewStep
+    }
+    
+    func sendClick(segmentifyObject : InteractionModel) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.userOperationStep = SegmentifyManager.clickStep
+    }
    
     //Alternative Events
      //Register Event

@@ -9,7 +9,6 @@
 import Foundation
 
 class SegmentifyObject {
-    var eventName:String?
     var sessionID:String?
     var pageUrl:String?
     var currency:String?
