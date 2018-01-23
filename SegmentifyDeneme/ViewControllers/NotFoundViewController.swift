@@ -29,7 +29,7 @@ class NotFoundViewController : UIViewController {
         
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = SegmentifyObject()
+        let obj = PageModel()
         //obj.category = "404 Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in

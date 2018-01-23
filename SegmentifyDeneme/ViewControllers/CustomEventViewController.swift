@@ -29,7 +29,7 @@ class CustomEventViewController : UIViewController {
         
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = SegmentifyObject()
+        let obj = CustomEventModel()
         let productDict = ["PRICE":"200-500"]
         
         //obj.type = "deneme"

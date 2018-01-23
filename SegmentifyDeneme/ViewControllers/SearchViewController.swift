@@ -29,7 +29,7 @@ class SearchViewController : UIViewController {
 
          SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = SegmentifyObject()
+        let obj = PageModel()
         //obj.category = "Search Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response

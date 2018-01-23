@@ -29,7 +29,7 @@ final class SegmentifyAnalyticWrapper {
     func sendPageViewEvent() {
         
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(category: "Product Page", subCategory: nil, pageUrl: "https://www.mobilecp.boyner.com.tr/mobile2/mbProduct/GetCombinedProducts?ProductID=658386")
-        let obj = SegmentifyObject()
+        let obj = PageModel()
         //obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
         

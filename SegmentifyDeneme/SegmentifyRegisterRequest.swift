@@ -69,6 +69,7 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var mUrl:String?
     var imageXS:String?
     var imageS:String?
+    var imageM:String?
     var imageL:String?
     var imageXL:String?
     var colors:[String]?
