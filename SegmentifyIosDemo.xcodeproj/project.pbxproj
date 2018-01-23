@@ -91,17 +91,17 @@
 		57D547CC20120D9C004FC06C /* CustomEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventViewController.swift; sourceTree = "<group>"; };
 		57D547CE201284DE004FC06C /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		57E926D91FE00835002E85F4 /* SegmentifyUrlSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyUrlSessionDelegate.swift; sourceTree = "<group>"; };
-		57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyDeneme.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FFD4CA1FD9A814008B1486 /* SegmentifyIosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyIosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4CD1FD9A814008B1486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57FFD4CF1FD9A814008B1486 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		57FFD4D21FD9A814008B1486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		57FFD4D41FD9A814008B1486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57FFD4D71FD9A814008B1486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57FFD4D91FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		57FFD4DE1FD9A814008B1486 /* SegmentifyDenemeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyDenemeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FFD4DE1FD9A814008B1486 /* SegmentifyIosDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4E21FD9A814008B1486 /* SegmentifyDenemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyDenemeTests.swift; sourceTree = "<group>"; };
 		57FFD4E41FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		57FFD4E91FD9A814008B1486 /* SegmentifyDenemeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyDenemeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FFD4E91FD9A814008B1486 /* SegmentifyIosDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4ED1FD9A814008B1486 /* SegmentifyDenemeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyDenemeUITests.swift; sourceTree = "<group>"; };
 		57FFD4EF1FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FFD4FB1FD9A854008B1486 /* SegmentifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyManager.swift; sourceTree = "<group>"; };
@@ -192,9 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				576C51D5200F8C470027691F /* CustomTableViewCell.swift */,
-				57FFD4CC1FD9A814008B1486 /* SegmentifyDeneme */,
-				57FFD4E11FD9A814008B1486 /* SegmentifyDenemeTests */,
-				57FFD4EC1FD9A814008B1486 /* SegmentifyDenemeUITests */,
+				57FFD4CC1FD9A814008B1486 /* SegmentifyIosDemo */,
+				57FFD4E11FD9A814008B1486 /* SegmentifyIosDemoTests */,
+				57FFD4EC1FD9A814008B1486 /* SegmentifyIosDemoUITests */,
 				57FFD4CB1FD9A814008B1486 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -202,14 +202,14 @@
 		57FFD4CB1FD9A814008B1486 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */,
-				57FFD4DE1FD9A814008B1486 /* SegmentifyDenemeTests.xctest */,
-				57FFD4E91FD9A814008B1486 /* SegmentifyDenemeUITests.xctest */,
+				57FFD4CA1FD9A814008B1486 /* SegmentifyIosDemo.app */,
+				57FFD4DE1FD9A814008B1486 /* SegmentifyIosDemoTests.xctest */,
+				57FFD4E91FD9A814008B1486 /* SegmentifyIosDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		57FFD4CC1FD9A814008B1486 /* SegmentifyDeneme */ = {
+		57FFD4CC1FD9A814008B1486 /* SegmentifyIosDemo */ = {
 			isa = PBXGroup;
 			children = (
 				57D547BD2011E2E2004FC06C /* ViewControllers */,
@@ -231,33 +231,36 @@
 				575BF4CE1FEBA436007B4354 /* Constant.swift */,
 				57909C60201740EC00903E2A /* SegmentifyUserObject.swift */,
 			);
+			name = SegmentifyIosDemo;
 			path = SegmentifyDeneme;
 			sourceTree = "<group>";
 		};
-		57FFD4E11FD9A814008B1486 /* SegmentifyDenemeTests */ = {
+		57FFD4E11FD9A814008B1486 /* SegmentifyIosDemoTests */ = {
 			isa = PBXGroup;
 			children = (
 				57FFD4E21FD9A814008B1486 /* SegmentifyDenemeTests.swift */,
 				57FFD4E41FD9A814008B1486 /* Info.plist */,
 			);
+			name = SegmentifyIosDemoTests;
 			path = SegmentifyDenemeTests;
 			sourceTree = "<group>";
 		};
-		57FFD4EC1FD9A814008B1486 /* SegmentifyDenemeUITests */ = {
+		57FFD4EC1FD9A814008B1486 /* SegmentifyIosDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
 				57FFD4ED1FD9A814008B1486 /* SegmentifyDenemeUITests.swift */,
 				57FFD4EF1FD9A814008B1486 /* Info.plist */,
 			);
+			name = SegmentifyIosDemoUITests;
 			path = SegmentifyDenemeUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		57FFD4C91FD9A814008B1486 /* SegmentifyDeneme */ = {
+		57FFD4C91FD9A814008B1486 /* SegmentifyIosDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57FFD4F21FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDeneme" */;
+			buildConfigurationList = 57FFD4F21FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemo" */;
 			buildPhases = (
 				57FFD4C61FD9A814008B1486 /* Sources */,
 				57FFD4C71FD9A814008B1486 /* Frameworks */,
@@ -267,14 +270,14 @@
 			);
 			dependencies = (
 			);
-			name = SegmentifyDeneme;
+			name = SegmentifyIosDemo;
 			productName = SegmentifyDeneme;
-			productReference = 57FFD4CA1FD9A814008B1486 /* SegmentifyDeneme.app */;
+			productReference = 57FFD4CA1FD9A814008B1486 /* SegmentifyIosDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		57FFD4DD1FD9A814008B1486 /* SegmentifyDenemeTests */ = {
+		57FFD4DD1FD9A814008B1486 /* SegmentifyIosDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57FFD4F51FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeTests" */;
+			buildConfigurationList = 57FFD4F51FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemoTests" */;
 			buildPhases = (
 				57FFD4DA1FD9A814008B1486 /* Sources */,
 				57FFD4DB1FD9A814008B1486 /* Frameworks */,
@@ -285,14 +288,14 @@
 			dependencies = (
 				57FFD4E01FD9A814008B1486 /* PBXTargetDependency */,
 			);
-			name = SegmentifyDenemeTests;
+			name = SegmentifyIosDemoTests;
 			productName = SegmentifyDenemeTests;
-			productReference = 57FFD4DE1FD9A814008B1486 /* SegmentifyDenemeTests.xctest */;
+			productReference = 57FFD4DE1FD9A814008B1486 /* SegmentifyIosDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		57FFD4E81FD9A814008B1486 /* SegmentifyDenemeUITests */ = {
+		57FFD4E81FD9A814008B1486 /* SegmentifyIosDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57FFD4F81FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeUITests" */;
+			buildConfigurationList = 57FFD4F81FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemoUITests" */;
 			buildPhases = (
 				57FFD4E51FD9A814008B1486 /* Sources */,
 				57FFD4E61FD9A814008B1486 /* Frameworks */,
@@ -303,9 +306,9 @@
 			dependencies = (
 				57FFD4EB1FD9A814008B1486 /* PBXTargetDependency */,
 			);
-			name = SegmentifyDenemeUITests;
+			name = SegmentifyIosDemoUITests;
 			productName = SegmentifyDenemeUITests;
-			productReference = 57FFD4E91FD9A814008B1486 /* SegmentifyDenemeUITests.xctest */;
+			productReference = 57FFD4E91FD9A814008B1486 /* SegmentifyIosDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -347,9 +350,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				57FFD4C91FD9A814008B1486 /* SegmentifyDeneme */,
-				57FFD4DD1FD9A814008B1486 /* SegmentifyDenemeTests */,
-				57FFD4E81FD9A814008B1486 /* SegmentifyDenemeUITests */,
+				57FFD4C91FD9A814008B1486 /* SegmentifyIosDemo */,
+				57FFD4DD1FD9A814008B1486 /* SegmentifyIosDemoTests */,
+				57FFD4E81FD9A814008B1486 /* SegmentifyIosDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -443,12 +446,12 @@
 /* Begin PBXTargetDependency section */
 		57FFD4E01FD9A814008B1486 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 57FFD4C91FD9A814008B1486 /* SegmentifyDeneme */;
+			target = 57FFD4C91FD9A814008B1486 /* SegmentifyIosDemo */;
 			targetProxy = 57FFD4DF1FD9A814008B1486 /* PBXContainerItemProxy */;
 		};
 		57FFD4EB1FD9A814008B1486 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 57FFD4C91FD9A814008B1486 /* SegmentifyDeneme */;
+			target = 57FFD4C91FD9A814008B1486 /* SegmentifyIosDemo */;
 			targetProxy = 57FFD4EA1FD9A814008B1486 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -589,7 +592,7 @@
 				INFOPLIST_FILE = SegmentifyDeneme/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ataanilturgay.SegmentifyDeneme;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ataanilturgay.SegmentifyIosDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -605,7 +608,7 @@
 				INFOPLIST_FILE = SegmentifyDeneme/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ataanilturgay.SegmentifyDeneme;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ataanilturgay.SegmentifyIosDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -690,7 +693,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57FFD4F21FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDeneme" */ = {
+		57FFD4F21FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				57FFD4F31FD9A814008B1486 /* Debug */,
@@ -699,7 +702,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57FFD4F51FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeTests" */ = {
+		57FFD4F51FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				57FFD4F61FD9A814008B1486 /* Debug */,
@@ -708,7 +711,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57FFD4F81FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyDenemeUITests" */ = {
+		57FFD4F81FD9A814008B1486 /* Build configuration list for PBXNativeTarget "SegmentifyIosDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				57FFD4F91FD9A814008B1486 /* Debug */,

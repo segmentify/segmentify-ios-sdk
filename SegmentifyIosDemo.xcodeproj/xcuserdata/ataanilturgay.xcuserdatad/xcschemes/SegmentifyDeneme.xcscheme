@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
-               BuildableName = "SegmentifyDeneme.app"
-               BlueprintName = "SegmentifyDeneme"
+               BuildableName = "SegmentifyIosDemo.app"
+               BlueprintName = "SegmentifyIosDemo"
                ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "57FFD4DD1FD9A814008B1486"
-               BuildableName = "SegmentifyDenemeTests.xctest"
-               BlueprintName = "SegmentifyDenemeTests"
+               BuildableName = "SegmentifyIosDemoTests.xctest"
+               BlueprintName = "SegmentifyIosDemoTests"
                ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -44,8 +44,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "57FFD4E81FD9A814008B1486"
-               BuildableName = "SegmentifyDenemeUITests.xctest"
-               BlueprintName = "SegmentifyDenemeUITests"
+               BuildableName = "SegmentifyIosDemoUITests.xctest"
+               BlueprintName = "SegmentifyIosDemoUITests"
                ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -54,8 +54,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
-            BuildableName = "SegmentifyDeneme.app"
-            BlueprintName = "SegmentifyDeneme"
+            BuildableName = "SegmentifyIosDemo.app"
+            BlueprintName = "SegmentifyIosDemo"
             ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -78,8 +78,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
-            BuildableName = "SegmentifyDeneme.app"
-            BlueprintName = "SegmentifyDeneme"
+            BuildableName = "SegmentifyIosDemo.app"
+            BlueprintName = "SegmentifyIosDemo"
             ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -97,8 +97,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
-            BuildableName = "SegmentifyDeneme.app"
-            BlueprintName = "SegmentifyDeneme"
+            BuildableName = "SegmentifyIosDemo.app"
+            BlueprintName = "SegmentifyIosDemo"
             ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
