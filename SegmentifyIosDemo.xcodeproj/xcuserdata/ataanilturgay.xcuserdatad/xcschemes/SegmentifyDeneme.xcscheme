@@ -17,7 +17,7 @@
                BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
                BuildableName = "SegmentifyDeneme.app"
                BlueprintName = "SegmentifyDeneme"
-               ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+               ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "57FFD4DD1FD9A814008B1486"
                BuildableName = "SegmentifyDenemeTests.xctest"
                BlueprintName = "SegmentifyDenemeTests"
-               ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+               ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,7 +46,7 @@
                BlueprintIdentifier = "57FFD4E81FD9A814008B1486"
                BuildableName = "SegmentifyDenemeUITests.xctest"
                BlueprintName = "SegmentifyDenemeUITests"
-               ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+               ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -56,7 +56,7 @@
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
             BuildableName = "SegmentifyDeneme.app"
             BlueprintName = "SegmentifyDeneme"
-            ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+            ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,7 +80,7 @@
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
             BuildableName = "SegmentifyDeneme.app"
             BlueprintName = "SegmentifyDeneme"
-            ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+            ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,7 +99,7 @@
             BlueprintIdentifier = "57FFD4C91FD9A814008B1486"
             BuildableName = "SegmentifyDeneme.app"
             BlueprintName = "SegmentifyDeneme"
-            ReferencedContainer = "container:SegmentifyDeneme.xcodeproj">
+            ReferencedContainer = "container:SegmentifyIosDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
