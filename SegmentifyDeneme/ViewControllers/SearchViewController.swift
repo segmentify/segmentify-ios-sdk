@@ -30,12 +30,11 @@ class SearchViewController : UIViewController {
          SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = PageModel()
-        //obj.category = "Search Page"
+        obj.category = "Search Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
-        //obj.subCategory = "Womenswear"
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,8 +86,6 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
-    
-            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
 
         if let imageURL = URL(string:  self.images[indexPath.row]) {

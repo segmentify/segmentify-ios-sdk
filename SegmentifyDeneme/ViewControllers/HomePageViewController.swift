@@ -32,7 +32,6 @@ class HomePageViewController : UIViewController {
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
-        //obj.subCategory = "Womenswear"
     }
     
     override func didReceiveMemoryWarning() {

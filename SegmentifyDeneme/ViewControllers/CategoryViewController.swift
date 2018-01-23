@@ -31,7 +31,7 @@ class CategoryViewController : UIViewController {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = PageModel()
-        //obj.category = "Category Page"
+        obj.category = "Category Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
