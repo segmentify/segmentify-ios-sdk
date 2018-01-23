@@ -94,19 +94,25 @@ class SegmentifyManager {
         }*/
         let appkey = SegmentifyManager.setup.appKey
         guard appkey != nil else {
-            fatalError("Error - you must fill appKey before accessing SegmentifyManager.shared")
+            //fatalError("Error - you must fill appKey before accessing SegmentifyManager.shared")
+            print("Error - you must fill appKey before accessing SegmentifyManager.shared")
+            return
         }
         eventRequest.appKey = appkey
         
         let subDomain = SegmentifyManager.setup.subDomain
         guard subDomain != nil else {
-            fatalError("Error - you must fill subdomain before accessing SegmentifyManager.shared")
+            print("Error - you must fill subdomain before accessing SegmentifyManager.shared")
+            return
+            //fatalError("Error - you must fill subdomain before accessing SegmentifyManager.shared")
         }
         eventRequest.subdomain = subDomain!
         
         let dataCenterUrl = SegmentifyManager.setup.dataCenterUrl
         guard dataCenterUrl != nil else {
-            fatalError("Error - you must fill dataCenterUrl before accessing SegmentifyManager.shared")
+            //fatalError("Error - you must fill dataCenterUrl before accessing SegmentifyManager.shared")
+            print("Error - you must fill dataCenterUrl before accessing SegmentifyManager.shared")
+            return
         }
         eventRequest.dataCenterUrl = dataCenterUrl!
 
@@ -516,7 +522,9 @@ class SegmentifyManager {
 
         let userId = segmentifyObject.userId
         guard userId != nil else {
-            fatalError("Error - you must fill userId before accessing change user event")
+            //fatalError("Error - you must fill userId before accessing change user event")
+            print("Error - you must fill userId before accessing change user event")
+            return
         }
         eventRequest.userID = userId
         let lastUserID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -529,7 +537,7 @@ class SegmentifyManager {
         }*/
         setIDAndSendEvent()
     }
-    
+
     //Checkout Purchase Event
     func sendPurchase(segmentifyObject : CheckoutModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
@@ -537,91 +545,66 @@ class SegmentifyManager {
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
-            print("Error - you must fill totalPrice before accessing sendPurchase event method")
-            fatalError("Error - you must fill totalPrice before accessing sendPurchase event method")
+            print("Error - you must fill userId before accessing change user event")
+            return
         }
         let productList = segmentifyObject.productList
         guard productList != nil else {
             print("Error - you must fill productList before accessing sendPurchase event method")
-            fatalError("Error - you must fill productList before accessing sendPurchase event method")
+            return
         }
-
         setIDAndSendEvent()
     }
     
     //Checkout Payment Event
-    func sendPaymentInformation(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func sendPaymentInformation(segmentifyObject : CheckoutModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
-        eventRequest.oldUserId = nil
         
-        /*if let totalPrice = segmentifyObject.totalPrice {
-            eventRequest.totalPrice = totalPrice
+        let totalPrice = segmentifyObject.totalPrice
+        guard totalPrice != nil else {
+            print("Error - you must fill userId before accessing change user event")
+            return
         }
-        if let currency = segmentifyObject.currency {
-            eventRequest.currency = currency
+        let productList = segmentifyObject.productList
+        guard productList != nil else {
+            print("Error - you must fill productList before accessing sendPurchase event method")
+            return
         }
-        if let basketID = segmentifyObject.basketID {
-            eventRequest.basketID = basketID
-        }
-        if let orderNo = segmentifyObject.orderNo {
-            eventRequest.orderNo = orderNo
-        }
-        if let products = segmentifyObject.products {
-            eventRequest.products = products
-        }
-        if let lang = segmentifyObject.lang {
-            eventRequest.lang = lang
-        }*/
         setIDAndSendEvent()
     }
     
     //Checkout Customer Information Event
-    func sendCustomerInformation(segmentifyObject : SegmentifyObject,callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func sendCustomerInformation(segmentifyObject : CheckoutModel,callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.customerInformationStep
-        eventRequest.oldUserId = nil
-        
-        /*if let totalPrice = segmentifyObject.totalPrice {
-            eventRequest.totalPrice = totalPrice
+        let totalPrice = segmentifyObject.totalPrice
+        guard totalPrice != nil else {
+            print("Error - you must fill userId before accessing change user event")
+            return
         }
-        if let currency = segmentifyObject.currency {
-            eventRequest.currency = currency
+        let productList = segmentifyObject.productList
+        guard productList != nil else {
+            print("Error - you must fill productList before accessing sendPurchase event method")
+            return
         }
-        if let basketID = segmentifyObject.basketID {
-            eventRequest.basketID = basketID
-        }
-        if let orderNo = segmentifyObject.orderNo {
-            eventRequest.orderNo = orderNo
-        }
-        if let products = segmentifyObject.products {
-            eventRequest.products = products
-        }
-        if let lang = segmentifyObject.lang {
-            eventRequest.lang = lang
-        }*/
         setIDAndSendEvent()
     }
     
     //Checkout View Basket Event
-    func sendViewBasket(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func sendViewBasket(segmentifyObject : CheckoutModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
-        eventRequest.oldUserId = nil
-        
-        /*if let totalPrice = segmentifyObject.totalPrice {
-            eventRequest.totalPrice = totalPrice
+        let totalPrice = segmentifyObject.totalPrice
+        guard totalPrice != nil else {
+            print("Error - you must fill userId before accessing change user event")
+            return
         }
-        if let currency = segmentifyObject.currency {
-            eventRequest.currency = currency
+        let productList = segmentifyObject.productList
+        guard productList != nil else {
+            print("Error - you must fill productList before accessing sendPurchase event method")
+            return
         }
-        
-        if let products = segmentifyObject.products {
-            eventRequest.products = products
-        }
-        if let lang = segmentifyObject.lang {
-            eventRequest.lang = lang
-        }*/
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -643,63 +626,50 @@ class SegmentifyManager {
     }
     
     //Product View Event
-    func sendProductView(segmentifyObject : SegmentifyObject, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.productViewEventName
-        /*if let productId = segmentifyObject.productID {
-            eventRequest.productID = productId
+        
+        let productId = segmentifyObject.productId
+        guard productId != nil else {
+            print("Error - you must fill productId before accessing change user event")
+            return
         }
-        if let title = segmentifyObject.title {
-            eventRequest.title = title
+        let name = segmentifyObject.name
+        guard name != nil else {
+            print("Error - you must fill name before accessing sendPurchase event method")
+            return
         }
-        if let price = segmentifyObject.price {
-            eventRequest.price = price
+        let url = segmentifyObject.url
+        guard url != nil else {
+            print("Error - you must fill url before accessing sendPurchase event method")
+            return
         }
-        if let categories = segmentifyObject.categories {
-            eventRequest.categories = categories
+        let image = segmentifyObject.image
+        guard image != nil else {
+            print("Error - you must fill image before accessing sendPurchase event method")
+            return
         }
-        if let image = segmentifyObject.image {
-            eventRequest.image = image
+        if segmentifyObject.category != nil {
+            if segmentifyObject.categories != nil {
+                print("Error - you can not both fill category and categpries parameters")
+                return
+            } else {
+                eventRequest.category = segmentifyObject.category
+            }
+        } else {
+            if let categories = segmentifyObject.categories {
+                eventRequest.categories = categories
+            } else {
+                print("Error - you should fill one of category and categpries parameters")
+                return
+            }
         }
-        if let url = segmentifyObject.url {
-            eventRequest.url = url
+        let price = segmentifyObject.price
+        guard price != nil else {
+            print("Error - you must fill price before accessing sendPurchase event method")
+            return
         }
         
-        eventRequest.userOperationStep = nil
-        eventRequest.oldUserId = nil
-        
-        if let brand = segmentifyObject.brand {
-            eventRequest.brand = brand
-        }
-        if let currency = segmentifyObject.currency {
-            eventRequest.currency = currency
-        }
-        if let stock = segmentifyObject.stock {
-            eventRequest.stock = stock
-        }
-        if let lang = segmentifyObject.lang {
-            eventRequest.lang = lang
-        }
-        if let imageXS = segmentifyObject.imageXS {
-            eventRequest.imageXS = imageXS
-        }
-        if let imageS = segmentifyObject.imageS {
-            eventRequest.imageS = imageS
-        }
-        if let imageL = segmentifyObject.imageL {
-            eventRequest.imageL = imageL
-        }
-        if let imageXL = segmentifyObject.imageXL {
-            eventRequest.imageXL = imageXL
-        }
-        if let colors = segmentifyObject.colors {
-            eventRequest.colors = colors
-        }
-        if let sizes = segmentifyObject.sizes {
-            eventRequest.sizes = sizes
-        }
-        if let labels = segmentifyObject.labels {
-            eventRequest.labels = labels
-        }*/
         setIDAndSendEvent()
     }
     
