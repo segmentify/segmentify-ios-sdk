@@ -1,6 +1,6 @@
 //
 //  SegmentifyDeneme-Bridging.h
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 18.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.

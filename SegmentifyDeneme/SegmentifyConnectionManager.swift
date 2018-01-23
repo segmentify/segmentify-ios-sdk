@@ -1,6 +1,6 @@
 //
 //  SegmentifyConnectionManager.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 8.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
@@ -50,17 +50,9 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         dataTask.resume()
     }
     
-    //func request<T : SegmentifyRequestProtocol>(requestModel : T, callback: @escaping (_ response : T?) -> Void) {
     func request<R: SegmentifyRequestProtocol>(requestModel: R, success: @escaping (_ response: [String:AnyObject]) -> Void, failure: @escaping (_ error: Error) -> Void) {
 
-        //TODO prod = true olacak
-        //var prod = false
-        
-        /*let emIsProd = SegmentifyTools.retrieveUserDefaults(userKey: "em_is_prod")
-        if emIsProd != nil
-        {
-            prod = emIsProd as! Bool
-         }*/
+      
         
         var url: URL?
         //if (prod) {

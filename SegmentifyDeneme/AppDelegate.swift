@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 7.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.

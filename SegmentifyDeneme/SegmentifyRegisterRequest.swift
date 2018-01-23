@@ -1,6 +1,6 @@
 //
 //  SegmentifyRegisterRequest.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 7.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
@@ -16,11 +16,12 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var method = "POST"
     var subdomain = ""
     var dataCenterUrl:String = ""
+    var appKey:String = ""
     
     var segmentifyObj:SegmentifyObject?
     
     var token:String?
-    var appKey:String?
+    //var appKey:String?
     var os:String?
     var osVersion:String?
     var deviceType:String?
@@ -116,7 +117,7 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
         self.token = dictionary["token"] as? String
-        self.appKey = dictionary["appKey"] as? String
+        self.appKey = (dictionary["appKey"] as? String)!
         self.os = dictionary["os"] as? String
         self.osVersion = dictionary["osVersion"] as? String
         self.deviceType = dictionary["deviceType"] as? String
@@ -147,9 +148,9 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         if let token = self.token {
             dictionary["token"] = token as Any?
         }
-        if let appKey = self.appKey {
+        //if let appKey = self.appKey {
             dictionary["appKey"] = appKey as Any?
-        }
+        //}
         
         dictionary["os"] = "ios"
         dictionary["device"] = "ios"

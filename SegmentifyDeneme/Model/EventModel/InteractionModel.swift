@@ -1,6 +1,6 @@
 //
 //  ImpressionModel.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 23.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.

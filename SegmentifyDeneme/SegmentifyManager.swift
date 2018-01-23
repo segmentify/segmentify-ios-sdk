@@ -1,6 +1,6 @@
 //
 //  SegmentifyManager.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 7.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
@@ -96,7 +96,7 @@ class SegmentifyManager {
             print("Error - you must fill appKey before accessing SegmentifyManager.shared")
             return
         }
-        eventRequest.appKey = appkey
+        eventRequest.appKey = appkey!
         
         let subDomain = SegmentifyManager.setup.subDomain
         guard subDomain != nil else {
