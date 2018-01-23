@@ -30,7 +30,7 @@ class NotFoundViewController : UIViewController {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = SegmentifyObject()
-        obj.category = "404 Page"
+        //obj.category = "404 Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -43,7 +43,7 @@ class NotFoundViewController : UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)

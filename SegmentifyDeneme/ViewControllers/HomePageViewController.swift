@@ -27,7 +27,7 @@ class HomePageViewController : UIViewController {
     
     func sendPageViewEvent() {
         let obj = SegmentifyObject()
-        obj.category = "Home Page"
+        //obj.category = "Home Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
@@ -40,7 +40,7 @@ class HomePageViewController : UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)

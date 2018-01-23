@@ -31,8 +31,8 @@ class CategoryViewController : UIViewController {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = SegmentifyObject()
-        obj.category = "Category Page"
-        obj.subCategory = "Womenswear"
+        //obj.category = "Category Page"
+        //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
@@ -44,7 +44,7 @@ class CategoryViewController : UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)

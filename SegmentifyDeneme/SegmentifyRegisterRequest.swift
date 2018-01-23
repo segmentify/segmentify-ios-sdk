@@ -132,12 +132,12 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         self.firstTime = dictionary["firstTime"] as? NSNumber
         self.advertisingIdentifier = dictionary["advertisingIdentifier"] as? String
 
-        if let extra = dictionary["extra"] {
+        /*if let extra = dictionary["extra"] {
             segmentifyObj?.extra = extra as! [AnyHashable: Any]
         }
         else {
             segmentifyObj?.extra = [AnyHashable: Any]()
-        }
+        }*/
     }
     
     func toDictionary() -> Dictionary<AnyHashable, Any> {

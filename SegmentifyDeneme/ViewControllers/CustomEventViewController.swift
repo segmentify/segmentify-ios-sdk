@@ -32,7 +32,7 @@ class CustomEventViewController : UIViewController {
         let obj = SegmentifyObject()
         let productDict = ["PRICE":"200-500"]
         
-        obj.type = "deneme"
+        //obj.type = "deneme"
         obj.params = productDict as [String : AnyObject]
         
         SegmentifyManager.sharedManager().sendCustomEvent(segmentifyObject: obj) { (response: [RecommendationModel]) in
@@ -46,7 +46,7 @@ class CustomEventViewController : UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)

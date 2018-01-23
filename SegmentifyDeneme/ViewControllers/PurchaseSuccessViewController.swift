@@ -54,7 +54,7 @@ class PurchaseSuccessViewController: UIViewController {
          SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = SegmentifyObject()
-        obj.category = "Search Page"
+        //obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -62,7 +62,7 @@ class PurchaseSuccessViewController: UIViewController {
         }
     }
     
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)

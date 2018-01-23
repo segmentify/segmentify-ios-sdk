@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
     @IBAction func loginButtonAction(_ sender: Any) {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = SegmentifyUserObject()
+        /*let obj = UserModel()
         //let obj = SegmentifyObject()
         obj.username = "dlakfds@gmail.com"
         obj.email = "sdnflqmg@com"
@@ -21,9 +21,18 @@ class HomeViewController: UIViewController {
         
         
         //let obj2 = SegmentifyObject()
-        let obj2 = SegmentifyUserObject()
-        obj2.userID = "181111111"
-        SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)
+        let obj2 = UserChangeModel()
+        obj2.userId = "181111111"
+        SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)*/
+        
+        
+        let checObj = CheckoutModel()
+        checObj.totalPrice = 1
+        SegmentifyManager.sharedManager().sendPurchase(segmentifyObject: checObj) { (response: [RecommendationModel]) in
+            
+        }
+        
+        
     }
     @IBAction func customEventButton(_ sender: Any) {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CustomEventViewController") as? CustomEventViewController

@@ -30,7 +30,7 @@ final class SegmentifyAnalyticWrapper {
         
         //SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setPageViewEvent(category: "Product Page", subCategory: nil, pageUrl: "https://www.mobilecp.boyner.com.tr/mobile2/mbProduct/GetCombinedProducts?ProductID=658386")
         let obj = SegmentifyObject()
-        obj.category = "Search Page"
+        //obj.category = "Search Page"
         //obj.subCategory = "Womenswear"
         
         
@@ -105,8 +105,8 @@ final class SegmentifyAnalyticWrapper {
         let productsDict = ["price":"78","productId":"25799809929","quantity":"1"]
         productsArray.append(productsDict)
         
-        let obj = SegmentifyObject()
-        obj.products = productsArray
+        //let obj = SegmentifyObject()
+        //obj.products = productsArray
         //obj.userID = "1234"
         
         /*SegmentifyManager.sharedManager(appKey: appKey, dataCenterUrl: dataCenterUrl, subDomain: subDomain).setViewBasketEvent(segmentifyObject: obj, callback: { (response: [RecommendationModel]) in

@@ -55,7 +55,7 @@ class BasketViewController: UIViewController {
         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = SegmentifyObject()
-        obj.category = "Basket Page"
+        //obj.category = "Basket Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
@@ -72,17 +72,17 @@ class BasketViewController: UIViewController {
         productsArray.append(firstProduct)
         productsArray.append(secondProduct)
         
-        let obj = SegmentifyObject()
+        /*let obj = SegmentifyObject()
         obj.products = productsArray
         obj.totalPrice = 100.20
         
         SegmentifyManager.sharedManager().sendViewBasket(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
-        }
+        }*/
     }
 
-    func setProductInfos(products : [ProductModel]) {
+    func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
             self.productIds.append(product.productId!)
             self.titles.append(product.name!)
