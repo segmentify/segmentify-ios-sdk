@@ -37,8 +37,8 @@
 		57FFD4D31FD9A814008B1486 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D11FD9A814008B1486 /* Main.storyboard */; };
 		57FFD4D51FD9A814008B1486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D41FD9A814008B1486 /* Assets.xcassets */; };
 		57FFD4D81FD9A814008B1486 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FFD4D61FD9A814008B1486 /* LaunchScreen.storyboard */; };
-		57FFD4E31FD9A814008B1486 /* SegmentifyDenemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4E21FD9A814008B1486 /* SegmentifyDenemeTests.swift */; };
-		57FFD4EE1FD9A814008B1486 /* SegmentifyDenemeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4ED1FD9A814008B1486 /* SegmentifyDenemeUITests.swift */; };
+		57FFD4E31FD9A814008B1486 /* SegmentifyIosDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4E21FD9A814008B1486 /* SegmentifyIosDemoTests.swift */; };
+		57FFD4EE1FD9A814008B1486 /* SegmentifyIosDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4ED1FD9A814008B1486 /* SegmentifyIosDemoTests.swift */; };
 		57FFD4FC1FD9A854008B1486 /* SegmentifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4FB1FD9A854008B1486 /* SegmentifyManager.swift */; };
 		57FFD4FE1FD9ABC1008B1486 /* SegmentifyAnalyticWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4FD1FD9ABC1008B1486 /* SegmentifyAnalyticWrapper.swift */; };
 		57FFD5001FD9AC4C008B1486 /* SegmentifyRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FFD4FF1FD9AC4C008B1486 /* SegmentifyRegisterRequest.swift */; };
@@ -99,10 +99,10 @@
 		57FFD4D71FD9A814008B1486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57FFD4D91FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FFD4DE1FD9A814008B1486 /* SegmentifyIosDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		57FFD4E21FD9A814008B1486 /* SegmentifyDenemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyDenemeTests.swift; sourceTree = "<group>"; };
+		57FFD4E21FD9A814008B1486 /* SegmentifyIosDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyIosDemoTests.swift; sourceTree = "<group>"; };
 		57FFD4E41FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FFD4E91FD9A814008B1486 /* SegmentifyIosDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		57FFD4ED1FD9A814008B1486 /* SegmentifyDenemeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyDenemeUITests.swift; sourceTree = "<group>"; };
+		57FFD4ED1FD9A814008B1486 /* SegmentifyIosDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyIosDemoTests.swift; sourceTree = "<group>"; };
 		57FFD4EF1FD9A814008B1486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FFD4FB1FD9A854008B1486 /* SegmentifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyManager.swift; sourceTree = "<group>"; };
 		57FFD4FD1FD9ABC1008B1486 /* SegmentifyAnalyticWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentifyAnalyticWrapper.swift; sourceTree = "<group>"; };
@@ -238,7 +238,7 @@
 		57FFD4E11FD9A814008B1486 /* SegmentifyIosDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				57FFD4E21FD9A814008B1486 /* SegmentifyDenemeTests.swift */,
+				57FFD4E21FD9A814008B1486 /* SegmentifyIosDemoTests.swift */,
 				57FFD4E41FD9A814008B1486 /* Info.plist */,
 			);
 			name = SegmentifyIosDemoTests;
@@ -248,7 +248,7 @@
 		57FFD4EC1FD9A814008B1486 /* SegmentifyIosDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
-				57FFD4ED1FD9A814008B1486 /* SegmentifyDenemeUITests.swift */,
+				57FFD4ED1FD9A814008B1486 /* SegmentifyIosDemoTests.swift */,
 				57FFD4EF1FD9A814008B1486 /* Info.plist */,
 			);
 			name = SegmentifyIosDemoUITests;
@@ -429,7 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57FFD4E31FD9A814008B1486 /* SegmentifyDenemeTests.swift in Sources */,
+				57FFD4E31FD9A814008B1486 /* SegmentifyIosDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57FFD4EE1FD9A814008B1486 /* SegmentifyDenemeUITests.swift in Sources */,
+				57FFD4EE1FD9A814008B1486 /* SegmentifyIosDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
