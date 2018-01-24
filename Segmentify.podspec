@@ -11,12 +11,12 @@ Pod::Spec.new do |s|
   s.name         = "Segmentify"
   s.version      = "1.0"
   s.summary      = "Segmentify SDK"
-  s.platform      = :ios 
+  s.platform      = :ios, "9.0"
   s.description  = "Segmentify iOS SDK"
   s.homepage     = "https://github.com/segmentify/segmentify-ios-sdk"
   s.license      = "MIT"
   s.author       = { "Ata Anıl Turgay" => "ata.turgay@appcent.mobi" }
   s.source       = { :git => "https://github.com/segmentify/segmentify-ios-sdk.git", :tag => "#{s.version}" }
-  s.source_files  = "Seg/Pod:Classes/.{swift,plist}"
+  s.source_files  = "Pod/Classes/*.{swift,plist,h,m}"
 
 end
