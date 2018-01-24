@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SegmentifyManager {
+public class SegmentifyManager {
 
     static let sdkVersion = "1.0"
     
@@ -73,7 +73,7 @@ class SegmentifyManager {
         return segmentifySharedInstance!
     }
     
-    class func config(appkey: String, dataCenterUrl: String, subDomain: String) {
+    public class func config(appkey: String, dataCenterUrl: String, subDomain: String) {
         SegmentifyManager.setup.apiKey = appkey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain

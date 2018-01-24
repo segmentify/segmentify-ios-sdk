@@ -52,7 +52,7 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
     func request<R: SegmentifyRequestProtocol>(requestModel: R, success: @escaping (_ response: [String:AnyObject]) -> Void, failure: @escaping (_ error: Error) -> Void) {
 
         var url: URL?
-            url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)\(requestModel.apiKey)")
+        url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)\(requestModel.apiKey)")
 
         print("URL : \(String(describing: url!))")
         
@@ -107,6 +107,4 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         }
         dataTask.resume()
     }
-    
-    
 }
