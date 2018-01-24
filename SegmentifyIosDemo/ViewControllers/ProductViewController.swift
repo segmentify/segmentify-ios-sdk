@@ -42,17 +42,17 @@ class ProductViewController: UIViewController {
     }
     
     func sendProductViewEvent() {
-        let ProductObj = ProductModel()
-        ProductObj.title = "Asymmetric Dress in Black"
-        ProductObj.category = "Womenswear"
-        ProductObj.image = "//cdn.shopify.com/s/files/1/1524/5822/products/2014_11_17_Lana_Look034_02_300x300.jpg?v=1475497696"
-        ProductObj.url = "https://segmentify-shop.myshopify.com/products/asymmetric-dress-black"
-        ProductObj.inStock = true
-        ProductObj.brand = "Amelia Toro"
-        ProductObj.price = 578
-        ProductObj.productId = "25799860937"
+        let productObj = ProductModel()
+        productObj.title = "Asymmetric Dress in Black"
+        productObj.category = "Womenswear"
+        productObj.image = "//cdn.shopify.com/s/files/1/1524/5822/products/2014_11_17_Lana_Look034_02_300x300.jpg?v=1475497696"
+        productObj.url = "https://segmentify-shop.myshopify.com/products/asymmetric-dress-black"
+        productObj.inStock = true
+        productObj.brand = "Amelia Toro"
+        productObj.price = 578
+        productObj.productId = "25799860937"
         
-        SegmentifyManager.sharedManager().sendProductView(segmentifyObject: ProductObj) { (response: [RecommendationModel]) in
+        SegmentifyManager.sharedManager().sendProductView(segmentifyObject: productObj) { (response: [RecommendationModel]) in
         }
     }
     
@@ -60,10 +60,10 @@ class ProductViewController: UIViewController {
         
         SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
-        let obj = BasketOperationsModel()
+        let obj = BasketModel()
         obj.productId = "25799860937"
         obj.price = 578
-        obj.quantity = "1"
+        obj.quantity = 1
         obj.step = "add"
         
         SegmentifyManager.sharedManager().sendAddOrRemoveBasket(segmentifyObject: obj)

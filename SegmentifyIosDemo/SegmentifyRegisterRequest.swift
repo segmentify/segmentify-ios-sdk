@@ -44,7 +44,6 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var totalPrice:NSNumber?
     var stock:Bool?
     var oldPrice:NSNumber?
-
     var basketStep:String?
     var basketID:String?
     var quantity:NSNumber?

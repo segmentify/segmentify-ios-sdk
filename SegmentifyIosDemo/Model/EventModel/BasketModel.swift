@@ -8,9 +8,9 @@
 
 import Foundation
 
-class BasketOperationsModel: SegmentifyObject {
+class BasketModel: SegmentifyObject {
     var step:String?
     var price:NSNumber?
-    var quantity:String?
+    var quantity:NSNumber?
     var productId:String?
 }

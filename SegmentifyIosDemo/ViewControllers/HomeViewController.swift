@@ -22,6 +22,13 @@ class HomeViewController: UIViewController {
         let obj2 = UserChangeModel()
         obj2.userId = "222"
         SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: obj2)
+        
+        let update = UserModel()
+        update.username = "dslkfngfls"
+        //update.email = "dsfsd"
+        SegmentifyManager.sharedManager().sendUserUpdate(segmentifyObject: update)
+        
+        
     }
     
     @IBAction func customEventButton(_ sender: Any) {
