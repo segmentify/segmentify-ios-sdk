@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Ata Anıl Turgay" => "ata.turgay@appcent.mobi" }
   s.source       = { :git => "https://github.com/segmentify/segmentify-ios-sdk.git", :tag => "#{s.version}" }
-  s.source_files  = "Pod/Classes/*.{swift,plist,h,m}"
+  s.source_files  = "Pod/Classes/**/*.{Connection,Extension,Model,swift,plist,h,m}"
 
 end
