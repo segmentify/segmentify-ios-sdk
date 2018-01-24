@@ -1,6 +1,6 @@
 //
 //  CategoryViewController.swift
-//  SegmentifyIosDemo
+//  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -28,9 +28,11 @@ class CategoryViewController : UIViewController {
     
     func sendPageViewEvent() {
         
+        SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = PageModel()
         obj.category = "Category Page"
-        //obj.subCategory = "Womenswear"
+        obj.subCategory = "Womenswear"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)

@@ -41,6 +41,7 @@
 		57ADFB922017FD5000FE95D8 /* NotFoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ADFB662017FD5000FE95D8 /* NotFoundViewController.swift */; };
 		57ADFB932017FD5000FE95D8 /* PurchaseSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ADFB672017FD5000FE95D8 /* PurchaseSuccessViewController.swift */; };
 		57ADFB942017FD5000FE95D8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ADFB682017FD5000FE95D8 /* SearchViewController.swift */; };
+		B28D0E8920188382007225E9 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D0E8820188382007225E9 /* ProductViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		57FFD4CA1FD9A814008B1486 /* SegmentifyIosDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentifyIosDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4DE1FD9A814008B1486 /* SegmentifyIosDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FFD4E91FD9A814008B1486 /* SegmentifyIosDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentifyIosDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B28D0E8820188382007225E9 /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductViewController.swift; path = "../../../mobile-sdk-ios-sad/SegmentifyDeneme/ViewControllers/ProductViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				57ADFB622017FD5000FE95D8 /* CategoryViewController.swift */,
 				57ADFB632017FD5000FE95D8 /* CustomEventViewController.swift */,
 				57ADFB642017FD5000FE95D8 /* HomePageViewController.swift */,
+				B28D0E8820188382007225E9 /* ProductViewController.swift */,
 				57ADFB652017FD5000FE95D8 /* HomeViewController.swift */,
 				57ADFB662017FD5000FE95D8 /* NotFoundViewController.swift */,
 				57ADFB672017FD5000FE95D8 /* PurchaseSuccessViewController.swift */,
@@ -384,6 +387,7 @@
 				57ADFB8E2017FD5000FE95D8 /* CategoryViewController.swift in Sources */,
 				57ADFB842017FD5000FE95D8 /* SegmentifyConnectionManager.swift in Sources */,
 				57ADFB7C2017FD5000FE95D8 /* PageModel.swift in Sources */,
+				B28D0E8920188382007225E9 /* ProductViewController.swift in Sources */,
 				57ADFB7D2017FD5000FE95D8 /* ProductModel.swift in Sources */,
 				57ADFB762017FD5000FE95D8 /* ConfigModel.swift in Sources */,
 				57ADFB932017FD5000FE95D8 /* PurchaseSuccessViewController.swift in Sources */,

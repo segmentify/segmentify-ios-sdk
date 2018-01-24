@@ -43,6 +43,8 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var price:NSNumber?
     var totalPrice:NSNumber?
     var stock:Bool?
+    var oldPrice:NSNumber?
+
     var basketStep:String?
     var basketID:String?
     var quantity:NSNumber?
@@ -296,6 +298,10 @@ class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         if let instanceId = self.instanceId {
             dictionary["instanceId"] = instanceId
+        }
+        
+        if let oldPrice = self.oldPrice {
+            dictionary["oldPrice"] = oldPrice
         }
         
         if let type = self.type {

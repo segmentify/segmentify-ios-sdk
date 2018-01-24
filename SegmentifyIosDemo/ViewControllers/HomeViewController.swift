@@ -1,6 +1,6 @@
 //
 //  HomeViewController.swift
-//  SegmentifyIosDemo
+//  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -11,8 +11,9 @@ import UIKit
 class HomeViewController: UIViewController {
 
     @IBAction func loginButtonAction(_ sender: Any) {
-
-        let obj = UserModel() 
+        SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
+        let obj = UserModel()
         obj.username = "dlakfds@gmail.com"
         obj.email = "sdnflqmg@com"
         SegmentifyManager.sharedManager().sendUserLogin(segmentifyObject: obj)
@@ -55,6 +56,11 @@ class HomeViewController: UIViewController {
     
     @IBAction func homeButton(_ sender: Any) {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "HomePageViewController") as? HomePageViewController
+        self.navigationController?.pushViewController(viewController!, animated: true)
+    }
+    
+    @IBAction func productButton(_ sender: Any) {
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ProductViewController") as? ProductViewController
         self.navigationController?.pushViewController(viewController!, animated: true)
     }
     override func viewDidLoad() {

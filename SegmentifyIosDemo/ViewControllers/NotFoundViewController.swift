@@ -1,6 +1,6 @@
 //
 //  NotFoundViewController.swift
-//  SegmentifyIosDemo
+//  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -27,9 +27,10 @@ class NotFoundViewController : UIViewController {
     
     func sendPageViewEvent() {
         
+        SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = PageModel()
-        //obj.category = "404 Page"
-        //obj.subCategory = "Womenswear"
+        obj.category = "404 Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)

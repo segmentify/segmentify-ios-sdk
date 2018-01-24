@@ -10,7 +10,7 @@ import Foundation
 
 class ProductModel:SegmentifyObject {
     var productId:String?
-    var name:String?
+    var title:String?
     var inStock:Bool?
     var url:String?
     var mUrl:String?

@@ -1,6 +1,6 @@
 //
 //  PurchaseSuccessViewController.swift
-//  SegmentifyIosDemo
+//  SegmentifyDeneme
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -31,6 +31,7 @@ class PurchaseSuccessViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sendPageViewEvent()
+        self.sendPurchaseSuccessPageViewEvent()
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,11 +51,32 @@ class PurchaseSuccessViewController: UIViewController {
      */
     
     func sendPageViewEvent() {
-
+        
+         SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
         let obj = PageModel()
-        //obj.category = "Search Page"
-        //obj.subCategory = "Womenswear"
+        obj.category = "Purchase Success Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
+       
+        }
+    }
+    
+    
+    
+    
+    func sendPurchaseSuccessPageViewEvent() {
+        
+        var productsArray = [Any]()
+        let firstProduct = ["price":"78","productId":"25799809929","quantity":"1"]
+        
+        productsArray.append(firstProduct)
+        
+        let obj = CheckoutModel()
+        obj.productList = productsArray
+        obj.totalPrice = 78
+        obj.orderNo = "12313"
+        
+        SegmentifyManager.sharedManager().sendPurchase(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
