@@ -523,7 +523,6 @@ class SegmentifyManager {
 
         let userId = segmentifyObject.userId
         guard userId != nil else {
-            //fatalError("Error - you must fill userId before accessing change user event")
             print("Error - you must fill userId before accessing change user event")
             return
         }
@@ -543,6 +542,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
             print("Error - you must fill userId before accessing sendPurchase event")
@@ -560,14 +560,11 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         if segmentifyObject.orderNo != nil {
             eventRequest.orderNo = segmentifyObject.orderNo
         }
-        
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
-        
         
         setIDAndSendEvent()
     }
@@ -579,6 +576,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
             print("Error - you must fill userId before accessing sendPaymentInformation event method")
@@ -609,6 +607,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
             print("Error - you must fill userId before accessing sendCustomerInformation event method")
@@ -640,6 +639,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
             print("Error - you must fill userId before accessing sendViewBasket event")
@@ -657,7 +657,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -670,6 +669,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let step = segmentifyObject.step
         guard step != nil else {
             print("Error - you must fill step before accessing sendAddOrRemoveBasket event method")
@@ -705,6 +705,7 @@ class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.oldUserId = nil
+        
         let productId = segmentifyObject.productId
         guard productId != nil else {
             print("Error - you must fill productId before accessing sendProductView event")
@@ -752,56 +753,22 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.productID = segmentifyObject.productId
         eventRequest.title = segmentifyObject.title
         eventRequest.price = segmentifyObject.price
         eventRequest.image = segmentifyObject.image
         eventRequest.url = segmentifyObject.url
-        
-        if(eventRequest.imageL != nil) {
-            eventRequest.imageL = segmentifyObject.imageL
-        }
-        
-        if eventRequest.imageM != nil {
-            eventRequest.imageM = segmentifyObject.imageM
-        }
-        
-        if eventRequest.imageS != nil {
-            eventRequest.imageS = segmentifyObject.imageS
-        }
-        
-        if eventRequest.imageXS != nil {
-            eventRequest.imageXS = segmentifyObject.imageXS
-        }
-        
-        if eventRequest.imageXL != nil {
-            eventRequest.imageXL = segmentifyObject.imageXL
-        }
-        
-        if eventRequest.brand != nil {
-            eventRequest.brand = segmentifyObject.brand
-        }
-        
-        if eventRequest.colors != nil {
-            eventRequest.colors = segmentifyObject.colors
-        }
-        if eventRequest.labels != nil {
-            eventRequest.labels = segmentifyObject.labels
-        }
-        
-        if eventRequest.sizes != nil {
-            eventRequest.sizes = segmentifyObject.sizes
-        }
-        
-        if eventRequest.gender != nil {
-            eventRequest.gender = segmentifyObject.gender
-        }
-        
-        if eventRequest.oldPrice != nil {
-            eventRequest.oldPrice = segmentifyObject.oldPrice
-        }
-        
+        eventRequest.imageL = segmentifyObject.imageL
+        eventRequest.imageM = segmentifyObject.imageM
+        eventRequest.imageS = segmentifyObject.imageS
+        eventRequest.imageXS = segmentifyObject.imageXS
+        eventRequest.imageXL = segmentifyObject.imageXL
+        eventRequest.brand = segmentifyObject.brand
+        eventRequest.colors = segmentifyObject.colors
+        eventRequest.labels = segmentifyObject.labels
+        eventRequest.sizes = segmentifyObject.sizes
+        eventRequest.gender = segmentifyObject.gender
+        eventRequest.oldPrice = segmentifyObject.oldPrice
         
         setIDAndSendEvent()
     }
@@ -813,6 +780,7 @@ class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
         let category = segmentifyObject.category
         guard category != nil else {
             print("Error - you must fill category before accessing sendPageView event method")
@@ -830,8 +798,6 @@ class SegmentifyManager {
         if(segmentifyObject.subCategory != nil){
             eventRequest.subCategory = segmentifyObject.subCategory
         }
-        
-        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -853,8 +819,7 @@ class SegmentifyManager {
         eventRequest.oldUserId = nil
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        
-         eventRequest.type = segmentifyObject.type
+        eventRequest.type = segmentifyObject.type
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -905,7 +870,7 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-         setIDAndSendEvent()
+        setIDAndSendEvent()
      }
      
      //Login Event
@@ -928,7 +893,7 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-         setIDAndSendEvent()
+        setIDAndSendEvent()
      }
      
      //Logout Event
@@ -951,8 +916,7 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
-         setIDAndSendEvent()
+        setIDAndSendEvent()
      }
      
     //User Update Event
@@ -970,7 +934,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         if let fullName = fullName {
             eventRequest.fullName = fullName
         }
@@ -1017,12 +980,10 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         if let orderNo = orderNo {
             eventRequest.orderNo = orderNo
         }
         setIDAndSendEventWithCallback(callback: callback)
-        
     }
     
     //Checkout Payment Event
@@ -1040,7 +1001,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1060,7 +1020,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1083,7 +1042,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1103,7 +1061,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         if let price = price {
             eventRequest.price = price
         }
@@ -1131,8 +1088,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
-        
         if let brand = brand {
             eventRequest.brand = brand
         }
@@ -1194,6 +1149,7 @@ class SegmentifyManager {
     func sendCustomEvent(type : String, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.customEventName
         eventRequest.type = type
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         }else {
@@ -1201,7 +1157,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
@@ -1213,6 +1168,7 @@ class SegmentifyManager {
         eventRequest.type = SegmentifyManager.impressionStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         }else {
@@ -1220,7 +1176,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
     }
@@ -1230,6 +1185,7 @@ class SegmentifyManager {
         eventRequest.type = SegmentifyManager.widgetViewStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         }else {
@@ -1237,7 +1193,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
     }
@@ -1247,6 +1202,7 @@ class SegmentifyManager {
         eventRequest.type = SegmentifyManager.widgetViewStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         }else {
@@ -1254,7 +1210,6 @@ class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
     }
@@ -1333,7 +1288,3 @@ class SegmentifyManager {
             task.resume()
     }
 }
-
-
-
-
