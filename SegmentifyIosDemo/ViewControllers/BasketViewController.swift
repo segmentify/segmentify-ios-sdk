@@ -1,6 +1,6 @@
 //
 //  BasketViewController.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -52,15 +52,13 @@ class BasketViewController: UIViewController {
     
     func sendPageViewEvent() {
         
-        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
-        
+    
         let obj = PageModel()
-        //obj.category = "Basket Page"
+        obj.category = "Basket Page"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: obj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
-        //obj.subCategory = "Womenswear"
     }
     
     func sendViewBasketEvent() {
@@ -71,15 +69,6 @@ class BasketViewController: UIViewController {
         
         productsArray.append(firstProduct)
         productsArray.append(secondProduct)
-        
-        /*let obj = SegmentifyObject()
-        obj.products = productsArray
-        obj.totalPrice = 100.20
-        
-        SegmentifyManager.sharedManager().sendViewBasket(segmentifyObject: obj) { (response: [RecommendationModel]) in
-            self.recommendations = response
-            self.createProducts(recommendations: self.recommendations)
-        }*/
     }
 
     func setProductInfos(products : [ProductRecommendationModel]) {
@@ -127,8 +116,6 @@ extension BasketViewController : UITableViewDelegate, UITableViewDataSource {
         
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
-            
-            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {

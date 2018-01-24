@@ -1,6 +1,6 @@
 //
 //  PurchaseSuccessViewController.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -50,9 +50,7 @@ class PurchaseSuccessViewController: UIViewController {
      */
     
     func sendPageViewEvent() {
-        
-         SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
-        
+
         let obj = PageModel()
         //obj.category = "Search Page"
         //obj.subCategory = "Womenswear"

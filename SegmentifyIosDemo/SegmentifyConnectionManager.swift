@@ -1,6 +1,6 @@
 //
 //  SegmentifyConnectionManager.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 8.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
@@ -11,7 +11,7 @@ import Foundation
 class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
     
     static let timeoutInterval = 30
-    static let baseUrl = "/add/events/v1.json"
+    static let baseUrl = "/add/events/v1.json?apiKey="
     
     static let sharedInstance : SegmentifyConnectionManager = {
         let shareManager = SegmentifyConnectionManager()
@@ -37,7 +37,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         configuration.httpMaximumConnectionsPerHost = 3
         
         return URLSession.init(configuration: configuration, delegate: SegmentifyUrlSessionDelegate(), delegateQueue: nil)
-        
     }
     
     func request(urlString: String) {
@@ -50,28 +49,10 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         dataTask.resume()
     }
     
-    //func request<T : SegmentifyRequestProtocol>(requestModel : T, callback: @escaping (_ response : T?) -> Void) {
     func request<R: SegmentifyRequestProtocol>(requestModel: R, success: @escaping (_ response: [String:AnyObject]) -> Void, failure: @escaping (_ error: Error) -> Void) {
 
-        //TODO prod = true olacak
-        //var prod = false
-        
-        /*let emIsProd = SegmentifyTools.retrieveUserDefaults(userKey: "em_is_prod")
-        if emIsProd != nil
-        {
-            prod = emIsProd as! Bool
-         }*/
-        
         var url: URL?
-        //if (prod) {
-            //TODO
-            //test url gibi değişiklik olacak
-            //url = URL.init(string: "https://\(requestModel.subdomain)\(SegmentifyConnectionManager.prodBaseUrl)/\(requestModel.path)")
-        //}
-        //else {
-            //url = URL.init(string: "\(SegmentifyConnectionManager.testBaseUrl):\(requestModel.port)/\(requestModel.path)")
-            url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)?apiKey=8157d334-f8c9-4656-a6a4-afc8b1846e4c")
-        //}
+            url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)\(requestModel.apiKey)")
 
         print("URL : \(String(describing: url!))")
         
@@ -117,7 +98,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                         failure(connectionError!)
                         if (self.debugMode) {
                             print("Server response with failure : \(remoteResponse.statusCode)")
-                            
                         }
                     }
                 }

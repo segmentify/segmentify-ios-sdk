@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 7.12.2017.
 //  Copyright © 2017 Ata Anıl Turgay. All rights reserved.
@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
+        
+        //TODO apiKey, dataCenterUrl ve subDomain kaldırılacak.
+        SegmentifyManager.config(appkey: Constant.segmentifyApiKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         return true
     }

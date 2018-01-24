@@ -1,6 +1,6 @@
 //
 //  HomeViewController.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -11,9 +11,8 @@ import UIKit
 class HomeViewController: UIViewController {
 
     @IBAction func loginButtonAction(_ sender: Any) {
-        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
-        
-        let obj = UserModel()
+
+        let obj = UserModel() 
         obj.username = "dlakfds@gmail.com"
         obj.email = "sdnflqmg@com"
         SegmentifyManager.sharedManager().sendUserLogin(segmentifyObject: obj)

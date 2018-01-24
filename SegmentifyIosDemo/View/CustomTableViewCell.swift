@@ -10,7 +10,6 @@ import UIKit
 
 class CustomTableViewCell: UITableViewCell {
     
-    
     @IBOutlet weak var oldPriceLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var brandLabel: UILabel!

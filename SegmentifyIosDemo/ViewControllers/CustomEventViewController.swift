@@ -1,6 +1,6 @@
 //
 //  CustomEventViewController.swift
-//  SegmentifyDeneme
+//  SegmentifyIosDemo
 //
 //  Created by Ata Anıl Turgay on 19.01.2018.
 //  Copyright © 2018 Ata Anıl Turgay. All rights reserved.
@@ -26,8 +26,6 @@ class CustomEventViewController : UIViewController {
     }
     
     func sendCustomEvent() {
-        
-        SegmentifyManager.config(appkey: Constant.segmentifyAppKey, dataCenterUrl: Constant.segmentifyDataCenterUrl, subDomain: Constant.segmentifySubDomain)
         
         let obj = CustomEventModel()
         let productDict = ["PRICE":"200-500"]
@@ -90,8 +88,6 @@ extension CustomEventViewController : UITableViewDelegate, UITableViewDataSource
         
         cell.onButtonTapped = {
             print(self.productIds[indexPath.row])
-            
-            //SegmentifyManager.sharedManager(appKey: self.appKey, dataCenterUrl: self.dataCenterUrl, subDomain: self.subDomain).setAddOrRemoveBasketStepEvent(basketStep: "add", productID: self.productIds[indexPath.row], price: self.prices[indexPath.row] as NSNumber, quantity:1)
         }
         
         if let imageURL = URL(string:  self.images[indexPath.row]) {
