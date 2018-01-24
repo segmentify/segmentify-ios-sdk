@@ -1,2 +1,2 @@
-# mobile-sdk-ios
+# segmentify-ios-sdk
 Segmentify iOS SDK
