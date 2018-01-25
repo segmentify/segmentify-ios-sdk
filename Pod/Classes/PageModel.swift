@@ -9,6 +9,7 @@
 import Foundation
 
 public class PageModel:SegmentifyObject {
-    var category:String?
-    var subCategory:String?
+   public override init() {}
+   public var category:String?
+   public var subCategory:String?
 }
