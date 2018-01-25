@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.description  = "Segmentify iOS SDK to enable product recommendations and real-time conversion analytics"
   s.homepage     = "https://github.com/segmentify/segmentify-ios-sdk"
   s.license      = "BSD-2"
-  s.author       = { "Cem Ayan" => "cem.ayan@segmentify.com" }
+  s.author       = { "Ata Anıl Turgay" => "ata.turgay@appcent.mobi" }
   s.source       = { :git => "https://github.com/segmentify/segmentify-ios-sdk.git", :tag => "#{s.version}" }
   s.source_files  = "Pod/Classes/**/*"
   s.public_header_files = "Pod/Classes/*.h"
