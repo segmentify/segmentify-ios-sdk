@@ -9,7 +9,7 @@
 import Foundation
 
 public class SegmentifyObject {
-    public override init() {}
+    public init() {}
     public var sessionID:String?
     public var pageUrl:String?
     public var currency:String?
