@@ -29,6 +29,7 @@ public class ProductRecommendationModel : NSCopying {
         return copy
     }
     
+   public init() {}
     
    public init(brand: String, currency: String, image: String, inStock: Bool, inserTime: Int, language: String, lastUpdateTime:Int?, name: String, oldPriceText: String, price: Int?, priceText: String, url: String?, productId: String) {
         
