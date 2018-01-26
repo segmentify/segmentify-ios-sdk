@@ -9,8 +9,9 @@
 import Foundation
 
 public class BasketModel: SegmentifyObject {
-    var step:String?
-    var price:NSNumber?
-    var quantity:NSNumber?
-    var productId:String?
+    public override init() {}
+    public var step:String?
+    public var price:NSNumber?
+    public var quantity:NSNumber?
+    public var productId:String?
 }

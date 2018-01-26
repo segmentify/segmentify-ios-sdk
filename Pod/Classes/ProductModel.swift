@@ -9,24 +9,25 @@
 import Foundation
 
 public class ProductModel:SegmentifyObject {
-    var productId:String?
-    var title:String?
-    var inStock:Bool?
-    var url:String?
-    var mUrl:String?
-    var image:String?
-    var imageXS:String?
-    var imageS:String?
-    var imageM:String?
-    var imageL:String?
-    var imageXL: String?
-    var category:String?
-    var categories:[String]?
-    var brand:String?
-    var price:NSNumber?
-    var oldPrice:NSNumber?
-    var gender:String?
-    var colors:[String]?
-    var sizes:[String]?
-    var labels:[String]?
+    public override init() {}
+    public var productId:String?
+    public var title:String?
+    public var inStock:Bool?
+    public var url:String?
+    public var mUrl:String?
+    public var image:String?
+    public var imageXS:String?
+    public var imageS:String?
+    public var imageM:String?
+    public var imageL:String?
+    public var imageXL: String?
+    public var category:String?
+    public var categories:[String]?
+    public var brand:String?
+    public var price:NSNumber?
+    public var oldPrice:NSNumber?
+    public var gender:String?
+    public var colors:[String]?
+    public var sizes:[String]?
+    public var labels:[String]?
 }

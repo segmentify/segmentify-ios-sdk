@@ -8,8 +8,9 @@
 
 import Foundation
 
-class InteractionModel: SegmentifyObject {
-    var interactionId:String?
-    var impressionId:String?
-    var type:String?
+public class InteractionModel: SegmentifyObject {
+    public override init() {}
+    public var interactionId:String?
+    public var impressionId:String?
+    public var type:String?
 }

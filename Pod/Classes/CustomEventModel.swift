@@ -9,5 +9,6 @@
 import Foundation
 
 public class CustomEventModel : SegmentifyObject {
-    var type:String?
+    public override init() {}
+    public var type:String?
 }

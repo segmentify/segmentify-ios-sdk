@@ -9,9 +9,10 @@
 import Foundation
 
 public class SegmentifyObject {
-    var sessionID:String?
-    var pageUrl:String?
-    var currency:String?
-    var lang:String?
-    var params:[String:AnyObject]?
+    public override init() {}
+    public var sessionID:String?
+    public var pageUrl:String?
+    public var currency:String?
+    public var lang:String?
+    public var params:[String:AnyObject]?
 }

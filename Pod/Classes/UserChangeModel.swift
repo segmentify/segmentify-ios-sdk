@@ -9,6 +9,7 @@
 import Foundation
 
 public class UserChangeModel : SegmentifyObject {
-    var oldUserId:String?
-    var userId:String?
+    public override init() {}
+    public var oldUserId:String?
+    public var userId:String?
 }
