@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreTelephony
 
-class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
+public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var path = "subscription"
     var port = "4243"
     var method = "POST"

@@ -8,9 +8,9 @@
 
 import Foundation
 
-class DynamicItemsModel {
-    var recommendationSource:String?
-    var timeFrame:String?
-    var itemCount:Int?
-    var key:String?
+public class DynamicItemsModel {
+    public var recommendationSource:String?
+    public var timeFrame:String?
+    public var itemCount:Int?
+    public var key:String?
 }

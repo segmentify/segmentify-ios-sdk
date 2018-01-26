@@ -8,32 +8,29 @@
 
 import Foundation
 
-class ProductRecommendationModel : NSCopying {
+public class ProductRecommendationModel : NSCopying {
     
-    var brand:String?
-    var currency:String?
-    var image:String?
-    var inStock:Bool?
-    var insertTime:Int?
-    var language:String?
-    var lastUpdateTime:Int?
-    var name:String?
-    var oldPriceText:String?
-    var price:Int?
-    var priceText:String?
-    var url:String?
-    var productId:String?
+    public var brand:String?
+    public var currency:String?
+    public var image:String?
+    public var inStock:Bool?
+    public var insertTime:Int?
+    public var language:String?
+    public var lastUpdateTime:Int?
+    public var name:String?
+    public var oldPriceText:String?
+    public var price:Int?
+    public var priceText:String?
+    public var url:String?
+    publicvar productId:String?
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = ProductRecommendationModel(brand: brand!, currency: currency!, image: image!, inStock: inStock!, inserTime: insertTime!, language: language!, lastUpdateTime: lastUpdateTime!, name: name!, oldPriceText: oldPriceText!, price: price, priceText: priceText!, url: url, productId: productId!)
         return copy
     }
     
-    init() {
-        
-    }
     
-    init(brand: String, currency: String, image: String, inStock: Bool, inserTime: Int, language: String, lastUpdateTime:Int?, name: String, oldPriceText: String, price: Int?, priceText: String, url: String?, productId: String) {
+   public init(brand: String, currency: String, image: String, inStock: Bool, inserTime: Int, language: String, lastUpdateTime:Int?, name: String, oldPriceText: String, price: Int?, priceText: String, url: String?, productId: String) {
         
         self.brand = brand
         self.currency = currency
