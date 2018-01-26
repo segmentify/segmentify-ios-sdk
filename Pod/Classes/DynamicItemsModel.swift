@@ -9,6 +9,7 @@
 import Foundation
 
 public class DynamicItemsModel {
+    public init() {}
     public var recommendationSource:String?
     public var timeFrame:String?
     public var itemCount:Int?
