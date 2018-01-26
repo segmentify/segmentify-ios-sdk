@@ -9,17 +9,17 @@
 import Foundation
 
 public class RecommendationModel : NSCopying {
-    var notificationTitle:String?
-    var products:[ProductRecommendationModel]?
-    var errorString:String?
-    var instanceId:String?
-    var interactionId:String?
+    public var notificationTitle:String?
+    public var products:[ProductRecommendationModel]?
+    public var errorString:String?
+    public var instanceId:String?
+    public var interactionId:String?
     
-    init() {
+    public init() {
         
     }
     
-    init(notificationTitle: String, products: [ProductRecommendationModel], errorString: String?, instanceId: String?, interactionId: String?) {
+    public init(notificationTitle: String, products: [ProductRecommendationModel], errorString: String?, instanceId: String?, interactionId: String?) {
         self.notificationTitle = notificationTitle
         self.products = products
         self.errorString = errorString
