@@ -51,6 +51,7 @@ public class SegmentifyManager {
     private var recommendationArray = [AnyHashable : Any]()
     private var recommendations :[RecommendationModel] = []
     private var currentKey : String?
+    private var type : String?
     private var staticItemsArrayCount : Int = Int()
     private var currentNewArray : [RecommendationModel]?
     
@@ -199,6 +200,13 @@ public class SegmentifyManager {
                 }
                 self.params = params
                 
+                self.type = obj["type"] as! String
+                
+                guard self.type == "recommendProducts"  else {
+                    print("type is not valid")
+                    return
+                }
+                
                 guard let dynamicItems = self.params!["dynamicItems"] as? String else {
                     print("params['dynamicItems'] is not valid")
                     return
@@ -268,8 +276,8 @@ public class SegmentifyManager {
                     self.keys.append(key)
                     self.dynamicItemsArray.append(dynObj)
                 }
-                self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil)
-                self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys)
+                self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil,interactionId: interId,impressionId : insId)
+                self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
             }
             callback(self.recommendations)
             
@@ -283,7 +291,7 @@ public class SegmentifyManager {
         })
     }
     
-    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?) {
+    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,interactionId: String!,impressionId : String!) {
         
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
         if dynamicItemsArray.count > 0 {
@@ -291,7 +299,7 @@ public class SegmentifyManager {
                 if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
                     if products.count > 0 {
                         
-                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
+                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
                         self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
                     }
                 }
@@ -299,7 +307,7 @@ public class SegmentifyManager {
         }
     }
     
-    private func getRecommendations(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,  keys : [String]) {
+    private func getRecommendations(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,  keys : [String],interactionId : String!,impressionId : String!) {
         if validStaticItem {
             self.recommendationArray["products"] = staticItems as AnyObject
         }
@@ -312,7 +320,7 @@ public class SegmentifyManager {
                 if let products = recommendedProducts[dynObj.key!] as? [[AnyHashable:Any]] {
                     if products.count > 0 {
                         
-                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products)
+                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
                         for product in currentRecModel.products!{
                             if newProdArray.contains(where: {$0.productId==product.productId}){ }
                             else{
@@ -329,11 +337,13 @@ public class SegmentifyManager {
             let newRecModel = RecommendationModel()
             newRecModel.notificationTitle = notificationTitle
             newRecModel.products = newProdArray
+            newRecModel.instanceId = impressionId
+            newRecModel.interactionId = interactionId
             recommendations.append(newRecModel)
         }
     }
     
-    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]]) {
+    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]],interactionId:String!,impressionId:String!) {
         var staticProducts = [ProductRecommendationModel]()
         if !self.products.isEmpty {
             for staticProduct in self.products{
@@ -401,6 +411,9 @@ public class SegmentifyManager {
                 self.currentRecModel.products = self.products
             }
         }
+ 
+        self.currentRecModel.instanceId = impressionId
+        self.currentRecModel.interactionId = interactionId
         self.currentRecModel.notificationTitle = title
     }
     
@@ -527,6 +540,7 @@ public class SegmentifyManager {
             return
         }
         eventRequest.instanceId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         eventRequest.userID = userId
         let lastUserID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -537,10 +551,10 @@ public class SegmentifyManager {
     
     //Checkout Purchase Event
     open func sendPurchase(segmentifyObject : CheckoutModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-        eventRequest.eventName = SegmentifyManager.userOperationEventName
-        eventRequest.userOperationStep = SegmentifyManager.paymentPurchaseStep
+        eventRequest.eventName = SegmentifyManager.checkoutEventName
+        eventRequest.checkoutStep = SegmentifyManager.paymentPurchaseStep
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
         let totalPrice = segmentifyObject.totalPrice
@@ -566,7 +580,7 @@ public class SegmentifyManager {
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
-        setIDAndSendEvent()
+       setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Payment Event
@@ -574,7 +588,7 @@ public class SegmentifyManager {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
         let totalPrice = segmentifyObject.totalPrice
@@ -605,7 +619,7 @@ public class SegmentifyManager {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.customerInformationStep
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
         let totalPrice = segmentifyObject.totalPrice
@@ -637,8 +651,12 @@ public class SegmentifyManager {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
         eventRequest.instanceId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.category = nil
+        eventRequest.type = nil
+        
+        
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -661,13 +679,14 @@ public class SegmentifyManager {
         eventRequest.products  =  productList
         
         setIDAndSendEventWithCallback(callback: callback)
+        
     }
     
     //Add or Remove Basket Event
     open func sendAddOrRemoveBasket(segmentifyObject : BasketModel) {
         eventRequest.eventName = SegmentifyManager.basketOperationsEventName
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
         let step = segmentifyObject.step
@@ -703,7 +722,7 @@ public class SegmentifyManager {
     open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
         let productId = segmentifyObject.productId
@@ -769,8 +788,9 @@ public class SegmentifyManager {
         eventRequest.sizes = segmentifyObject.sizes
         eventRequest.gender = segmentifyObject.gender
         eventRequest.oldPrice = segmentifyObject.oldPrice
+        eventRequest.noUpdate = segmentifyObject.noUpdate
         
-        setIDAndSendEvent()
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Page View Event
@@ -1068,7 +1088,7 @@ public class SegmentifyManager {
     }
     
     //Product View Event
-    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? , callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1120,6 +1140,9 @@ public class SegmentifyManager {
         }
         if let labels = labels {
             eventRequest.labels = labels
+        }
+        if let noUpdate = noUpdate {
+            eventRequest.noUpdate = noUpdate
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1199,7 +1222,7 @@ public class SegmentifyManager {
     
     open func sendClickView(instanceId : String, interactionId : String) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
-        eventRequest.type = SegmentifyManager.widgetViewStep
+        eventRequest.type = SegmentifyManager.clickStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
         

@@ -10,7 +10,6 @@ import Foundation
 
 public class CheckoutModel : SegmentifyObject {
     public override init() {}
-    public var step:String?
     public var totalPrice:NSNumber?
     public var productList:[Any]?
     public var orderNo:String?

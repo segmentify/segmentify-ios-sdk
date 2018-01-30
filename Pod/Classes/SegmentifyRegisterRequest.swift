@@ -82,6 +82,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var params:[String:AnyObject]?
     var instanceId:String?
     var interactionId:String?
+    var noUpdate:Bool?
     
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
@@ -116,6 +117,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     }
     
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
+     
         self.token = dictionary["token"] as? String
         self.apiKey = (dictionary["apiKey"] as? String)!
         self.os = dictionary["os"] as? String
@@ -138,6 +140,10 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     func toDictionary() -> Dictionary<AnyHashable, Any> {
         var dictionary = [AnyHashable: Any]()
         
+        
+        //self.basketStep = ""
+        //self.checkoutStep = ""
+    
         if let token = self.token {
             dictionary["token"] = token as Any?
         }
@@ -215,6 +221,9 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         if let age = self.age {
             dictionary["age"] = age as Any?
         }
+        if let noUpdate = self.noUpdate {
+            dictionary["noUpdate"] = noUpdate as Any?
+        }
         
         if let memberSince = self.memberSince {
             dictionary["memberSince"] = memberSince as Any?
@@ -267,13 +276,24 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
             dictionary["url"] = url
         }
         
-        if let checkoutStep = self.checkoutStep {
-            dictionary["step"] = checkoutStep
+        if self.eventName == "CHECKOUT" && checkoutStep != nil{
+             dictionary["step"] = self.checkoutStep
         }
         
-        if let basketStep = self.basketStep {
-            dictionary["step"] = basketStep
+        if self.eventName == "BASKET_OPERATIONS" && basketStep != nil{
+            dictionary["step"] = self.basketStep
         }
+        
+        
+       // if let basketStep = self.basketStep {
+        
+            //dictionary["step"] = basketStep
+        //}
+
+        //if let checkoutStep = self.checkoutStep {
+            //dictionary["step"] = checkoutStep
+        //}
+
         
         if let orderNo = self.orderNo {
             dictionary["orderNo"] = orderNo
@@ -301,7 +321,9 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         dictionary["extra"] = extra as Any?
         
+
         return dictionary
+
     }
     
     convenience init?(withJsonString jsonString: String) {

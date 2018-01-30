@@ -30,4 +30,5 @@ public class ProductModel:SegmentifyObject {
     public var colors:[String]?
     public var sizes:[String]?
     public var labels:[String]?
+    public var noUpdate:Bool?
 }
