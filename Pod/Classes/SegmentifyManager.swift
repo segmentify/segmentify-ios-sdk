@@ -200,7 +200,7 @@ public class SegmentifyManager {
                 }
                 self.params = params
                 
-                self.type = obj["type"] as! String
+                self.type = obj["type"] as? String
                 
                 guard self.type == "recommendProducts"  else {
                     print("type is not valid")
