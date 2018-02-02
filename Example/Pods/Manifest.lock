@@ -1,0 +1,12 @@
+PODS:
+  - Segmentify (1.0.11)
+
+DEPENDENCIES:
+  - Segmentify
+
+SPEC CHECKSUMS:
+  Segmentify: 17f2929d868a63e6b42ee10afff3677c48f7fb1e
+
+PODFILE CHECKSUM: f29fb8fc4369cf24a4b3edeb7cd8d835669ebbe5
+
+COCOAPODS: 1.2.1
