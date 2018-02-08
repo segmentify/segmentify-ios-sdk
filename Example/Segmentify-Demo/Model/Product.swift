@@ -2,23 +2,35 @@
 //  Product.swift
 //  Segmentify-Demo
 //
-//  Created by Mehmet Koca on 1.02.2018.
+//  Created by Mehmet Koca on 5.02.2018.
 //  Copyright © 2018 mehmetkoca. All rights reserved.
 //
 
 import Foundation
-import Segmentify
-
-struct Product {
-    var images : [String]?
-    var titles : [String]?
-    var prices : [Int]?
-    var oldPrices : [String]?
-    var productIds : [String]?
-    var brands: [String]?
-    var urls: [String]?
-    var infoStock: [Bool]?
-    var category: [String]?
+public class Product {
+    var image : String?
+    var name : String?
+    var price: NSNumber?
+    var oldPrice: Int?
+    var productId: String?
+    var brand: String?
+    var url: String?
+    var inStock: Bool?
+    var category: String?
     var categories: [String]?
-    var names : [String]?
+    
+    init() {}
+
+    init(image: String?, name: String?, price : NSNumber?, oldPrice: Int?, productId: String?, brand: String?, url: String?, inStock: Bool?, category: String?, categories: [String]?) {
+        self.image = image
+        self.name = name
+        self.price = price!
+        self.oldPrice = oldPrice!
+        self.productId = productId
+        self.brand = brand
+        self.url = url
+        self.inStock = inStock
+        self.category = category
+        self.categories = categories
+    }
 }

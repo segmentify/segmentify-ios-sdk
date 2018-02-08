@@ -11,7 +11,7 @@ import Foundation
 public class ProductModel:SegmentifyObject {
     public override init() {}
     public var productId:String?
-    public var title:String?
+    public var name:String?
     public var inStock:Bool?
     public var url:String?
     public var mUrl:String?

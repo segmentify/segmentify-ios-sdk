@@ -15,4 +15,5 @@ public class SegmentifyObject {
     public var currency:String?
     public var lang:String?
     public var params:[String:AnyObject]?
+    public var nextPage: Bool?
 }

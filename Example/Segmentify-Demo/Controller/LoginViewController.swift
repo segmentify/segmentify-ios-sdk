@@ -21,6 +21,8 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 7
         // login visitor corner radius
         loginVisitorButton.layer.cornerRadius = 7
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
