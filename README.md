@@ -19,5 +19,5 @@ For other integrations you can check [Master Integration](https://www.segmentify
 ## License
 
 Segmentify iOS SDK is available under the BSD-2 license.
-Please check LICENSE file to learn more about details.
+Please check LICENSE file to learn more about details
 
