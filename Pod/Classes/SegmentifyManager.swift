@@ -192,6 +192,7 @@ public class SegmentifyManager {
                 print("error : \(response["statusCode"]! as Any)")
                 return
             }
+            self.recommendations.removeAll()
             
             for (_, obj) in responses[0].enumerated() {
                 self.minusIndex = Int()
@@ -352,8 +353,49 @@ public class SegmentifyManager {
         }
         
         for (_, obj) in products.enumerated() {
-            
             let proObj = ProductRecommendationModel()
+            if let noUpdate = obj["noUpdate"] {
+                proObj.noUpdate = noUpdate as? Bool
+            }
+            if let labels = obj["labels"] {
+                proObj.labels = labels as? [String]
+            }
+            if let sizes = obj["sizes"] {
+                proObj.sizes = sizes as? [String]
+            }
+            if let colors = obj["colors"] {
+                proObj.colors = colors as? [String]
+            }
+            if let gender = obj["gender"] {
+                proObj.gender = gender as? String
+            }
+            if let categories = obj["categories"] {
+                proObj.categories = categories as? [String]
+            }
+            if let category = obj["category"] {
+                proObj.category = category as? String
+            }
+            if let imageXL = obj["imageXL"] {
+                proObj.imageXL = imageXL as? String
+            }
+            if let imageL = obj["imageL"] {
+                proObj.imageL = imageL as? String
+            }
+            if let imageM = obj["imageM"] {
+                proObj.imageM = imageM as? String
+            }
+            if let imageS = obj["imageS"] {
+                proObj.imageS = imageS as? String
+            }
+            if let imageXS = obj["imageXS"] {
+                proObj.imageXS = imageXS as? String
+            }
+            if let mUrl = obj["mUrl"] {
+                proObj.mUrl = mUrl as? String
+            }
+            if let url = obj["url"] {
+                proObj.url = url as? String
+            }
             if let brand = obj["brand"] {
                 proObj.brand = brand as? String
             }
@@ -363,32 +405,18 @@ public class SegmentifyManager {
             if let productId = obj["productId"] {
                 proObj.productId = productId as? String
             }
-            if let currency = obj["currency"] {
-                proObj.currency = currency as? String
-            }
             if let image = obj["image"] {
                 proObj.image = image as? String
             }
             if let inStock = obj["inStock"] {
                 proObj.inStock = inStock as? Bool
             }
-            if let insertTime = obj["insertTime"] {
-                proObj.insertTime = insertTime as? Int
-            }
-            if let language = obj["language"] {
-                proObj.language = language as? String
-            }
+            
             if let price = obj["price"] {
-                proObj.price = price as? Int
+                proObj.price = price as? NSNumber
             }
-            if let priceText = obj["priceText"] {
-                proObj.priceText = priceText as? String
-            }
-            if let oldPriceText = obj["oldPriceText"] {
-                proObj.oldPriceText = oldPriceText as? String
-            }
-            if let lastUpdateTime = obj["lastUpdateTime"] {
-                proObj.lastUpdateTime = lastUpdateTime as? Int
+            if let oldPrice = obj["oldPrice"] {
+                proObj.oldPrice = oldPrice as? NSNumber
             }
             
             if self.products.contains(where: {$0.productId == proObj.productId}) {
@@ -730,7 +758,7 @@ public class SegmentifyManager {
             print("Error - you must fill productId before accessing sendProductView event")
             return
         }
-        let title = segmentifyObject.title
+        let title = segmentifyObject.name
         guard title != nil else {
             print("Error - you must fill title before accessing sendProductView event method")
             return
@@ -773,7 +801,7 @@ public class SegmentifyManager {
             }
         }
         eventRequest.productID = segmentifyObject.productId
-        eventRequest.title = segmentifyObject.title
+        eventRequest.title = segmentifyObject.name
         eventRequest.price = segmentifyObject.price
         eventRequest.image = segmentifyObject.image
         eventRequest.url = segmentifyObject.url
