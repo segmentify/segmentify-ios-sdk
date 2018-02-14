@@ -43,7 +43,9 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
     func request(urlString: String) {
         let url = URL.init(string: urlString)
         let request = URLRequest.init(url: url!)
-        debugPrint("Request to : \(url!)")
+        if SegmentifyManager.logStatus == true {
+            debugPrint("Request to : \(url!)")
+        }
         let dataTask = SegmentifyConnectionManager.urlSession.dataTask(with: request) {data, response, error in
             debugPrint("Server responded. Error  : \(String(describing: error))")
         }
@@ -55,8 +57,9 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         var url: URL?
         url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)\(requestModel.apiKey)")
         
-        
-        print("URL : \(String(describing: url!))")
+        if SegmentifyManager.logStatus == true {
+            print("URL : \(String(describing: url!))")
+        }
         
         var request = URLRequest.init(url: url!)
         request.httpMethod = requestModel.method
@@ -64,31 +67,40 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         request.setValue(requestModel.subdomain, forHTTPHeaderField: "Origin")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = TimeInterval(SegmentifyConnectionManager.timeoutInterval)
-        print("request header : \(String(describing: (request.allHTTPHeaderFields)!))")
+        if SegmentifyManager.logStatus == true {
+            print("request header : \(String(describing: (request.allHTTPHeaderFields)!))")
+        }
         
         if (requestModel.method == "POST" || requestModel.method == "PUT") {
             request.httpBody = try! JSONSerialization.data(withJSONObject: requestModel.toDictionary(), options: [])
         }
         
         if (request.httpBody != nil) {
-            debugPrint("Request to \(url!) with body \(String.init(data: request.httpBody!, encoding: String.Encoding.utf8)!)")
+            if SegmentifyManager.logStatus == true {
+                debugPrint("Request to \(url!) with body \(String.init(data: request.httpBody!, encoding: String.Encoding.utf8)!)")
+            }
         }
         
         let dataTask = SegmentifyConnectionManager.urlSession.dataTask(with: request) {data, response, connectionError in
-            print("request : \(request)")
+            if SegmentifyManager.logStatus == true {
+                print("request : \(request)")
+            }
             if connectionError == nil {
                 let remoteResponse = response as! HTTPURLResponse
                 
                 DispatchQueue.main.async {
                     if (connectionError == nil && (remoteResponse.statusCode == 200 || remoteResponse.statusCode == 201)) {
                         if (self.debugMode) {
-                            print("Server response code : \(remoteResponse.statusCode)")
+                            if SegmentifyManager.logStatus == true {
+                                print("Server response code : \(remoteResponse.statusCode)")
+                            }
                         }
                         
                         do {
                             let jsonObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String:AnyObject]
-                            
-                            print("response : \(String(describing: jsonObject))")
+                            if SegmentifyManager.logStatus == true {
+                                print("response : \(String(describing: jsonObject))")
+                            }
                             
                             success(jsonObject!)
                             

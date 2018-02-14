@@ -66,6 +66,13 @@ public class SegmentifyManager {
     private static var segmentifySharedInstance: SegmentifyManager?
     private var eventRequest = SegmentifyRegisterRequest()
     private static let setup = ConfigModel()
+    // log status variable. Default: true
+    static var logStatus: Bool = true
+    // set log status
+    public class func logStatus(isVisible: Bool) -> Bool{
+        logStatus = isVisible
+        return isVisible
+    }
     
     public class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {

@@ -35,8 +35,6 @@ class PurchaseSuccessViewController: UIViewController {
         sendPageViewRequest()
         sendPurchaseRequest()
         BasketProducts.basketProducts = []
-        var xxx = [Int]()
-        
     }
     
     func sendPageViewRequest() {
