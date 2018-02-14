@@ -30,7 +30,7 @@ class BasketDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orderNoRandom = Int(arc4random_uniform(100000)+1)
+        orderNoRandom = Int(arc4random_uniform(10000000)+1)
         // set corner radius to purchase button
         purchaseButton.layer.cornerRadius = 7
         setTotalPrice()

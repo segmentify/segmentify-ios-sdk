@@ -7,6 +7,7 @@
 //
 
 import Foundation
+// for HomeViewController sections
 class Section {
     var sectionName: String?
     var sectionObjects: [Product]?

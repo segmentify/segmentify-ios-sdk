@@ -16,17 +16,9 @@ class PurchaseSuccessViewController: UIViewController {
     var recommendations: [RecommendationModel] = []
     var tableViewProducts = [Product]()
     var OrderDetailItem = Product()
-    
     var instanceId = String()
-    
     var productsArray = [Any]()
-    
     @IBOutlet weak var lblorderNo: UILabel!
-//    @IBOutlet weak var imgView: UIImageView!
-//    @IBOutlet weak var lblproductName: UILabel!
-//    @IBOutlet weak var lblproductBrand: UILabel!
-//    @IBOutlet weak var lblproductPrice: UILabel!
-    
     var orderNo = Int()
     var totalPrice = Double()
     
@@ -40,12 +32,11 @@ class PurchaseSuccessViewController: UIViewController {
         Order No: \(orderNo)
         Total Price: €  \(totalPrice)
         """
-//        lblproductName.text = self.OrderDetailItem.name
-//        lblproductBrand.text = self.OrderDetailItem.brand
-//        lblproductPrice.text = "€ \(self.OrderDetailItem.price!)"
         sendPageViewRequest()
         sendPurchaseRequest()
         BasketProducts.basketProducts = []
+        var xxx = [Int]()
+        
     }
     
     func sendPageViewRequest() {
@@ -99,20 +90,6 @@ class PurchaseSuccessViewController: UIViewController {
             }
         }
     }
-    
-//    func loadImage() {
-//        if let imageURL = URL(string: self.OrderDetailItem.image!) {
-//            DispatchQueue.global().async {
-//                let data = try? Data(contentsOf: imageURL)
-//                if let data = data {
-//                    let image = UIImage(data: data)
-//                    DispatchQueue.main.async {
-//                        self.imgView.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "productDetailForPurchaseVC" {

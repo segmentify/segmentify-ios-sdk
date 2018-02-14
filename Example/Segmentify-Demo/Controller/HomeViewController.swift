@@ -11,7 +11,6 @@ import Segmentify
 class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collecView: UICollectionView!
-    //var userInfo = String()
     @IBOutlet weak var notificationTitle: UILabel!
     
     var recommendations: [RecommendationModel] = []
@@ -66,7 +65,6 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
     
     func setProductInfosTableView(products : [ProductRecommendationModel]) {
         let staticProduct = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/product_necklace_mariacalderara_anchor-necklace01_300x300.jpg?v=1475499408", name: "Necklace Mariacalderara", price: 775, oldPrice: 350, productId: "25800412873", brand: "Maria Calderara", url: "https://segmentify-shop.myshopify.com/products/anchor-necklace-no-color", inStock: true, category: "Accessories", categories: ["Accessories"])
@@ -154,7 +152,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeProductCell", for: indexPath) as? HomeProductCell
-        // tableViewProducts[indexPath.row].name
         cell?.lblProductName.text = sectionsArray[indexPath.section].sectionObjects?[indexPath.row].name
         cell?.lblBrandName.text = sectionsArray[indexPath.section].sectionObjects![indexPath.row].brand
         cell?.lblPrice.text = "€ "+String(describing: sectionsArray[indexPath.section].sectionObjects![indexPath.row].price!)
@@ -186,10 +183,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        
         return cell!
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

@@ -21,25 +21,11 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 7
         // login visitor corner radius
         loginVisitorButton.layer.cornerRadius = 7
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "login" {
-//            let destinationViewController = segue.destination as? HomeViewController
-//            destinationViewController?.userInfo = "Segmentify🙋🏻‍♂️"
-//        }
-//        if segue.identifier == "loginVisitor"{
-//            let destinationViewController = segue.destination as? HomeViewController
-//            destinationViewController?.userInfo = "Visitor👻"
-//        }
-        
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
@@ -52,5 +38,4 @@ class LoginViewController: UIViewController {
         user2Obj.userId = "123456"
         SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: user2Obj)
     }
-    
 }
