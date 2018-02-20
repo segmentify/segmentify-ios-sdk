@@ -1,11 +1,11 @@
 PODS:
-  - Segmentify (1.0.12)
+  - Segmentify (1.0.13)
 
 DEPENDENCIES:
   - Segmentify
 
 SPEC CHECKSUMS:
-  Segmentify: 218beb3081d17133c106fd1c70ae1ae1ed7b2352
+  Segmentify: 9de016ad652926adaf571adce3af9d527ad1edf6
 
 PODFILE CHECKSUM: f29fb8fc4369cf24a4b3edeb7cd8d835669ebbe5
 

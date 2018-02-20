@@ -14,6 +14,7 @@ class BasketProductCell: UITableViewCell {
     @IBOutlet weak var lblProductName: UILabel!
     @IBOutlet weak var lblProductBrand: UILabel!
     @IBOutlet weak var lblProductPrice: UILabel!
+    @IBOutlet weak var lblProductCount: UILabel!
     
     
     override func awakeFromNib() {

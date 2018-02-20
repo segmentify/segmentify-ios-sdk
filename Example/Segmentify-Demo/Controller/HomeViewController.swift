@@ -12,14 +12,13 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collecView: UICollectionView!
     @IBOutlet weak var notificationTitle: UILabel!
+    @IBOutlet weak var categoryTitle: UIButton!
+    @IBOutlet weak var basketButton: UIBarButtonItem!
     
     var recommendations: [RecommendationModel] = []
-
     var collectionViewProducts = [Product]()
     var tableViewProducts = [Product]()
-    
     var sectionsArray = [Section]()
-    
     var instanceId = String()
     var currentProduct = Product()
     // selected button's tag number
@@ -111,10 +110,9 @@ class HomeViewController: UIViewController {
         let userObj = UserModel()
         userObj.username = "test"
         userObj.email = "test@segmentify.com"
-        
         SegmentifyManager.sharedManager().sendUserLogout(segmentifyObject: userObj)
-        
         performSegue(withIdentifier: "logoutShow", sender: nil)
+        BasketProducts.basketProducts = []
     }
 }
 
@@ -163,12 +161,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         basketObj.quantity = 1
         basketObj.step = "add"
         
-        
         cell?.onButtonTapped = {
             // set tapped button's tag to buttonIndex variable
             self.buttonIndex = (cell?.basketButton.tag)!
+            if self.sectionsArray[indexPath.section].sectionObjects![self.buttonIndex].count == 0 {
+                BasketProducts.basketProducts.append(self.sectionsArray[indexPath.section].sectionObjects![self.buttonIndex])
+            }
             // 👻 self.tableViewProducts[self.buttonIndex]
-            BasketProducts.basketProducts.append(self.sectionsArray[indexPath.section].sectionObjects![self.buttonIndex])
+            for product in BasketProducts.basketProducts {
+                if product.productId == self.sectionsArray[indexPath.section].sectionObjects![self.buttonIndex].productId {
+                    product.count = product.count + 1
+                }
+            }
+            
             SegmentifyManager.sharedManager().sendAddOrRemoveBasket(segmentifyObject: basketObj)
         }
         
