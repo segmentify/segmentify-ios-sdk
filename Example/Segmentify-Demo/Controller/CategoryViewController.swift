@@ -11,7 +11,7 @@ import Segmentify
 
 class CategoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-
+    
     var recommendations: [RecommendationModel] = []
     var tableViewProducts = [Product]()
     var instanceId = String()
