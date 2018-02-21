@@ -82,6 +82,7 @@ class ProductDetailViewController: UIViewController {
     }
     
     @IBAction func addToBasketBUtton(_ sender: UIButton) {
+        
         sendAddToBasketRequest()
     }
     
@@ -92,7 +93,15 @@ class ProductDetailViewController: UIViewController {
             //destinationViewController?.basketDetailItem = self.productDetailItem
             destinationViewController?.instanceId = self.instanceId
             // 👻
-            BasketProducts.basketProducts.append(productDetailItem)
+            if self.productDetailItem.count == 0 {
+                BasketProducts.basketProducts.append(self.productDetailItem)
+            }
+            for product in BasketProducts.basketProducts {
+                if product.productId == self.productDetailItem.productId {
+                    product.count = product.count + 1
+                }
+            }
+            
         }
        
         if segue.identifier == "productDetailForProductVC" {

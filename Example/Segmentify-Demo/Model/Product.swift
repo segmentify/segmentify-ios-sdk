@@ -18,6 +18,7 @@ public class Product {
     var inStock: Bool?
     var category: String?
     var categories: [String]?
+    var count: Int!
     
     init() {}
 
@@ -32,5 +33,6 @@ public class Product {
         self.inStock = inStock
         self.category = category
         self.categories = categories
+        self.count = 0
     }
 }

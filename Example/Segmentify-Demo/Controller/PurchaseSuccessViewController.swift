@@ -12,7 +12,6 @@ import Segmentify
 class PurchaseSuccessViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
     var recommendations: [RecommendationModel] = []
     var tableViewProducts = [Product]()
     var OrderDetailItem = Product()
@@ -49,7 +48,7 @@ class PurchaseSuccessViewController: UIViewController {
     func sendPurchaseRequest() {
         let purchObj = CheckoutModel()
         for prod in BasketProducts.basketProducts {
-            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "1"]
+            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "\(prod.count!)"]
             self.productsArray.append(product)
         }
         purchObj.productList = productsArray
@@ -119,7 +118,6 @@ extension PurchaseSuccessViewController: UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderRecommendationCell", for: indexPath) as? OrderRecommendationCell
-        
         
         cell?.lblProductName.text = tableViewProducts[indexPath.row].name
         cell?.lblProductBrand.text = tableViewProducts[indexPath.row].brand

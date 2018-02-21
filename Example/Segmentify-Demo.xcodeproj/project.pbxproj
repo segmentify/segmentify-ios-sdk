@@ -26,6 +26,8 @@
 		F0D0B4AF2029DB4C00E649B4 /* BasketProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D0B4AE2029DB4C00E649B4 /* BasketProductCell.swift */; };
 		F0D0B4B32029EE3A00E649B4 /* BasketRecommendationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D0B4B22029EE3A00E649B4 /* BasketRecommendationCell.swift */; };
 		F0D0B4B5202C387600E649B4 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D0B4B4202C387600E649B4 /* Section.swift */; };
+		F0DE637D203579710025C67A /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DE637C203579710025C67A /* CategoryViewController.swift */; };
+		F0DE637F20357C570025C67A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DE637E20357C570025C67A /* CategoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		F0D0B4AE2029DB4C00E649B4 /* BasketProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketProductCell.swift; sourceTree = "<group>"; };
 		F0D0B4B22029EE3A00E649B4 /* BasketRecommendationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketRecommendationCell.swift; sourceTree = "<group>"; };
 		F0D0B4B4202C387600E649B4 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		F0DE637C203579710025C67A /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		F0DE637E20357C570025C67A /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		F832BA76E86CF969599342D9 /* Pods-Segmentify-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Segmentify-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		FD6B502BCF14664C57EF6829 /* Pods_Segmentify_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Segmentify_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -91,6 +95,7 @@
 				F02C320B201B5EE9004DB770 /* ProductDetailViewController.swift */,
 				F02C320F201B6B5F004DB770 /* BasketDetailViewController.swift */,
 				F0C02874201F032C00FF0083 /* PurchaseSuccessViewController.swift */,
+				F0DE637C203579710025C67A /* CategoryViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -104,6 +109,7 @@
 				F063CCF52020670D000E4D05 /* HomeCollectionViewCell.swift */,
 				F0D0B4AE2029DB4C00E649B4 /* BasketProductCell.swift */,
 				F0D0B4B22029EE3A00E649B4 /* BasketRecommendationCell.swift */,
+				F0DE637E20357C570025C67A /* CategoryCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,10 +280,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0DE637F20357C570025C67A /* CategoryCell.swift in Sources */,
 				F0D0B4B5202C387600E649B4 /* Section.swift in Sources */,
 				F09748F42023499600A9F592 /* LoginViewController.swift in Sources */,
 				F01CE7DB201F650500275A12 /* RecommendationCell.swift in Sources */,
 				F0D0B4B32029EE3A00E649B4 /* BasketRecommendationCell.swift in Sources */,
+				F0DE637D203579710025C67A /* CategoryViewController.swift in Sources */,
 				F02C31FA201B4EFD004DB770 /* HomeViewController.swift in Sources */,
 				F02C320C201B5EE9004DB770 /* ProductDetailViewController.swift in Sources */,
 				F0D0B4A72028846700E649B4 /* Product.swift in Sources */,

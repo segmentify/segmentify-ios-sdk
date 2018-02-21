@@ -30,6 +30,9 @@ class BasketDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if BasketProducts.basketProducts.count == 0 {
+            purchaseButton.isEnabled = false
+        }
         orderNoRandom = Int(arc4random_uniform(10000000)+1)
         // set corner radius to purchase button
         purchaseButton.layer.cornerRadius = 7
@@ -42,7 +45,7 @@ class BasketDetailViewController: UIViewController {
     func calculateTotalPrice() -> Double {
         var total: Double = 0.0
         for product in BasketProducts.basketProducts {
-            total = total + Double(truncating: product.price!)
+            total = total + (product.price?.doubleValue)! * Double(product.count!)
         }
         return total
     }
@@ -53,13 +56,11 @@ class BasketDetailViewController: UIViewController {
         totalPrice.text = "Total amount of items: €\(totalOrderPrice!)"
     }
     
-    
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
         pageViewObj.category = "Basket Page"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
-            
             
         }
     }
@@ -67,7 +68,7 @@ class BasketDetailViewController: UIViewController {
     func sendCheckoutRequest() {
         let checkObj = CheckoutModel()
         for prod in BasketProducts.basketProducts {
-            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "1"]
+            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "\(prod.count!)"]
             self.productsArray.append(product)
         }
         checkObj.productList = productsArray
@@ -79,11 +80,6 @@ class BasketDetailViewController: UIViewController {
             self.createProducts(recommendations: self.recommendations)
         }
     }
-    
-    @IBAction func purchaseButton(_ sender: UIButton) {
-        
-    }
-    
     
     func setProductInfos(products : [ProductRecommendationModel]) {
         for product in products {
@@ -135,6 +131,11 @@ class BasketDetailViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func returnHome(_ sender: UIBarButtonItem) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
 }
 
 extension BasketDetailViewController: UITableViewDataSource, UITableViewDelegate {
@@ -156,6 +157,7 @@ extension BasketDetailViewController: UITableViewDataSource, UITableViewDelegate
             cell?.lblProductName.text = BasketProducts.basketProducts[indexPath.row].name
             cell?.lblProductBrand.text = BasketProducts.basketProducts[indexPath.row].brand
             cell?.lblProductPrice.text = "€ \(BasketProducts.basketProducts[indexPath.row].price!)"
+            cell?.lblProductCount.text = "Piece: \(BasketProducts.basketProducts[indexPath.row].count!)"
             
             if let imageURL = URL(string: BasketProducts.basketProducts[indexPath.row].image!) {
                 DispatchQueue.global().async {
@@ -176,7 +178,11 @@ extension BasketDetailViewController: UITableViewDataSource, UITableViewDelegate
         BasketProducts.basketProducts.remove(at: indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        
         setTotalPrice()
+        if BasketProducts.basketProducts.count == 0 {
+            purchaseButton.isEnabled = false
+        }
     }
 }
 
