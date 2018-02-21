@@ -48,7 +48,7 @@ class PurchaseSuccessViewController: UIViewController {
     func sendPurchaseRequest() {
         let purchObj = CheckoutModel()
         for prod in BasketProducts.basketProducts {
-            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "\(prod.count)"]
+            let product = ["price": "\(prod.price!)", "productId": "\(prod.productId!)", "quantity": "\(prod.count!)"]
             self.productsArray.append(product)
         }
         purchObj.productList = productsArray
