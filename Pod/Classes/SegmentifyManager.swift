@@ -267,24 +267,36 @@ public class SegmentifyManager {
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
+                    var key = String()
                     if let recoomendationSource = object["recommendationSource"] {
                         self.recommendationSourceKeys.append(recoomendationSource as! String)
                         dynObj.recommendationSource = recoomendationSource as? String
+                        key = "\(object["recommendationSource"]!)"
                     }
-                    if let timeFrameKey = object["timeFrame"] {
+                    let timeFrameKey = object["timeFrame"]
+                    if timeFrameKey != nil {
                         self.timeFrameKeys.append(timeFrameKey as! String)
                         dynObj.timeFrame = timeFrameKey as? String
+                        key = key + "|\(object["timeFrame"]!)"
+                    } else {
+                        key = key + "|null"
                     }
                     if let itemCount = object["itemCount"] {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
-                    let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
-                    dynObj.key = key
-                    self.keys.append(key)
-                    self.dynamicItemsArray.append(dynObj)
+                    //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
+                    if key != "" {
+                        dynObj.key = key
+                        self.keys.append(key)
+                        self.dynamicItemsArray.append(dynObj)
+                    }
                 }
+                
+                
+                
                 self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil,interactionId: interId,impressionId : insId)
+                
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
             }
             callback(self.recommendations)
