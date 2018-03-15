@@ -34,7 +34,7 @@ public class SegmentifyManager {
     static let logoutStep = "signout"
     static let updateUserStep = "update"
     static let impressionStep = "impression"
-    static let widgetViewStep = "widget_view"
+    static let widgetViewStep = "widget-view"
     static let clickStep = "click"
     
     static let startIndex = 0
