@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/Segmentify/Pod/Classes/SegmentifyManager.swift"
-            timestampString = "542815056.095515"
+            timestampString = "543240368.076193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
-            landmarkName = "createRecomendation(title:itemCount:products:interactionId:impressionId:)"
+            startingLineNumber = "550"
+            endingLineNumber = "550"
+            landmarkName = "sendUserLogin(segmentifyObject:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/Segmentify/Pod/Classes/SegmentifyManager.swift"
+            timestampString = "543240368.076692"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "637"
+            endingLineNumber = "637"
+            landmarkName = "sendChangeUser(segmentifyObject:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

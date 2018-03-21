@@ -161,6 +161,9 @@ public class SegmentifyManager {
     
     // MARK: Request Builders
     func setIDAndSendEvent() {
+        
+      
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -188,11 +191,16 @@ public class SegmentifyManager {
         } else {
             self.sendEvent(callback: { (response: [RecommendationModel]) in
                 callback(response)
+                self.clearData()
+                
             })
         }
     }
+
     
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+        
+  
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -246,9 +254,6 @@ public class SegmentifyManager {
                     return
                 }
                 
-                if staticItemsDic.count > 0 {
-                    self.validStaticItem = true
-                }
                 
                 var insId : String = String()
                 var interId : String = String()
@@ -266,6 +271,13 @@ public class SegmentifyManager {
                 self.sendImpression(instanceId: insId, interactionId: interId)
            
         
+                if staticItemsDic.count > 0 {
+                    self.validStaticItem = true
+                    
+                    self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
+                    
+                }
+                
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
                     var key = String()
@@ -296,7 +308,7 @@ public class SegmentifyManager {
                 
                 
                 
-                self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil,interactionId: interId,impressionId : insId)
+                
                 
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
 
@@ -315,20 +327,55 @@ public class SegmentifyManager {
         })
     }
     
-    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,interactionId: String!,impressionId : String!) {
+    private func clearData() {
+       self.params?.removeAll()
+        self.paramsArr?.removeAll()
+        self.validStaticItem = false
+        self.staticItems?.removeAll()
+        self.recommendationSourceKeys.removeAll()
+        self.timeFrameKeys.removeAll()
+        self.keys.removeAll()
+        self.itemCounts.removeAll()
+        self.dynamicItemsArray.removeAll()
+        self.recommendationArray.removeAll()
+        self.recommendations.removeAll()
+        self.currentKey = nil
+        self.type = nil
+        self.staticItemsArrayCount = Int()
+        self.currentNewArray?.removeAll()
+        self.key = String()
+        self.newRecommendationArray.removeAll()
+        
+        self.currentRecModel = RecommendationModel()
+        self.products.removeAll()
+        //self.eventRequest = SegmentifyRegisterRequest()
+    }
+    
+    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>,interactionId: String!,impressionId : String!) {
+        
+        
+        print("prdct:")
+        print(recommendedProducts)
         
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
-        if dynamicItemsArray.count > 0 {
-            for dynObj in dynamicItemsArray {
+        
                 if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
                     if products.count > 0 {
                         
-                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
+                        self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
+                        
+                        let newRecModel = RecommendationModel()
+                        newRecModel.notificationTitle = self.currentRecModel.notificationTitle
+                        newRecModel.products = self.currentRecModel.products
+                        newRecModel.instanceId = self.currentRecModel.instanceId
+                        newRecModel.interactionId = self.currentRecModel.interactionId
+                        recommendations.append(newRecModel)
+                        
                         self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
                     }
                 }
-            }
-        }
+        
+        
         
         
     }
@@ -347,11 +394,15 @@ public class SegmentifyManager {
                     if products.count > 0 {
                         
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
+                        var counter = 0
                         for product in currentRecModel.products!{
                             if newProdArray.contains(where: {$0.productId==product.productId}){ }
-                            else{
-                                if newProdArray.count <= (validStaticItem ? staticItemsArrayCount +  dynObj.itemCount! - 1 : dynObj.itemCount! - 1) {
-                                    newProdArray.append(product)
+                            else {
+                                if counter < dynObj.itemCount! {
+                                    if(!checkIfItemRecommendedBefore(item: product)) {
+                                        newProdArray.append(product)
+                                        counter = counter + 1
+                                    }
                                 }
                             }
                         }
@@ -369,13 +420,19 @@ public class SegmentifyManager {
         }
     }
     
-    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]],interactionId:String!,impressionId:String!) {
-        var staticProducts = [ProductRecommendationModel]()
-        if !self.products.isEmpty {
-            for staticProduct in self.products{
-                staticProducts.append(staticProduct.copy() as! ProductRecommendationModel)
+    private func checkIfItemRecommendedBefore(item : ProductRecommendationModel) -> Bool {
+        for model in self.recommendations {
+            for recoItem in model.products! {
+                if(recoItem.productId==item.productId) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+    
+    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]], interactionId:String!, impressionId:String!) {
+        
         
         for (_, obj) in products.enumerated() {
             let proObj = ProductRecommendationModel()
@@ -447,20 +504,7 @@ public class SegmentifyManager {
             if self.products.contains(where: {$0.productId == proObj.productId}) {
                 minusIndex = minusIndex! - 1
             } else {
-                if !staticProducts.isEmpty{
-                    var flag = true
-                    for staticProduct in staticProducts{
-                        if staticProduct.productId == proObj.productId{
-                            flag = false
-                            break
-                        }
-                    }
-                    if flag{
-                        self.products.append(proObj)
-                    }
-                }else{
-                    self.products.append(proObj)
-                }
+                addProduct(proObj: proObj)
                 self.currentRecModel.products = self.products
             }
         }
@@ -468,6 +512,12 @@ public class SegmentifyManager {
         self.currentRecModel.instanceId = impressionId
         self.currentRecModel.interactionId = interactionId
         self.currentRecModel.notificationTitle = title
+    }
+    
+    private func addProduct(proObj : ProductRecommendationModel) {
+        if !self.products.contains(where: {$0.productId == proObj.productId}) {
+            self.products.append(proObj)
+         }
     }
     
     //EVENTS

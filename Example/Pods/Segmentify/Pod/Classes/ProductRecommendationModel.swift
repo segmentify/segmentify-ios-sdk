@@ -33,13 +33,14 @@ public class ProductRecommendationModel : NSCopying {
     public var noUpdate:Bool?
     
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = ProductRecommendationModel(productId: productId!, name: name!, inStock: inStock!, url: url!, mUrl: mUrl!, image: image!, imageXS: imageXS!, imageS: imageS!, imageM: imageM!, imageL: imageL!, imageXL: imageXL!, category: category!, categories: categories!, brand: brand!, price: price!, oldPrice: oldPrice!, gender: gender!, colors: colors!, sizes: sizes!, labels: labels!, noUpdate: noUpdate!)
+        let copy = ProductRecommendationModel(productId: productId
+            , name: name, inStock: inStock, url: url, mUrl: mUrl, image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category, categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes, labels: labels, noUpdate: noUpdate)
         return copy
     }
     
    public init() {}
     
-    public init(productId: String, name: String, inStock: Bool, url: String, mUrl: String, image: String, imageXS: String, imageS: String, imageM: String, imageL: String, imageXL: String, category: String, categories: [String], brand: String, price: NSNumber, oldPrice: NSNumber, gender: String, colors: [String], sizes: [String], labels: [String], noUpdate: Bool) {
+    public init(productId: String?, name: String?, inStock: Bool?, url: String?, mUrl: String?, image: String?, imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: String?, categories: [String]?, brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?, labels: [String]?, noUpdate: Bool?) {
         
         self.productId = productId
         self.name = name

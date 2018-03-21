@@ -51,13 +51,13 @@ class HomeViewController: UIViewController {
     //
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_61869cb94553e000" {
+            if recObj.instanceId == "ext_home_rec" {
                 self.setProductInfosTableView(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
             }
             
-            if recObj.instanceId == "ext_home_rec" {
+            if recObj.instanceId == "scn_61869cb94553e000" {
                 self.setProductInfosCollectionView(products: recObj.products!)
                 self.notificationTitle.text = recObj.notificationTitle
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
