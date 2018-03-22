@@ -117,7 +117,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     }
     
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
-     
+        
         self.token = dictionary["token"] as? String
         self.apiKey = (dictionary["apiKey"] as? String)!
         self.os = dictionary["os"] as? String
@@ -138,7 +138,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     }
     
     
-     func clearVariables(){
+    func clearVariables(){
         self.category = nil
         self.categories = nil
         self.subCategory = nil
@@ -196,10 +196,10 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     
     func toDictionary() -> Dictionary<AnyHashable, Any> {
         var dictionary = [AnyHashable: Any]()
-    
+        
         //self.basketStep = ""
         //self.checkoutStep = ""
-    
+        
         if let token = self.token {
             dictionary["token"] = token as Any?
         }
@@ -336,7 +336,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         }
         
         if self.eventName == "CHECKOUT" && checkoutStep != nil{
-             dictionary["step"] = self.checkoutStep
+            dictionary["step"] = self.checkoutStep
         }
         
         if self.eventName == "BASKET_OPERATIONS" && basketStep != nil{
@@ -402,10 +402,10 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         
         dictionary["extra"] = extra as Any?
-
-    
+        
+        
         return dictionary
-
+        
     }
     
     convenience init?(withJsonString jsonString: String) {

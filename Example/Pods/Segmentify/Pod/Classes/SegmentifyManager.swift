@@ -162,7 +162,7 @@ public class SegmentifyManager {
     // MARK: Request Builders
     func setIDAndSendEvent() {
         
-      
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -196,11 +196,11 @@ public class SegmentifyManager {
             })
         }
     }
-
+    
     
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         
-  
+        
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -269,8 +269,8 @@ public class SegmentifyManager {
                     self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
                 }
                 self.sendImpression(instanceId: insId, interactionId: interId)
-           
-        
+                
+                
                 if staticItemsDic.count > 0 {
                     self.validStaticItem = true
                     
@@ -311,9 +311,9 @@ public class SegmentifyManager {
                 
                 
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
-
-             
-
+                
+                
+                
             }
             callback(self.recommendations)
             
@@ -328,7 +328,7 @@ public class SegmentifyManager {
     }
     
     private func clearData() {
-       self.params?.removeAll()
+        self.params?.removeAll()
         self.paramsArr?.removeAll()
         self.validStaticItem = false
         self.staticItems?.removeAll()
@@ -359,21 +359,21 @@ public class SegmentifyManager {
         
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
         
-                if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
-                    if products.count > 0 {
-                        
-                        self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
-                        
-                        let newRecModel = RecommendationModel()
-                        newRecModel.notificationTitle = self.currentRecModel.notificationTitle
-                        newRecModel.products = self.currentRecModel.products
-                        newRecModel.instanceId = self.currentRecModel.instanceId
-                        newRecModel.interactionId = self.currentRecModel.interactionId
-                        recommendations.append(newRecModel)
-                        
-                        self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
-                    }
-                }
+        if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
+            if products.count > 0 {
+                
+                self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
+                
+                let newRecModel = RecommendationModel()
+                newRecModel.notificationTitle = self.currentRecModel.notificationTitle
+                newRecModel.products = self.currentRecModel.products
+                newRecModel.instanceId = self.currentRecModel.instanceId
+                newRecModel.interactionId = self.currentRecModel.interactionId
+                recommendations.append(newRecModel)
+                
+                self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
+            }
+        }
         
         
         
@@ -508,7 +508,7 @@ public class SegmentifyManager {
                 self.currentRecModel.products = self.products
             }
         }
- 
+        
         self.currentRecModel.instanceId = impressionId
         self.currentRecModel.interactionId = interactionId
         self.currentRecModel.notificationTitle = title
@@ -517,7 +517,7 @@ public class SegmentifyManager {
     private func addProduct(proObj : ProductRecommendationModel) {
         if !self.products.contains(where: {$0.productId == proObj.productId}) {
             self.products.append(proObj)
-         }
+        }
     }
     
     //EVENTS
@@ -687,7 +687,7 @@ public class SegmentifyManager {
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
-       setIDAndSendEventWithCallback(callback: callback)
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Payment Event
