@@ -646,10 +646,14 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         eventRequest.userID = userId
-        let lastUserID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        let lastUserID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
         eventRequest.oldUserId = lastUserID
         UserDefaults.standard.set(segmentifyObject.userId, forKey: "UserSentUserId")
-        setIDAndSendEvent()
+        UserDefaults.standard.set(userId, forKey: "SEGMENTIFY_USER_ID")
+        
+        if(lastUserID != userId){
+            setIDAndSendEvent()
+        }
     }
     
     //Checkout Purchase Event
