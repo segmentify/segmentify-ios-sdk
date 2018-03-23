@@ -40,7 +40,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             SegmentifyManager.sharedManager().sendUserLogin(segmentifyObject: userObj)
             
             let user2Obj = UserChangeModel()
-            user2Obj.userId = "123456789"
+            user2Obj.userId = "1234567892"
             SegmentifyManager.sharedManager().sendChangeUser(segmentifyObject: user2Obj)
         } else {
             let alert = UIAlertController(title: "Alert", message: "Invalid username or password.", preferredStyle: UIAlertControllerStyle.alert)

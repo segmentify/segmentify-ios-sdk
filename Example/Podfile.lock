@@ -1,12 +1,12 @@
 PODS:
-  - Segmentify (1.0.13)
+  - Segmentify (1.0.16)
 
 DEPENDENCIES:
   - Segmentify
 
 SPEC CHECKSUMS:
-  Segmentify: 9de016ad652926adaf571adce3af9d527ad1edf6
+  Segmentify: 2317c2055bd2eeb931cc3d4cce0b3f6e781b2286
 
 PODFILE CHECKSUM: f29fb8fc4369cf24a4b3edeb7cd8d835669ebbe5
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.4.0
