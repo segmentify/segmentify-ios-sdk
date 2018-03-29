@@ -1384,14 +1384,14 @@ public class SegmentifyManager {
 
     func initSessionId(sessionId :String!){
         let nw  =  NSDate().timeIntervalSince1970
-        let nowInterval = round(NSDate().timeIntervalSince1970)
+        _ = round(NSDate().timeIntervalSince1970)
         let nowDate = Date(timeIntervalSince1970: nw)
         
-        var y=nowDate.addingTimeInterval(TimeInterval(SegmentifyManager._sessionKeepSecond))
-        var newDate = y
-        var addedInterval = round(newDate.timeIntervalSince1970)
-        let endDate = Date(timeIntervalSince1970: TimeInterval(addedInterval))
-        UserDefaults.standard.set(sessionId as? String ,forKey: "SEGMENTIFY_SESSION_ID")
+        let y=nowDate.addingTimeInterval(TimeInterval(SegmentifyManager._sessionKeepSecond))
+        let newDate = y
+        let addedInterval = round(newDate.timeIntervalSince1970)
+        _ = Date(timeIntervalSince1970: TimeInterval(addedInterval))
+        UserDefaults.standard.set(sessionId ,forKey: "SEGMENTIFY_SESSION_ID")
         UserDefaults.standard.set(addedInterval,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
 
    
@@ -1435,19 +1435,19 @@ public class SegmentifyManager {
                                 
                                 let nw  =  NSDate().timeIntervalSince1970
                                 let nowInterval = round(NSDate().timeIntervalSince1970)
-                                let nowDate = Date(timeIntervalSince1970: nw)
+                                _ = Date(timeIntervalSince1970: nw)
 
            
-                                if let key =  UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP"){
-                                    var lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                if UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP") != nil{
+                                    let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
                                     UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                 } else{
                                     self.initSessionId(sessionId: jsonArray[1] as? String)
                                 }
 
                                 
-                                var getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
-                                var getLastStampToDouble = getLastStamp  as! Double
+                                let getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                let getLastStampToDouble = getLastStamp  as! Double
                                 if(nowInterval<=getLastStampToDouble ){
                                     
                                     print(nowInterval)
@@ -1457,7 +1457,7 @@ public class SegmentifyManager {
                                     self.eventRequest.sessionID = sessionId
                                 }
                                 else{
-                                    var lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                    let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
                                     UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                     UserDefaults.standard.set(jsonArray[0] as? String ,forKey: "SEGMENTIFY_SESSION_ID")
                                     self.eventRequest.sessionID = jsonArray[0] as? String
