@@ -68,11 +68,18 @@ public class SegmentifyManager {
     private static let setup = ConfigModel()
     // log status variable. Default: true
     static var logStatus: Bool = true
+    static var _sessionKeepSecond: Int = 86400
     // set log status
     public class func logStatus(isVisible: Bool) -> Bool{
         logStatus = isVisible
         return isVisible
     }
+    
+    public class func setSessionKeepSecond(sessionKeepSecond: Int) -> Int{
+        _sessionKeepSecond = sessionKeepSecond
+        return sessionKeepSecond
+    }
+    
     
     public class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
@@ -399,7 +406,8 @@ public class SegmentifyManager {
                             if newProdArray.contains(where: {$0.productId==product.productId}){ }
                             else {
                                 if counter < dynObj.itemCount! {
-                                    if(!checkIfItemRecommendedBefore(item: product)) {
+                                    if( dynObj.recommendationSource == "RECOMMENDATION_SOURCE_LAST_VISITED" ||
+                                        !checkIfItemRecommendedBefore(item: product)) {
                                         newProdArray.append(product)
                                         counter = counter + 1
                                     }
@@ -1372,9 +1380,27 @@ public class SegmentifyManager {
         eventRequest.extra.removeAll()
     }
     
+    
+
+    func initSessionId(sessionId :String!){
+        let nw  =  NSDate().timeIntervalSince1970
+        let nowInterval = round(NSDate().timeIntervalSince1970)
+        let nowDate = Date(timeIntervalSince1970: nw)
+        
+        var y=nowDate.addingTimeInterval(TimeInterval(SegmentifyManager._sessionKeepSecond))
+        var newDate = y
+        var addedInterval = round(newDate.timeIntervalSince1970)
+        let endDate = Date(timeIntervalSince1970: TimeInterval(addedInterval))
+        UserDefaults.standard.set(sessionId as? String ,forKey: "SEGMENTIFY_SESSION_ID")
+        UserDefaults.standard.set(addedInterval,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+
+   
+    }
+    
     //private func
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
+        
         var requestURL : URL!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=1")!
@@ -1403,9 +1429,39 @@ public class SegmentifyManager {
                             if jsonArray.count > 1 {
                                 self.eventRequest.userID = jsonArray[0] as? String
                                 self.eventRequest.sessionID = jsonArray[1] as? String
+                                self.initSessionId(sessionId: jsonArray[1] as? String)
                                 UserDefaults.standard.set(self.eventRequest.userID, forKey: "SEGMENTIFY_USER_ID")
                             } else {
-                                self.eventRequest.sessionID = jsonArray[0] as? String
+                                
+                                let nw  =  NSDate().timeIntervalSince1970
+                                let nowInterval = round(NSDate().timeIntervalSince1970)
+                                let nowDate = Date(timeIntervalSince1970: nw)
+
+           
+                                if let key =  UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP"){
+                                    var lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                    UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                } else{
+                                    self.initSessionId(sessionId: jsonArray[1] as? String)
+                                }
+
+                                
+                                var getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                var getLastStampToDouble = getLastStamp  as! Double
+                                if(nowInterval<=getLastStampToDouble ){
+                                    
+                                    print(nowInterval)
+                                    print(getLastStampToDouble )
+                                    
+                                    let sessionId = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID") as? String
+                                    self.eventRequest.sessionID = sessionId
+                                }
+                                else{
+                                    var lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                    UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                    UserDefaults.standard.set(jsonArray[0] as? String ,forKey: "SEGMENTIFY_SESSION_ID")
+                                    self.eventRequest.sessionID = jsonArray[0] as? String
+                                }
                             }
                         }
                         success()
@@ -1419,7 +1475,9 @@ public class SegmentifyManager {
     }
 }
 
-
+public func daysBetween(start: Date, end: Date) -> Int {
+    return Calendar.current.dateComponents([.day], from: start, to: end).day!
+}
 
 
 

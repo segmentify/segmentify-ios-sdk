@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SegmentifyManager.config(appkey: "8157d334-f8c9-4656-a6a4-afc8b1846e4c", dataCenterUrl: "https://dce1.segmentify.com", subDomain: "segmentify-shop.myshopify.com")
         // option to show or hide console log
         let _ = SegmentifyManager.logStatus(isVisible: true)
+        let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)
         return true
     }
 
