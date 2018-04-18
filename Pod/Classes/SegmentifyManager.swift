@@ -45,6 +45,7 @@ public class SegmentifyManager {
     private var staticItems : [AnyHashable : Any]?
     private var recommendationSourceKeys : [String] = []
     private var timeFrameKeys : [String] = []
+    private var scoreKeys : [String] = []
     private var keys : [String] = []
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
@@ -294,6 +295,7 @@ public class SegmentifyManager {
                         key = "\(object["recommendationSource"]!)"
                     }
                     let timeFrameKey = object["timeFrame"]
+                    let scoreKey = object["score"]
                     if timeFrameKey != nil {
                         self.timeFrameKeys.append(timeFrameKey as! String)
                         dynObj.timeFrame = timeFrameKey as? String
@@ -305,6 +307,14 @@ public class SegmentifyManager {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
+                    
+                    if scoreKey != nil {
+                        self.scoreKeys.append(scoreKey as! String)
+                        dynObj.score = scoreKey as? String
+                        key = key + "|\(object["score"]!)"
+                    }
+                    
+                    
                     //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
                     if key != "" {
                         dynObj.key = key

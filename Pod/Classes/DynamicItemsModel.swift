@@ -14,4 +14,5 @@ public class DynamicItemsModel {
     public var timeFrame:String?
     public var itemCount:Int?
     public var key:String?
+    public var score:String?
 }
