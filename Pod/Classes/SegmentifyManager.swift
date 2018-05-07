@@ -307,7 +307,7 @@ public class SegmentifyManager {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
-                    
+                    //Score key
                     if scoreKey != nil {
                         self.scoreKeys.append(scoreKey as! String)
                         dynObj.score = scoreKey as? String

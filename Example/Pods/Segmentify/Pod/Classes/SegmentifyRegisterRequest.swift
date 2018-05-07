@@ -110,6 +110,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         self.deviceType = deviceType
         self.os = device.systemName
+        self.lang = "EN"
         self.osVersion = device.systemVersion
         self.deviceName = device.name
         self.local = NSLocale.preferredLanguages.first
@@ -119,6 +120,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
         
         self.token = dictionary["token"] as? String
+  
         self.apiKey = (dictionary["apiKey"] as? String)!
         self.os = dictionary["os"] as? String
         self.osVersion = dictionary["osVersion"] as? String

@@ -1,12 +1,16 @@
 PODS:
-  - Segmentify (1.0.16)
+  - Segmentify (1.0.19)
 
 DEPENDENCIES:
   - Segmentify
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Segmentify
+
 SPEC CHECKSUMS:
-  Segmentify: 2317c2055bd2eeb931cc3d4cce0b3f6e781b2286
+  Segmentify: 5c741c0ac5e4334b218d4cc582fcf62cb6afe108
 
 PODFILE CHECKSUM: f29fb8fc4369cf24a4b3edeb7cd8d835669ebbe5
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

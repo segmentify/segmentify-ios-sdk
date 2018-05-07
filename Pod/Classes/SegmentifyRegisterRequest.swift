@@ -110,6 +110,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         self.deviceType = deviceType
         self.os = device.systemName
+        self.lang = "EN"
         self.osVersion = device.systemVersion
         self.deviceName = device.name
         self.local = NSLocale.preferredLanguages.first

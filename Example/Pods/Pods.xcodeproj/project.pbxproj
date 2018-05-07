@@ -18,18 +18,18 @@
 		49E92947939CBBCC29BA93F8C316AFA5 /* SegmentifyTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1DFC71D28F592E90DBE171D6405BB8 /* SegmentifyTools.swift */; };
 		4C8EDDADF97B5E39C2D56A10686A9AD9 /* SegmentifyRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C91C847574D520F1190620A2CA84E53 /* SegmentifyRequestProtocol.swift */; };
 		50D1AF991FCAC0A96A1F285E990C6CA5 /* SegmentifyRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35826D2B5AA78D8B54211C312C39A7EC /* SegmentifyRegisterRequest.swift */; };
-		638975D3B9BD469493DE55AA76FCAB6F /* Segmentify-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB97207A0D2E703453FA5CE761647DA /* Segmentify-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		638975D3B9BD469493DE55AA76FCAB6F /* Segmentify-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7157B303610E16CED7F361E1CF70E848 /* Segmentify-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65EF0A3F6F23EB049B22D24689062AE8 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = 6660ED6178516A5E34F4E3EB9D8E8E73 /* Info.plist */; };
 		79380CCBF0B0AB427A0F3BE64F6C2C28 /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C408328C7C5EECB9BFF9B190273286 /* PageModel.swift */; };
 		B1E595346E4A3BCA7282E63400081FB1 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C47DB30D475D58A66E7A18F3F67AC /* ProductModel.swift */; };
 		B428654F6CD36A4D297146A640CB2FD5 /* SegmentifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C938B6FC4775F8197E324B9E363F36E2 /* SegmentifyManager.swift */; };
 		BB66C730C22EF17A666D2B702A9BC195 /* SegmentifyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AE89705BB55CEB9FD5BA9F74C15AF8 /* SegmentifyObject.swift */; };
-		BD82AE9FDF23054D630C97837694F7CA /* Pods-Segmentify-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E8705FE8A3D6D3125DAC3F10CE5DE2F8 /* Pods-Segmentify-Demo-dummy.m */; };
+		BD82AE9FDF23054D630C97837694F7CA /* Pods-Segmentify-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 80129448BF573F43C2176EAD1E01B0CA /* Pods-Segmentify-Demo-dummy.m */; };
 		C32D0306352BD2341D9AEAE990C73505 /* Segmentify.h in Headers */ = {isa = PBXBuildFile; fileRef = 19EEE61731B7DDEFC81D10ADAD778133 /* Segmentify.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C4224CB5770BE8984FF2A34E9C699C63 /* Segmentify-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2476014616229DD3ABA47D3B69F48AC8 /* Segmentify-dummy.m */; };
+		C4224CB5770BE8984FF2A34E9C699C63 /* Segmentify-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 973865E7FD40993773439B680C5C9AB3 /* Segmentify-dummy.m */; };
 		C736A93C55B3636C4151E3D7A0315479 /* RecommendationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A525EDF9F87014F987C11D9932BC0AE /* RecommendationModel.swift */; };
 		D3432E1507256FF2969FD011F57E2716 /* BasketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6EA1967910E4061F4003BF731FC70 /* BasketModel.swift */; };
-		D7DCBB0F88818438DA16BC57D523AAA8 /* Pods-Segmentify-Demo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 333C592E4A0C590FEBC5ED41BAAA39D9 /* Pods-Segmentify-Demo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D7DCBB0F88818438DA16BC57D523AAA8 /* Pods-Segmentify-Demo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BCC26D6B24CDCADB285E67CED4C68AF /* Pods-Segmentify-Demo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E9505BE9C09BEEFD820100D9C7AF6832 /* SegmentifyUrlSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E11CA794472356B41AD08F29B5B308 /* SegmentifyUrlSessionDelegate.swift */; };
 		F169F411A572CB3F9B852F2748096C3B /* ProductRecommendationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DF9520E5C12DD8424CF5CD6194BBBC /* ProductRecommendationModel.swift */; };
 		F16C694A6387455C88BE70F3E437C074 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711B247DD983281A50024293E6E9D2BA /* Constant.swift */; };
@@ -49,49 +49,49 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00351067332FA47F594063033F87F79C /* Segmentify-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Segmentify-prefix.pch"; sourceTree = "<group>"; };
 		010F47CB35399B8BCD55017FDA08E933 /* CheckoutModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CheckoutModel.swift; path = Pod/Classes/CheckoutModel.swift; sourceTree = "<group>"; };
+		073A555AC829B88C8F90BACCB9E91A43 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		191010FE6BC99A7E2483471F76473263 /* Segmentify-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Segmentify-prefix.pch"; sourceTree = "<group>"; };
 		19EEE61731B7DDEFC81D10ADAD778133 /* Segmentify.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Segmentify.h; path = Pod/Classes/Segmentify.h; sourceTree = "<group>"; };
-		22575DA25FD55DBB1D5D4C0BF14AB5C0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2476014616229DD3ABA47D3B69F48AC8 /* Segmentify-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Segmentify-dummy.m"; sourceTree = "<group>"; };
+		1BCC26D6B24CDCADB285E67CED4C68AF /* Pods-Segmentify-Demo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Segmentify-Demo-umbrella.h"; sourceTree = "<group>"; };
 		2A525EDF9F87014F987C11D9932BC0AE /* RecommendationModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecommendationModel.swift; path = Pod/Classes/RecommendationModel.swift; sourceTree = "<group>"; };
-		333C592E4A0C590FEBC5ED41BAAA39D9 /* Pods-Segmentify-Demo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Segmentify-Demo-umbrella.h"; sourceTree = "<group>"; };
+		300A8096A6B5CCA8B0EA69CB624D81E5 /* Pods-Segmentify-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Segmentify-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		30284ED1F66CF91B4792E0F6389D64A2 /* Pods-Segmentify-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Segmentify-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		35826D2B5AA78D8B54211C312C39A7EC /* SegmentifyRegisterRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyRegisterRequest.swift; path = Pod/Classes/SegmentifyRegisterRequest.swift; sourceTree = "<group>"; };
-		3B3A4AF45685332BAC2F02D6F5825BE3 /* Pods-Segmentify-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Segmentify-Demo-resources.sh"; sourceTree = "<group>"; };
-		4CB97207A0D2E703453FA5CE761647DA /* Segmentify-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Segmentify-umbrella.h"; sourceTree = "<group>"; };
+		3B7620C3F0931FEF05A546CFC3082E19 /* Segmentify.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Segmentify.xcconfig; sourceTree = "<group>"; };
 		4F6BCC1080859AE525EC81375B0EDF38 /* UserChangeModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserChangeModel.swift; path = Pod/Classes/UserChangeModel.swift; sourceTree = "<group>"; };
+		50CBBE234569A8F3C640EFD351655BD4 /* Pods-Segmentify-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Segmentify-Demo-frameworks.sh"; sourceTree = "<group>"; };
 		54AE89705BB55CEB9FD5BA9F74C15AF8 /* SegmentifyObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyObject.swift; path = Pod/Classes/SegmentifyObject.swift; sourceTree = "<group>"; };
 		5D05E7625461F781CEE44985723A0EA6 /* Array.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Array.swift; path = Pod/Classes/Array.swift; sourceTree = "<group>"; };
 		5FBDCABAECFA436CF83FA4BD2D149F3F /* ConfigModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigModel.swift; path = Pod/Classes/ConfigModel.swift; sourceTree = "<group>"; };
+		65A8AC9FBADCF0B80B03B655E706C707 /* Pods-Segmentify-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Segmentify-Demo-resources.sh"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		661FE238DBB77754F48029D9B1B64B87 /* Pods-Segmentify-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Segmentify-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
 		6660ED6178516A5E34F4E3EB9D8E8E73 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pod/Classes/Info.plist; sourceTree = "<group>"; };
 		67A8E00C7CB4358EB18726E999A2BFBF /* Segmentify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Segmentify.framework; path = Segmentify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		711B247DD983281A50024293E6E9D2BA /* Constant.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = Pod/Classes/Constant.swift; sourceTree = "<group>"; };
+		7157B303610E16CED7F361E1CF70E848 /* Segmentify-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Segmentify-umbrella.h"; sourceTree = "<group>"; };
+		763E49CB99ABFA1EAC63AC64C89A876C /* Pods-Segmentify-Demo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Segmentify-Demo.modulemap"; sourceTree = "<group>"; };
 		7C91C847574D520F1190620A2CA84E53 /* SegmentifyRequestProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyRequestProtocol.swift; path = Pod/Classes/SegmentifyRequestProtocol.swift; sourceTree = "<group>"; };
+		80129448BF573F43C2176EAD1E01B0CA /* Pods-Segmentify-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Segmentify-Demo-dummy.m"; sourceTree = "<group>"; };
 		88DF9520E5C12DD8424CF5CD6194BBBC /* ProductRecommendationModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductRecommendationModel.swift; path = Pod/Classes/ProductRecommendationModel.swift; sourceTree = "<group>"; };
-		8FC44C34470F2584D6B6DBD6CB1999F9 /* Pods-Segmentify-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Segmentify-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		905200A6D44358118298FE44029C85BE /* Pods-Segmentify-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Segmentify-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		973865E7FD40993773439B680C5C9AB3 /* Segmentify-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Segmentify-dummy.m"; sourceTree = "<group>"; };
 		977BA4AB1DD70E60AD94AA00F28D873E /* InteractionModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InteractionModel.swift; path = Pod/Classes/InteractionModel.swift; sourceTree = "<group>"; };
 		9B5C47DB30D475D58A66E7A18F3F67AC /* ProductModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductModel.swift; path = Pod/Classes/ProductModel.swift; sourceTree = "<group>"; };
 		A4CD238C0331D9E4C8FF6D759BF534D3 /* UserModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserModel.swift; path = Pod/Classes/UserModel.swift; sourceTree = "<group>"; };
 		AF3E8C85B71561063F989824FBE45BF9 /* DynamicItemsModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DynamicItemsModel.swift; path = Pod/Classes/DynamicItemsModel.swift; sourceTree = "<group>"; };
-		BC5AC9FEE9898D6DBE28FD0ED3143D50 /* Segmentify.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Segmentify.modulemap; sourceTree = "<group>"; };
 		C65A75F80204235007AED64A04F4A14B /* CustomEventModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomEventModel.swift; path = Pod/Classes/CustomEventModel.swift; sourceTree = "<group>"; };
 		C6E11CA794472356B41AD08F29B5B308 /* SegmentifyUrlSessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyUrlSessionDelegate.swift; path = Pod/Classes/SegmentifyUrlSessionDelegate.swift; sourceTree = "<group>"; };
 		C938B6FC4775F8197E324B9E363F36E2 /* SegmentifyManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyManager.swift; path = Pod/Classes/SegmentifyManager.swift; sourceTree = "<group>"; };
 		C9C408328C7C5EECB9BFF9B190273286 /* PageModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageModel.swift; path = Pod/Classes/PageModel.swift; sourceTree = "<group>"; };
-		CB59BE00F4E3C7631193F83D0A20791D /* Segmentify.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Segmentify.xcconfig; sourceTree = "<group>"; };
-		D57C2135536BF8FFB3531B8791DEFA82 /* Pods-Segmentify-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Segmentify-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		DDA241ABEA0763738D99651ADB64898B /* Pods-Segmentify-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Segmentify-Demo-frameworks.sh"; sourceTree = "<group>"; };
 		DE1DFC71D28F592E90DBE171D6405BB8 /* SegmentifyTools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyTools.swift; path = Pod/Classes/SegmentifyTools.swift; sourceTree = "<group>"; };
 		DFB6EA1967910E4061F4003BF731FC70 /* BasketModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BasketModel.swift; path = Pod/Classes/BasketModel.swift; sourceTree = "<group>"; };
 		E56EBB00604CF11014A8905C1D5AB465 /* Pods_Segmentify_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Segmentify_Demo.framework; path = "Pods-Segmentify-Demo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E7FD7911E4DD2AEB39086ECEE996FB3C /* Pods-Segmentify-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Segmentify-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
-		E8705FE8A3D6D3125DAC3F10CE5DE2F8 /* Pods-Segmentify-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Segmentify-Demo-dummy.m"; sourceTree = "<group>"; };
-		F6A7529B9D5B1ED9CA799E2421539525 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7C4425CC1CC6B873657B618D337BF36 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0A2C6C116D4208D9A97F0E8555077B1 /* Segmentify.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Segmentify.modulemap; sourceTree = "<group>"; };
+		F250ACF08A0F539655FBF5474B881430 /* Pods-Segmentify-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Segmentify-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		FC57D75BEA0460B9B52EDA5DF0336874 /* SegmentifyConnectionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SegmentifyConnectionManager.swift; path = Pod/Classes/SegmentifyConnectionManager.swift; sourceTree = "<group>"; };
-		FF8D1803FD1AC4BE09D46082FE9E9B8F /* Pods-Segmentify-Demo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Segmentify-Demo.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,24 +114,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		16A75B497B265E59B944F2FA1B6853F4 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				22575DA25FD55DBB1D5D4C0BF14AB5C0 /* Info.plist */,
-				BC5AC9FEE9898D6DBE28FD0ED3143D50 /* Segmentify.modulemap */,
-				CB59BE00F4E3C7631193F83D0A20791D /* Segmentify.xcconfig */,
-				2476014616229DD3ABA47D3B69F48AC8 /* Segmentify-dummy.m */,
-				00351067332FA47F594063033F87F79C /* Segmentify-prefix.pch */,
-				4CB97207A0D2E703453FA5CE761647DA /* Segmentify-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Segmentify";
-			sourceTree = "<group>";
-		};
 		1EBB6E84509768CC23289B026AE86741 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				FB42223A58EA1ECAFC698B623D969161 /* Pods-Segmentify-Demo */,
+				50761A4DB88E7E9656C6FE7373EB23BA /* Pods-Segmentify-Demo */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
@@ -162,10 +148,42 @@
 				C6E11CA794472356B41AD08F29B5B308 /* SegmentifyUrlSessionDelegate.swift */,
 				4F6BCC1080859AE525EC81375B0EDF38 /* UserChangeModel.swift */,
 				A4CD238C0331D9E4C8FF6D759BF534D3 /* UserModel.swift */,
-				16A75B497B265E59B944F2FA1B6853F4 /* Support Files */,
+				4DCF66BF0DCBB3308964E6D92CC9234B /* Support Files */,
 			);
 			name = Segmentify;
 			path = Segmentify;
+			sourceTree = "<group>";
+		};
+		4DCF66BF0DCBB3308964E6D92CC9234B /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				073A555AC829B88C8F90BACCB9E91A43 /* Info.plist */,
+				F0A2C6C116D4208D9A97F0E8555077B1 /* Segmentify.modulemap */,
+				3B7620C3F0931FEF05A546CFC3082E19 /* Segmentify.xcconfig */,
+				973865E7FD40993773439B680C5C9AB3 /* Segmentify-dummy.m */,
+				191010FE6BC99A7E2483471F76473263 /* Segmentify-prefix.pch */,
+				7157B303610E16CED7F361E1CF70E848 /* Segmentify-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Segmentify";
+			sourceTree = "<group>";
+		};
+		50761A4DB88E7E9656C6FE7373EB23BA /* Pods-Segmentify-Demo */ = {
+			isa = PBXGroup;
+			children = (
+				E7C4425CC1CC6B873657B618D337BF36 /* Info.plist */,
+				763E49CB99ABFA1EAC63AC64C89A876C /* Pods-Segmentify-Demo.modulemap */,
+				30284ED1F66CF91B4792E0F6389D64A2 /* Pods-Segmentify-Demo-acknowledgements.markdown */,
+				661FE238DBB77754F48029D9B1B64B87 /* Pods-Segmentify-Demo-acknowledgements.plist */,
+				80129448BF573F43C2176EAD1E01B0CA /* Pods-Segmentify-Demo-dummy.m */,
+				50CBBE234569A8F3C640EFD351655BD4 /* Pods-Segmentify-Demo-frameworks.sh */,
+				65A8AC9FBADCF0B80B03B655E706C707 /* Pods-Segmentify-Demo-resources.sh */,
+				1BCC26D6B24CDCADB285E67CED4C68AF /* Pods-Segmentify-Demo-umbrella.h */,
+				F250ACF08A0F539655FBF5474B881430 /* Pods-Segmentify-Demo.debug.xcconfig */,
+				300A8096A6B5CCA8B0EA69CB624D81E5 /* Pods-Segmentify-Demo.release.xcconfig */,
+			);
+			name = "Pods-Segmentify-Demo";
+			path = "Target Support Files/Pods-Segmentify-Demo";
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -210,24 +228,6 @@
 				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		FB42223A58EA1ECAFC698B623D969161 /* Pods-Segmentify-Demo */ = {
-			isa = PBXGroup;
-			children = (
-				F6A7529B9D5B1ED9CA799E2421539525 /* Info.plist */,
-				FF8D1803FD1AC4BE09D46082FE9E9B8F /* Pods-Segmentify-Demo.modulemap */,
-				D57C2135536BF8FFB3531B8791DEFA82 /* Pods-Segmentify-Demo-acknowledgements.markdown */,
-				E7FD7911E4DD2AEB39086ECEE996FB3C /* Pods-Segmentify-Demo-acknowledgements.plist */,
-				E8705FE8A3D6D3125DAC3F10CE5DE2F8 /* Pods-Segmentify-Demo-dummy.m */,
-				DDA241ABEA0763738D99651ADB64898B /* Pods-Segmentify-Demo-frameworks.sh */,
-				3B3A4AF45685332BAC2F02D6F5825BE3 /* Pods-Segmentify-Demo-resources.sh */,
-				333C592E4A0C590FEBC5ED41BAAA39D9 /* Pods-Segmentify-Demo-umbrella.h */,
-				8FC44C34470F2584D6B6DBD6CB1999F9 /* Pods-Segmentify-Demo.debug.xcconfig */,
-				905200A6D44358118298FE44029C85BE /* Pods-Segmentify-Demo.release.xcconfig */,
-			);
-			name = "Pods-Segmentify-Demo";
-			path = "Target Support Files/Pods-Segmentify-Demo";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,8 +294,8 @@
 		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -366,7 +366,43 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		39C5BC78A31CDE101068C530CAC7FA0F /* Debug */ = {
+		2EF8369A9427D9DF748C5E59C2E84722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 300A8096A6B5CCA8B0EA69CB624D81E5 /* Pods-Segmentify-Demo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Segmentify-Demo/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		30D948AE62C04225F8DEF8734A4C5A26 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -376,10 +412,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -387,6 +425,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -395,6 +434,65 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		9E88537B08ED4D6EB44DBA7BC8D56A35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -419,16 +517,15 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		765AAA728B759C9E203C85BA7AE48B05 /* Debug */ = {
+		AFA45E941CF6FDF271F1A1982E8BEFD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB59BE00F4E3C7631193F83D0A20791D /* Segmentify.xcconfig */;
+			baseConfigurationReference = 3B7620C3F0931FEF05A546CFC3082E19 /* Segmentify.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -445,6 +542,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Segmentify/Segmentify.modulemap";
+				PRODUCT_MODULE_NAME = Segmentify;
 				PRODUCT_NAME = Segmentify;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -457,98 +555,9 @@
 			};
 			name = Debug;
 		};
-		89C8BB24E37B25BAEEB8FBA01EE05DAF /* Release */ = {
+		C8172CAD787B291F6AAA7F8EF40ADD1B /* Release */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Release;
-		};
-		8A415A454D76ADE52620388CFE6A131B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 905200A6D44358118298FE44029C85BE /* Pods-Segmentify-Demo.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Segmentify-Demo/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Segmentify_Demo;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		A59B305E819EE82B0B4C4B173F682D23 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB59BE00F4E3C7631193F83D0A20791D /* Segmentify.xcconfig */;
+			baseConfigurationReference = 3B7620C3F0931FEF05A546CFC3082E19 /* Segmentify.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -565,6 +574,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Segmentify/Segmentify.modulemap";
+				PRODUCT_MODULE_NAME = Segmentify;
 				PRODUCT_NAME = Segmentify;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -578,10 +588,12 @@
 			};
 			name = Release;
 		};
-		DF81585BA1EB02F6FDE90BDDAD9184C5 /* Debug */ = {
+		E1840449E68C6B991222CF67583B6592 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FC44C34470F2584D6B6DBD6CB1999F9 /* Pods-Segmentify-Demo.debug.xcconfig */;
+			baseConfigurationReference = F250ACF08A0F539655FBF5474B881430 /* Pods-Segmentify-Demo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -601,7 +613,7 @@
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Segmentify_Demo;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -618,8 +630,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				39C5BC78A31CDE101068C530CAC7FA0F /* Debug */,
-				89C8BB24E37B25BAEEB8FBA01EE05DAF /* Release */,
+				9E88537B08ED4D6EB44DBA7BC8D56A35 /* Debug */,
+				30D948AE62C04225F8DEF8734A4C5A26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -627,8 +639,8 @@
 		36D8BD3F64B2BA58EA15A02040905A12 /* Build configuration list for PBXNativeTarget "Pods-Segmentify-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DF81585BA1EB02F6FDE90BDDAD9184C5 /* Debug */,
-				8A415A454D76ADE52620388CFE6A131B /* Release */,
+				E1840449E68C6B991222CF67583B6592 /* Debug */,
+				2EF8369A9427D9DF748C5E59C2E84722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -636,8 +648,8 @@
 		710720ED88470C8849108309F55A8EC5 /* Build configuration list for PBXNativeTarget "Segmentify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				765AAA728B759C9E203C85BA7AE48B05 /* Debug */,
-				A59B305E819EE82B0B4C4B173F682D23 /* Release */,
+				AFA45E941CF6FDF271F1A1982E8BEFD5 /* Debug */,
+				C8172CAD787B291F6AAA7F8EF40ADD1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

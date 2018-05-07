@@ -47,6 +47,7 @@ class ProductDetailViewController: UIViewController {
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
         pageViewObj.category = "Product Page"
+        pageViewObj.lang = "EN"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
         
@@ -58,6 +59,7 @@ class ProductDetailViewController: UIViewController {
         prodViewObj.productId = self.productDetailItem.productId
         prodViewObj.name = self.productDetailItem.name
         prodViewObj.url = self.productDetailItem.url
+        prodViewObj.lang = "EN"
         prodViewObj.image = self.productDetailItem.image?.replacingOccurrences(of: "https:", with: "")
         prodViewObj.category = self.productDetailItem.category
         prodViewObj.price = self.productDetailItem.price

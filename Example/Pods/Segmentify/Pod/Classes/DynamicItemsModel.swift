@@ -1,3 +1,4 @@
+
 //
 //  DynamicItemsModel.swift
 //  Segmentify
@@ -16,4 +17,3 @@ public class DynamicItemsModel {
     public var key:String?
     public var score:String?
 }
-
