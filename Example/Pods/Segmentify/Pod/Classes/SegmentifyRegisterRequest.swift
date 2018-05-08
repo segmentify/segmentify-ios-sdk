@@ -38,6 +38,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     var productID:String?
     var title:String?
     var brand:String?
+    var recommendIds:[String]?
     var currency:String?
     var price:NSNumber?
     var oldPrice:NSNumber?
@@ -118,9 +119,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     }
     
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
-        
         self.token = dictionary["token"] as? String
-  
         self.apiKey = (dictionary["apiKey"] as? String)!
         self.os = dictionary["os"] as? String
         self.osVersion = dictionary["osVersion"] as? String
@@ -291,7 +290,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         
         if let lang = self.lang {
             dictionary["lang"] = lang as Any?
-        }else{dictionary["lang"] = nil}
+        }
         
         if let currency = self.currency {
             dictionary["currency"] = currency as Any?
@@ -300,6 +299,10 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
         if (self.eventName == "CHECKOUT" && self.basketStep != nil) || self.eventName == "BASKET_OPERATIONS" {
             dictionary["quantity"] = quantity as Any?
         }else{dictionary["quantity"] = nil}
+        
+        if let recommendIds = self.recommendIds{
+            dictionary["recommendIds"] = recommendIds as Any?
+        }else{dictionary["recommendIds"] = nil}
         
         if self.eventName == "CHECKOUT"  {
             dictionary["basketId"] = basketID as Any?
@@ -393,7 +396,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
             dictionary["instanceId"] = instanceId
         }else{dictionary["instanceId"] = nil}
         
-        if self.eventName == "INTERACTION" {
+        if self.eventName == "INTERACTION" || self.eventName == "CUSTOM_EVENT" {
             dictionary["type"] = type
         }else{dictionary["type"] = nil}
         

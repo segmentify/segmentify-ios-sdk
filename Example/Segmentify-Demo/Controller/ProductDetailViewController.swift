@@ -148,7 +148,7 @@ class ProductDetailViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "ext_product_rec" {
+            if recObj.instanceId == "scn_66b2481c9a000" {
                 self.setProductInfos(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 self.notificationTitle.text = recObj.notificationTitle

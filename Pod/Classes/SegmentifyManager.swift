@@ -681,6 +681,7 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -701,6 +702,12 @@ public class SegmentifyManager {
         }
         if segmentifyObject.orderNo != nil {
             eventRequest.orderNo = segmentifyObject.orderNo
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
         }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
@@ -733,6 +740,12 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -746,6 +759,12 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -765,6 +784,9 @@ public class SegmentifyManager {
             }
         }
         
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -781,6 +803,12 @@ public class SegmentifyManager {
         eventRequest.category = nil
         eventRequest.type = nil
         
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         
         
         let totalPrice = segmentifyObject.totalPrice
@@ -799,6 +827,9 @@ public class SegmentifyManager {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
         }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
@@ -849,6 +880,13 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+        
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         
         let productId = segmentifyObject.productId
         guard productId != nil else {
@@ -926,6 +964,12 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         let category = segmentifyObject.category
         guard category != nil else {
             print("Error - you must fill category before accessing sendPageView event method")
@@ -942,6 +986,9 @@ public class SegmentifyManager {
         
         if(segmentifyObject.subCategory != nil){
             eventRequest.subCategory = segmentifyObject.subCategory
+        }
+        if(segmentifyObject.recommendIds != nil){
+            eventRequest.recommendIds = segmentifyObject.recommendIds
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -965,6 +1012,13 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.type = segmentifyObject.type
+        
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1109,8 +1163,9 @@ public class SegmentifyManager {
         setIDAndSendEvent()
     }
     
+    
     //Checkout Purchase Event
-    open func sendPurchase(totalPrice : NSNumber, productList:[Any], orderNo : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPurchase(totalPrice : NSNumber, productList:[Any], orderNo : String?,lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1128,11 +1183,21 @@ public class SegmentifyManager {
         if let orderNo = orderNo {
             eventRequest.orderNo = orderNo
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Payment Event
-    open func sendPaymentInformation(totalPrice : NSNumber, productList : [Any], callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPaymentInformation(totalPrice : NSNumber, productList : [Any],lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
@@ -1146,11 +1211,23 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Customer Information Event
-    open func sendCustomerInformation(totalPrice : NSNumber, productList : [Any], callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendCustomerInformation(totalPrice : NSNumber, productList : [Any],lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1165,11 +1242,21 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout View Basket Event
-    open func sendViewBasket(totalPrice : NSNumber, productList : [Any], currency : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendViewBasket(totalPrice : NSNumber, productList : [Any], currency : String?,lang :String?, params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1187,6 +1274,17 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1213,7 +1311,7 @@ public class SegmentifyManager {
     }
     
     //Product View Event
-    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? , callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1225,6 +1323,15 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1273,12 +1380,25 @@ public class SegmentifyManager {
     }
     
     //Page View Event
-    open func sendPageView(category : String, subCategory : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? ,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = category
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        if let recommendIds = recommendIds {
+            eventRequest.recommendIds = recommendIds
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1291,10 +1411,13 @@ public class SegmentifyManager {
         if let subCategory = subCategory {
             eventRequest.subCategory = subCategory
         }
+        if let recommendIds = recommendIds {
+            eventRequest.recommendIds = recommendIds
+        }
         setIDAndSendEventWithCallback(callback: callback)
     }
     
-    open func sendCustomEvent(type : String, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendCustomEvent(type : String, params :[String:AnyObject]?, lang : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.customEventName
         eventRequest.type = type
         
@@ -1305,6 +1428,17 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
+        
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil

@@ -27,7 +27,7 @@ class CategoryViewController: UIViewController {
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
         pageViewObj.category = "Category Page"
-        pageViewObj.subCategory = "Womenswear"
+        pageViewObj.subCategory = "Shirt"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -37,7 +37,7 @@ class CategoryViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "ext_category_rec" {
+            if recObj.instanceId == "scn_6ce48f2990000" {
                 self.setProductInfosTableView(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)

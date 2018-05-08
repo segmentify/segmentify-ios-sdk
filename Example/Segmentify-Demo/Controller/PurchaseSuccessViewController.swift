@@ -81,7 +81,7 @@ class PurchaseSuccessViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_6186a632e0d76001" {
+            if recObj.instanceId == "scn_68d474f77c000" {
                 self.setProductInfos(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
             }
