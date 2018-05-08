@@ -100,7 +100,7 @@ class BasketDetailViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_6ca5998792000" {
+            if recObj.instanceId == "ext_basket_rec" {
                 self.setProductInfos(products: recObj.products!)
                 self.notificationTitle.text = recObj.notificationTitle
                 self.instanceId = recObj.instanceId

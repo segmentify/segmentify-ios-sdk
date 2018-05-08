@@ -41,9 +41,6 @@ class HomeViewController: UIViewController {
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
-        //pageViewObj.recommendIds = ["345833013285","345832914981"]
-        //pageViewObj.lang = "TR"
-        pageViewObj.params = ["brand":"Braun" as AnyObject]
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -54,13 +51,13 @@ class HomeViewController: UIViewController {
     //
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_6e55c0a02c000" {
+            if recObj.instanceId == "ext_home_rec" {
                 self.setProductInfosTableView(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
             }
             
-            if recObj.instanceId == "scn_6dfafde068000" {
+            if recObj.instanceId == "scn_61869cb94553e000" {
                 self.setProductInfosCollectionView(products: recObj.products!)
                 self.notificationTitle.text = recObj.notificationTitle
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
