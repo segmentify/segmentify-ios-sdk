@@ -26,7 +26,7 @@ public class Product {
         self.image = image
         self.name = name
         self.price = price!
-        self.oldPrice = oldPrice!
+        self.oldPrice = oldPrice
         self.productId = productId
         self.brand = brand
         self.url = url

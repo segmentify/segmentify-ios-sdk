@@ -10,7 +10,7 @@ import Foundation
 
 class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
     
-    static let timeoutInterval = 30
+    static let timeoutInterval = 10
     static let baseUrl = "/add/events/v1.json?apiKey="
     
     static let sharedInstance : SegmentifyConnectionManager = {

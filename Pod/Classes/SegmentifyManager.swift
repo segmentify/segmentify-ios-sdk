@@ -34,7 +34,7 @@ public class SegmentifyManager {
     static let logoutStep = "signout"
     static let updateUserStep = "update"
     static let impressionStep = "impression"
-    static let widgetViewStep = "widget_view"
+    static let widgetViewStep = "widget-view"
     static let clickStep = "click"
     
     static let startIndex = 0
@@ -45,6 +45,7 @@ public class SegmentifyManager {
     private var staticItems : [AnyHashable : Any]?
     private var recommendationSourceKeys : [String] = []
     private var timeFrameKeys : [String] = []
+    private var scoreKeys : [String] = []
     private var keys : [String] = []
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
@@ -54,7 +55,7 @@ public class SegmentifyManager {
     private var type : String?
     private var staticItemsArrayCount : Int = Int()
     private var currentNewArray : [RecommendationModel]?
-    
+    private var key : String = String()
     private var newRecommendationArray : [RecommendationModel] = []
     
     private var testStaticProducts : [AnyHashable:Any]?
@@ -68,11 +69,18 @@ public class SegmentifyManager {
     private static let setup = ConfigModel()
     // log status variable. Default: true
     static var logStatus: Bool = true
+    static var _sessionKeepSecond: Int = 86400
     // set log status
     public class func logStatus(isVisible: Bool) -> Bool{
         logStatus = isVisible
         return isVisible
     }
+    
+    public class func setSessionKeepSecond(sessionKeepSecond: Int) -> Int{
+        _sessionKeepSecond = sessionKeepSecond
+        return sessionKeepSecond
+    }
+    
     
     public class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
@@ -161,6 +169,9 @@ public class SegmentifyManager {
     
     // MARK: Request Builders
     func setIDAndSendEvent() {
+        
+        
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -188,11 +199,16 @@ public class SegmentifyManager {
         } else {
             self.sendEvent(callback: { (response: [RecommendationModel]) in
                 callback(response)
+                self.clearData()
+                
             })
         }
     }
     
+    
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+        
+        
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let responses = response["responses"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -246,9 +262,6 @@ public class SegmentifyManager {
                     return
                 }
                 
-                if staticItemsDic.count > 0 {
-                    self.validStaticItem = true
-                }
                 
                 var insId : String = String()
                 var interId : String = String()
@@ -265,27 +278,59 @@ public class SegmentifyManager {
                 }
                 self.sendImpression(instanceId: insId, interactionId: interId)
                 
+                
+                if staticItemsDic.count > 0 {
+                    self.validStaticItem = true
+                    
+                    self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
+                    
+                }
+                
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
+                    var key = String()
                     if let recoomendationSource = object["recommendationSource"] {
                         self.recommendationSourceKeys.append(recoomendationSource as! String)
                         dynObj.recommendationSource = recoomendationSource as? String
+                        key = "\(object["recommendationSource"]!)"
                     }
-                    if let timeFrameKey = object["timeFrame"] {
+                    let timeFrameKey = object["timeFrame"]
+                    let scoreKey = object["score"]
+                    if timeFrameKey != nil {
                         self.timeFrameKeys.append(timeFrameKey as! String)
                         dynObj.timeFrame = timeFrameKey as? String
+                        key = key + "|\(object["timeFrame"]!)"
+                    } else {
+                        key = key + "|null"
                     }
                     if let itemCount = object["itemCount"] {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
-                    let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
-                    dynObj.key = key
-                    self.keys.append(key)
-                    self.dynamicItemsArray.append(dynObj)
+                    //Score key
+                    if scoreKey != nil {
+                        self.scoreKeys.append(scoreKey as! String)
+                        dynObj.score = scoreKey as? String
+                        key = key + "|\(object["score"]!)"
+                    }
+                    
+                    
+                    //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
+                    if key != "" {
+                        dynObj.key = key
+                        self.keys.append(key)
+                        self.dynamicItemsArray.append(dynObj)
+                    }
                 }
-                self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil,interactionId: interId,impressionId : insId)
+                
+                
+                
+                
+                
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
+                
+                
+                
             }
             callback(self.recommendations)
             
@@ -299,20 +344,57 @@ public class SegmentifyManager {
         })
     }
     
-    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,interactionId: String!,impressionId : String!) {
+    private func clearData() {
+        self.params?.removeAll()
+        self.paramsArr?.removeAll()
+        self.validStaticItem = false
+        self.staticItems?.removeAll()
+        self.recommendationSourceKeys.removeAll()
+        self.timeFrameKeys.removeAll()
+        self.keys.removeAll()
+        self.itemCounts.removeAll()
+        self.dynamicItemsArray.removeAll()
+        self.recommendationArray.removeAll()
+        self.recommendations.removeAll()
+        self.currentKey = nil
+        self.type = nil
+        self.staticItemsArrayCount = Int()
+        self.currentNewArray?.removeAll()
+        self.key = String()
+        self.newRecommendationArray.removeAll()
+        
+        self.currentRecModel = RecommendationModel()
+        self.products.removeAll()
+        //self.eventRequest = SegmentifyRegisterRequest()
+    }
+    
+    private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>,interactionId: String!,impressionId : String!) {
+        
+        
+        print("prdct:")
+        print(recommendedProducts)
         
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
-        if dynamicItemsArray.count > 0 {
-            for dynObj in dynamicItemsArray {
-                if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
-                    if products.count > 0 {
-                        
-                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
-                        self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
-                    }
-                }
+        
+        if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
+            if products.count > 0 {
+                
+                self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
+                
+                let newRecModel = RecommendationModel()
+                newRecModel.notificationTitle = self.currentRecModel.notificationTitle
+                newRecModel.products = self.currentRecModel.products
+                newRecModel.instanceId = self.currentRecModel.instanceId
+                newRecModel.interactionId = self.currentRecModel.interactionId
+                recommendations.append(newRecModel)
+                
+                self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
             }
         }
+        
+        
+        
+        
     }
     
     private func getRecommendations(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>, staticItems: Dictionary<AnyHashable, Any>?,  keys : [String],interactionId : String!,impressionId : String!) {
@@ -329,11 +411,16 @@ public class SegmentifyManager {
                     if products.count > 0 {
                         
                         self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
+                        var counter = 0
                         for product in currentRecModel.products!{
                             if newProdArray.contains(where: {$0.productId==product.productId}){ }
-                            else{
-                                if newProdArray.count <= (validStaticItem ? staticItemsArrayCount +  dynObj.itemCount! - 1 : dynObj.itemCount! - 1) {
-                                    newProdArray.append(product)
+                            else {
+                                if counter < dynObj.itemCount! {
+                                    if( dynObj.recommendationSource == "RECOMMENDATION_SOURCE_LAST_VISITED" ||
+                                        !checkIfItemRecommendedBefore(item: product)) {
+                                        newProdArray.append(product)
+                                        counter = counter + 1
+                                    }
                                 }
                             }
                         }
@@ -351,13 +438,19 @@ public class SegmentifyManager {
         }
     }
     
-    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]],interactionId:String!,impressionId:String!) {
-        var staticProducts = [ProductRecommendationModel]()
-        if !self.products.isEmpty {
-            for staticProduct in self.products{
-                staticProducts.append(staticProduct.copy() as! ProductRecommendationModel)
+    private func checkIfItemRecommendedBefore(item : ProductRecommendationModel) -> Bool {
+        for model in self.recommendations {
+            for recoItem in model.products! {
+                if(recoItem.productId==item.productId) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+    
+    private func createRecomendation(title:String, itemCount:Int, products:[[AnyHashable:Any]], interactionId:String!, impressionId:String!) {
+        
         
         for (_, obj) in products.enumerated() {
             let proObj = ProductRecommendationModel()
@@ -429,27 +522,20 @@ public class SegmentifyManager {
             if self.products.contains(where: {$0.productId == proObj.productId}) {
                 minusIndex = minusIndex! - 1
             } else {
-                if !staticProducts.isEmpty{
-                    var flag = true
-                    for staticProduct in staticProducts{
-                        if staticProduct.productId == proObj.productId{
-                            flag = false
-                            break
-                        }
-                    }
-                    if flag{
-                        self.products.append(proObj)
-                    }
-                }else{
-                    self.products.append(proObj)
-                }
+                addProduct(proObj: proObj)
                 self.currentRecModel.products = self.products
             }
         }
- 
+        
         self.currentRecModel.instanceId = impressionId
         self.currentRecModel.interactionId = interactionId
         self.currentRecModel.notificationTitle = title
+    }
+    
+    private func addProduct(proObj : ProductRecommendationModel) {
+        if !self.products.contains(where: {$0.productId == proObj.productId}) {
+            self.products.append(proObj)
+        }
     }
     
     //EVENTS
@@ -578,10 +664,14 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         eventRequest.userID = userId
-        let lastUserID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        let lastUserID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
         eventRequest.oldUserId = lastUserID
         UserDefaults.standard.set(segmentifyObject.userId, forKey: "UserSentUserId")
-        setIDAndSendEvent()
+        UserDefaults.standard.set(userId, forKey: "SEGMENTIFY_USER_ID")
+        
+        if(lastUserID != userId){
+            setIDAndSendEvent()
+        }
     }
     
     //Checkout Purchase Event
@@ -591,6 +681,7 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -612,10 +703,16 @@ public class SegmentifyManager {
         if segmentifyObject.orderNo != nil {
             eventRequest.orderNo = segmentifyObject.orderNo
         }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
-       setIDAndSendEventWithCallback(callback: callback)
+        setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Payment Event
@@ -643,6 +740,12 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -656,6 +759,12 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -675,6 +784,9 @@ public class SegmentifyManager {
             }
         }
         
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -691,6 +803,12 @@ public class SegmentifyManager {
         eventRequest.category = nil
         eventRequest.type = nil
         
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
         
         
         let totalPrice = segmentifyObject.totalPrice
@@ -709,6 +827,9 @@ public class SegmentifyManager {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
         }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
@@ -759,6 +880,13 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
+        
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         
         let productId = segmentifyObject.productId
         guard productId != nil else {
@@ -836,6 +964,12 @@ public class SegmentifyManager {
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         let category = segmentifyObject.category
         guard category != nil else {
             print("Error - you must fill category before accessing sendPageView event method")
@@ -852,6 +986,9 @@ public class SegmentifyManager {
         
         if(segmentifyObject.subCategory != nil){
             eventRequest.subCategory = segmentifyObject.subCategory
+        }
+        if(segmentifyObject.recommendIds != nil){
+            eventRequest.recommendIds = segmentifyObject.recommendIds
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -875,6 +1012,13 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.type = segmentifyObject.type
+        
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.params != nil {
+            eventRequest.params = segmentifyObject.params
+        }
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1019,8 +1163,9 @@ public class SegmentifyManager {
         setIDAndSendEvent()
     }
     
+    
     //Checkout Purchase Event
-    open func sendPurchase(totalPrice : NSNumber, productList:[Any], orderNo : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPurchase(totalPrice : NSNumber, productList:[Any], orderNo : String?,lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1038,11 +1183,21 @@ public class SegmentifyManager {
         if let orderNo = orderNo {
             eventRequest.orderNo = orderNo
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Payment Event
-    open func sendPaymentInformation(totalPrice : NSNumber, productList : [Any], callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPaymentInformation(totalPrice : NSNumber, productList : [Any],lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
@@ -1056,11 +1211,23 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout Customer Information Event
-    open func sendCustomerInformation(totalPrice : NSNumber, productList : [Any], callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendCustomerInformation(totalPrice : NSNumber, productList : [Any],lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1075,11 +1242,21 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Checkout View Basket Event
-    open func sendViewBasket(totalPrice : NSNumber, productList : [Any], currency : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendViewBasket(totalPrice : NSNumber, productList : [Any], currency : String?,lang :String?, params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
         eventRequest.totalPrice = totalPrice
         eventRequest.products = productList
@@ -1097,6 +1274,17 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1123,7 +1311,7 @@ public class SegmentifyManager {
     }
     
     //Product View Event
-    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? , callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1135,6 +1323,15 @@ public class SegmentifyManager {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1183,12 +1380,25 @@ public class SegmentifyManager {
     }
     
     //Page View Event
-    open func sendPageView(category : String, subCategory : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? ,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = category
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        if let recommendIds = recommendIds {
+            eventRequest.recommendIds = recommendIds
+        }
+        
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1201,10 +1411,13 @@ public class SegmentifyManager {
         if let subCategory = subCategory {
             eventRequest.subCategory = subCategory
         }
+        if let recommendIds = recommendIds {
+            eventRequest.recommendIds = recommendIds
+        }
         setIDAndSendEventWithCallback(callback: callback)
     }
     
-    open func sendCustomEvent(type : String, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    open func sendCustomEvent(type : String, params :[String:AnyObject]?, lang : String?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.customEventName
         eventRequest.type = type
         
@@ -1215,6 +1428,17 @@ public class SegmentifyManager {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+        
+        if let lang = lang {
+            eventRequest.lang = lang
+        }
+        
+        if let params = params {
+            eventRequest.params = params
+        }
+        
+        
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
@@ -1300,9 +1524,27 @@ public class SegmentifyManager {
         eventRequest.extra.removeAll()
     }
     
+    
+
+    func initSessionId(sessionId :String!){
+        let nw  =  NSDate().timeIntervalSince1970
+        _ = round(NSDate().timeIntervalSince1970)
+        let nowDate = Date(timeIntervalSince1970: nw)
+        
+        let y=nowDate.addingTimeInterval(TimeInterval(SegmentifyManager._sessionKeepSecond))
+        let newDate = y
+        let addedInterval = round(newDate.timeIntervalSince1970)
+        _ = Date(timeIntervalSince1970: TimeInterval(addedInterval))
+        UserDefaults.standard.set(sessionId ,forKey: "SEGMENTIFY_SESSION_ID")
+        UserDefaults.standard.set(addedInterval,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+
+   
+    }
+    
     //private func
     
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
+        
         var requestURL : URL!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=1")!
@@ -1331,9 +1573,39 @@ public class SegmentifyManager {
                             if jsonArray.count > 1 {
                                 self.eventRequest.userID = jsonArray[0] as? String
                                 self.eventRequest.sessionID = jsonArray[1] as? String
+                                self.initSessionId(sessionId: jsonArray[1] as? String)
                                 UserDefaults.standard.set(self.eventRequest.userID, forKey: "SEGMENTIFY_USER_ID")
                             } else {
-                                self.eventRequest.sessionID = jsonArray[0] as? String
+                                
+                                let nw  =  NSDate().timeIntervalSince1970
+                                let nowInterval = round(NSDate().timeIntervalSince1970)
+                                _ = Date(timeIntervalSince1970: nw)
+
+           
+                                if UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP") != nil{
+                                    let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                    UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                } else{
+                                    self.initSessionId(sessionId: jsonArray[1] as? String)
+                                }
+
+                                
+                                let getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                let getLastStampToDouble = getLastStamp  as! Double
+                                if(nowInterval<=getLastStampToDouble ){
+                                    
+                                    print(nowInterval)
+                                    print(getLastStampToDouble )
+                                    
+                                    let sessionId = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID") as? String
+                                    self.eventRequest.sessionID = sessionId
+                                }
+                                else{
+                                    let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
+                                    UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                    UserDefaults.standard.set(jsonArray[0] as? String ,forKey: "SEGMENTIFY_SESSION_ID")
+                                    self.eventRequest.sessionID = jsonArray[0] as? String
+                                }
                             }
                         }
                         success()
@@ -1347,7 +1619,9 @@ public class SegmentifyManager {
     }
 }
 
-
+public func daysBetween(start: Date, end: Date) -> Int {
+    return Calendar.current.dateComponents([.day], from: start, to: end).day!
+}
 
 
 
