@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CustomEventModel : SegmentifyObject {
-    public override init() {}
+public class CustomEventModel:SegmentifyObject {
+    public  override init() {}
     public var type:String?
 }

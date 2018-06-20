@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // define Segmentify config
-        SegmentifyManager.config(appkey: "8157d334-f8c9-4656-a6a4-afc8b1846e4c", dataCenterUrl: "https://dce1.segmentify.com", subDomain: "segmentify-shop.myshopify.com")
+        SegmentifyManager.config(appkey: "429df0a4-e96e-4572-adca-568995a264ff", dataCenterUrl: "https://dcetr1.segmentify.com", subDomain: "yeni.koctas.com.tr")
         // option to show or hide console log
         let _ = SegmentifyManager.logStatus(isVisible: true)
         let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)

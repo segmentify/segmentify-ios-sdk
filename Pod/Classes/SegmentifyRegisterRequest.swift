@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreTelephony
 
-public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
+public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var path = "subscription"
     var port = "4243"
     var method = "POST"
@@ -88,7 +88,7 @@ public class SegmentifyRegisterRequest : SegmentifyRequestProtocol {
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
-    init() {
+    override init() {
         let device = UIDevice.current
         
         var systemInfo = utsname()

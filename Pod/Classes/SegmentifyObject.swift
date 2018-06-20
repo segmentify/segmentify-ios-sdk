@@ -8,8 +8,8 @@
 
 import Foundation
 
-public class SegmentifyObject {
-    public init() {}
+public class SegmentifyObject:NSObject {
+    public override init() {}
     public var sessionID:String?
     public var pageUrl:String?
     public var currency:String?

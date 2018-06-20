@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ConfigModel {
+class ConfigModel:NSObject {
     var apiKey:String?
     var dataCenterUrl:String?
     var subDomain:String?

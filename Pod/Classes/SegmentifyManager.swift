@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SegmentifyManager {
+public class SegmentifyManager : NSObject {
     
     static let sdkVersion = "1.0"
     
@@ -103,7 +103,8 @@ public class SegmentifyManager {
         }
     }
     
-    init() {
+    override init() {
+        super.init()
         self.eventRequest = SegmentifyRegisterRequest()
         
         let appkey = SegmentifyManager.setup.apiKey
@@ -957,7 +958,8 @@ public class SegmentifyManager {
     }
     
     //Page View Event
-    open func sendPageView(segmentifyObject : PageModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    @objc open func sendPageView(segmentifyObject : PageModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+        
         
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.interactionId = nil
@@ -994,7 +996,7 @@ public class SegmentifyManager {
     }
     
     //Custom Event
-    open func sendCustomEvent(segmentifyObject : CustomEventModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+     @objc open func sendCustomEvent(segmentifyObject : CustomEventModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.customEventName
         let type = segmentifyObject.type
         guard type != nil else {
