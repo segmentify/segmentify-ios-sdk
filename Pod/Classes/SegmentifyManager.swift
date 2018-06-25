@@ -682,7 +682,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
-
+        
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -876,7 +876,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Product View Event
-    open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    @objc open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
@@ -996,7 +996,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Custom Event
-     @objc open func sendCustomEvent(segmentifyObject : CustomEventModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    @objc open func sendCustomEvent(segmentifyObject : CustomEventModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.customEventName
         let type = segmentifyObject.type
         guard type != nil else {
@@ -1121,7 +1121,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //User Update Event
-    open func sendUserUpdate(username : String?, fullName : String?, email : String?, mobilePhone : String?, gender : String?, age : String?, birthdate : String?, isRegistered : Bool?, isLogin : Bool?) {
+    open func sendUserUpdate(username : String?, fullName : String?, email : String?, mobilePhone : String?, gender : String?, age : String?, birthdate : String?, isRegistered : AnyObject?, isLogin : AnyObject?) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.updateUserStep
         eventRequest.username = username
@@ -1157,10 +1157,10 @@ public class SegmentifyManager : NSObject {
             eventRequest.birthdate = birthdate
         }
         if let isRegistered = isRegistered {
-            eventRequest.isRegistered = isRegistered
+            eventRequest.isRegistered = isRegistered as? Bool
         }
         if let isLogin = isLogin {
-            eventRequest.isLogin = isLogin
+            eventRequest.isLogin = isLogin as? Bool
         }
         setIDAndSendEvent()
     }
@@ -1313,7 +1313,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Product View Event
-    open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : Bool?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:Bool? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    @objc open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : AnyObject?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:AnyObject? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1346,7 +1346,7 @@ public class SegmentifyManager : NSObject {
             eventRequest.brand = brand
         }
         if let stock = stock {
-            eventRequest.stock = stock
+            eventRequest.stock = stock as? Bool
         }
         if let imageXS = imageXS {
             eventRequest.imageXS = imageXS
@@ -1376,13 +1376,13 @@ public class SegmentifyManager : NSObject {
             eventRequest.labels = labels
         }
         if let noUpdate = noUpdate {
-            eventRequest.noUpdate = noUpdate
+            eventRequest.noUpdate = noUpdate as? Bool
         }
         setIDAndSendEventWithCallback(callback: callback)
     }
     
     //Page View Event
-    open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? ,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    @objc open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? ,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = category
         eventRequest.interactionId = nil
@@ -1527,7 +1527,7 @@ public class SegmentifyManager : NSObject {
     }
     
     
-
+    
     func initSessionId(sessionId :String!){
         let nw  =  NSDate().timeIntervalSince1970
         _ = round(NSDate().timeIntervalSince1970)
@@ -1539,8 +1539,8 @@ public class SegmentifyManager : NSObject {
         _ = Date(timeIntervalSince1970: TimeInterval(addedInterval))
         UserDefaults.standard.set(sessionId ,forKey: "SEGMENTIFY_SESSION_ID")
         UserDefaults.standard.set(addedInterval,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
-
-   
+        
+        
     }
     
     //private func
@@ -1582,15 +1582,15 @@ public class SegmentifyManager : NSObject {
                                 let nw  =  NSDate().timeIntervalSince1970
                                 let nowInterval = round(NSDate().timeIntervalSince1970)
                                 _ = Date(timeIntervalSince1970: nw)
-
-           
+                                
+                                
                                 if UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP") != nil{
                                     let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
                                     UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                 } else{
                                     self.initSessionId(sessionId: jsonArray[1] as? String)
                                 }
-
+                                
                                 
                                 let getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                 let getLastStampToDouble = getLastStamp  as! Double

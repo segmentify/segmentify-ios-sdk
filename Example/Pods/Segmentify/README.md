@@ -1,4 +1,8 @@
 # Segmentify iOS SDK
+Segmentify  SDK for sending events and rendering recommendations for iOS based devices
+
+> **Supports iOS 9 and higher devices.**
+
 
 ## Installation
 
