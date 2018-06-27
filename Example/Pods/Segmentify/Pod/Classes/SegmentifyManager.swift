@@ -519,6 +519,10 @@ public class SegmentifyManager : NSObject {
             if let oldPrice = obj["oldPrice"] {
                 proObj.oldPrice = oldPrice as? NSNumber
             }
+            if let params = obj["params"]{
+                proObj.params = params as? [String:AnyObject]
+            }
+            
             
             if self.products.contains(where: {$0.productId == proObj.productId}) {
                 minusIndex = minusIndex! - 1

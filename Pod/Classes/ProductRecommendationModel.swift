@@ -31,16 +31,17 @@ public class ProductRecommendationModel : NSObject,NSCopying {
     public var sizes:[String]?
     public var labels:[String]?
     public var noUpdate:Bool?
+    public var params:[String:AnyObject]?
     
     public func copy(with zone: NSZone? = nil) -> Any {
         let copy = ProductRecommendationModel(productId: productId
-            , name: name, inStock: inStock, url: url, mUrl: mUrl, image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category, categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes, labels: labels, noUpdate: noUpdate)
+            , name: name, inStock: inStock, url: url, mUrl: mUrl, image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category, categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes, labels: labels, noUpdate: noUpdate, params : params)
         return copy
     }
     
     public override init() {}
     
-    public init(productId: String?, name: String?, inStock: Bool?, url: String?, mUrl: String?, image: String?, imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: String?, categories: [String]?, brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?, labels: [String]?, noUpdate: Bool?) {
+    public init(productId: String?, name: String?, inStock: Bool?, url: String?, mUrl: String?, image: String?, imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: String?, categories: [String]?, brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?, labels: [String]?, noUpdate: Bool?,params: [String:AnyObject]? ) {
         
         self.productId = productId
         self.name = name
@@ -63,6 +64,7 @@ public class ProductRecommendationModel : NSObject,NSCopying {
         self.sizes = sizes
         self.labels = labels
         self.noUpdate = noUpdate
+        self.params = params
     }
     
     

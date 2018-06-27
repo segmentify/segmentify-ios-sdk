@@ -63,7 +63,6 @@ class ProductDetailViewController: UIViewController {
         prodViewObj.image = self.productDetailItem.image?.replacingOccurrences(of: "https:", with: "")
         prodViewObj.category = self.productDetailItem.category
         prodViewObj.price = self.productDetailItem.price
-        prodViewObj.noUpdate = true
         SegmentifyManager.sharedManager().sendProductView(segmentifyObject: prodViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
