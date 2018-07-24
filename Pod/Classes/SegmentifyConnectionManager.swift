@@ -109,11 +109,16 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                         }
                     }
                     else {
-                        failure(connectionError!)
+                        
                         if (self.debugMode) {
                             print("Server response with failure : \(remoteResponse.statusCode)")
-                            
                         }
+
+                        do{
+                            print("Server response with failure : \(remoteResponse.statusCode)")
+                            return
+                        }
+                        
                     }
                 }
             } else {

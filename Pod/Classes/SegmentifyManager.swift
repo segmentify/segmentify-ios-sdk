@@ -280,12 +280,7 @@ public class SegmentifyManager : NSObject {
                 self.sendImpression(instanceId: insId, interactionId: interId)
                 
                 
-                if staticItemsDic.count > 0 {
-                    self.validStaticItem = true
-                    
-                    self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
-                    
-                }
+        
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -326,7 +321,12 @@ public class SegmentifyManager : NSObject {
                 
                 
                 
-                
+                if staticItemsDic.count > 0 {
+                    self.validStaticItem = true
+                    
+                    self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
+                    
+                }
                 
                 self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
                 
@@ -372,27 +372,18 @@ public class SegmentifyManager : NSObject {
     private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>,interactionId: String!,impressionId : String!) {
         
         
-        print("prdct:")
-        print(recommendedProducts)
-        
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
-        
-        if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
-            if products.count > 0 {
-                
-                self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
-                
-                let newRecModel = RecommendationModel()
-                newRecModel.notificationTitle = self.currentRecModel.notificationTitle
-                newRecModel.products = self.currentRecModel.products
-                newRecModel.instanceId = self.currentRecModel.instanceId
-                newRecModel.interactionId = self.currentRecModel.interactionId
-                recommendations.append(newRecModel)
-                
-                self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
+        if dynamicItemsArray.count > 0 {
+            for dynObj in dynamicItemsArray {
+                if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
+                    if products.count > 0 {
+                        
+                        self.createRecomendation(title: notificationTitle, itemCount: dynObj.itemCount!, products: products,interactionId: interactionId,impressionId: impressionId)
+                        self.staticItemsArrayCount = (self.currentRecModel.products?.count)!
+                    }
+                }
             }
         }
-        
         
         
         
