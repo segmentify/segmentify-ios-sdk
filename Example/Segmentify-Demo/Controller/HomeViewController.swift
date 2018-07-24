@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
-        
+        pageViewObj.params = ["homeMapLocation":"Ankara"] as [String : AnyObject]
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
@@ -51,7 +51,8 @@ class HomeViewController: UIViewController {
     //
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_61869cb94553e000" {
+            //Eğer scn_21470dcdc6982000 instanceId'li kampanyada products array'i boşsa alt
+            if recObj.instanceId == "scn_1306beaf5c82c000" {
                 self.setProductInfosTableView(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
@@ -90,6 +91,7 @@ class HomeViewController: UIViewController {
 
     func setProductInfosCollectionView(products : [ProductRecommendationModel]) {
         for product in products {
+
             if nil == product.price {
                 product.price = 0
             }

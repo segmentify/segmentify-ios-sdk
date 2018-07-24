@@ -1,5 +1,5 @@
 PODS:
-  - Segmentify (1.0.23)
+  - Segmentify (1.0.24)
 
 DEPENDENCIES:
   - Segmentify
@@ -9,7 +9,7 @@ SPEC REPOS:
     - Segmentify
 
 SPEC CHECKSUMS:
-  Segmentify: 679c1db31bc552ad66241231ac63c1cece43c8d1
+  Segmentify: 469d1e64272173504c19b2a125195425122eefc4
 
 PODFILE CHECKSUM: f29fb8fc4369cf24a4b3edeb7cd8d835669ebbe5
 
