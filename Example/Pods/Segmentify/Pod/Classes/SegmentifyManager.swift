@@ -290,25 +290,31 @@ public class SegmentifyManager : NSObject {
                         dynObj.recommendationSource = recoomendationSource as? String
                         key = "\(object["recommendationSource"]!)"
                     }
-                    let timeFrameKey = object["timeFrame"]
-                    let scoreKey = object["score"]
-                    if timeFrameKey != nil {
-                        self.timeFrameKeys.append(timeFrameKey as! String)
-                        dynObj.timeFrame = timeFrameKey as? String
-                        key = key + "|\(object["timeFrame"]!)"
-                    } else {
-                        key = key + "|null"
-                    }
+              
                     if let itemCount = object["itemCount"] {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
-                    //Score key
-                    if scoreKey != nil {
-                        self.scoreKeys.append(scoreKey as! String)
-                        dynObj.score = scoreKey as? String
-                        key = key + "|\(object["score"]!)"
+                    
+
+                    
+                    let timeFrameKey = object["timeFrame"]
+      
+                    if timeFrameKey != nil {
+                        self.timeFrameKeys.append(timeFrameKey as! String)
+                        dynObj.timeFrame = timeFrameKey as? String
+                        key = key + "|\(object["timeFrame"]!)"
+                        let scoreKey = object["score"]
+                        //Score key
+                        if scoreKey != nil {
+                            self.scoreKeys.append(scoreKey as! String)
+                            dynObj.score = scoreKey as? String
+                            key = key + "|\(object["score"]!)"
+                        }
                     }
+                    
+                    
+     
                     
                     
                     //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
