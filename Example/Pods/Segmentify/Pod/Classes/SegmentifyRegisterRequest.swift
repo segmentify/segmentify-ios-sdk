@@ -43,7 +43,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var price:NSNumber?
     var oldPrice:NSNumber?
     var totalPrice:NSNumber?
-    var stock:Bool?
+    var inStock:Bool?
     var basketStep:String?
     var basketID:String?
     var quantity:NSNumber?
@@ -151,7 +151,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.price = nil
         self.oldPrice = nil
         self.totalPrice = nil
-        self.stock = nil
+        self.inStock = nil
         self.basketStep = nil
         self.basketID = nil
         self.quantity = nil
@@ -327,6 +327,11 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         if let pageUrl = self.pageUrl {
             dictionary["pageUrl"] = pageUrl
         }else{dictionary["pageUrl"] = nil}
+        
+        
+        if self.eventName == "PRODUCT_VIEW" {
+            dictionary["inStock"] = inStock
+        }else{dictionary["inStock"] = nil}
         
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["image"] = image

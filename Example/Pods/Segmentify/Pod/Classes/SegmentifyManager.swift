@@ -878,6 +878,7 @@ public class SegmentifyManager : NSObject {
     
     //Product View Event
     @objc open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
@@ -954,6 +955,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.gender = segmentifyObject.gender
         eventRequest.oldPrice = segmentifyObject.oldPrice
         eventRequest.noUpdate = segmentifyObject.noUpdate
+        eventRequest.inStock = segmentifyObject.inStock
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1314,7 +1316,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Product View Event
-    @objc open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, stock : AnyObject?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:AnyObject? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    @objc open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, inStock : AnyObject?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:AnyObject? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1346,8 +1348,8 @@ public class SegmentifyManager : NSObject {
         if let brand = brand {
             eventRequest.brand = brand
         }
-        if let stock = stock {
-            eventRequest.stock = stock as? Bool
+        if let inStock = inStock {
+            eventRequest.inStock = inStock as? Bool
         }
         if let imageXS = imageXS {
             eventRequest.imageXS = imageXS

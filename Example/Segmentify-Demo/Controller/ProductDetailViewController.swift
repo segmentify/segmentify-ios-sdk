@@ -60,6 +60,7 @@ class ProductDetailViewController: UIViewController {
         prodViewObj.name = self.productDetailItem.name
         prodViewObj.url = self.productDetailItem.url
         prodViewObj.lang = "EN"
+        prodViewObj.inStock = true
         prodViewObj.image = self.productDetailItem.image?.replacingOccurrences(of: "https:", with: "")
         prodViewObj.category = self.productDetailItem.category
         prodViewObj.price = self.productDetailItem.price
