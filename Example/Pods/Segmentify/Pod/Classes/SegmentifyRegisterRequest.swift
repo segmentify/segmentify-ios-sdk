@@ -330,6 +330,10 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         
         if self.eventName == "PRODUCT_VIEW" {
+            dictionary["oldPrice"] = oldPrice
+        }else{dictionary["oldPrice"] = nil}
+        
+        if self.eventName == "PRODUCT_VIEW" {
             dictionary["inStock"] = inStock
         }else{dictionary["inStock"] = nil}
         

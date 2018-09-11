@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/Segmentify/Pod/Classes/SegmentifyManager.swift"
-            timestampString = "557756292.978287"
+            timestampString = "558363069.1272219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "960"
-            endingLineNumber = "960"
+            startingLineNumber = "959"
+            endingLineNumber = "959"
             landmarkName = "sendProductView(segmentifyObject:callback:)"
             landmarkType = "7">
          </BreakpointContent>
