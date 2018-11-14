@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EE19AACE92C9DD51F870D099 /* Pods_Segmentify_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6B502BCF14664C57EF6829 /* Pods_Segmentify_Demo.framework */; };
+		14FBEAC8AEA3DE0D954AC660 /* libPods-Segmentify-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AD6484F99F3D298519A7DA /* libPods-Segmentify-Demo.a */; };
+		B2E94238219C0A9D00CBEE7C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E94237219C0A9D00CBEE7C /* NotificationService.swift */; };
+		B2E9423C219C0A9D00CBEE7C /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B2E94235219C0A9D00CBEE7C /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B2E94242219C0D5A00CBEE7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2E94241219C0D5A00CBEE7C /* GoogleService-Info.plist */; };
+		CBA59F0E2166DD21BA115F97 /* libPods-NotificationService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED83B8F0F5E3B173CD90A20 /* libPods-NotificationService.a */; };
 		F01CE7DB201F650500275A12 /* RecommendationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01CE7DA201F650500275A12 /* RecommendationCell.swift */; };
 		F01CE7E1201FBD9A00275A12 /* OrderRecommendationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01CE7E0201FBD9A00275A12 /* OrderRecommendationCell.swift */; };
 		F02C31F8201B4EFD004DB770 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02C31F7201B4EFD004DB770 /* AppDelegate.swift */; };
@@ -30,7 +34,39 @@
 		F0DE637F20357C570025C67A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DE637E20357C570025C67A /* CategoryCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B2E9423A219C0A9D00CBEE7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F02C31EC201B4EFD004DB770 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2E94234219C0A9D00CBEE7C;
+			remoteInfo = NotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2E94240219C0A9E00CBEE7C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B2E9423C219C0A9D00CBEE7C /* NotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		10AD6484F99F3D298519A7DA /* libPods-Segmentify-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Segmentify-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		164E6F0439ECE762D74AD7FA /* Pods-NotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.release.xcconfig"; path = "Pods/Target Support Files/Pods-NotificationService/Pods-NotificationService.release.xcconfig"; sourceTree = "<group>"; };
+		AED83B8F0F5E3B173CD90A20 /* libPods-NotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E94235219C0A9D00CBEE7C /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E94237219C0A9D00CBEE7C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B2E94239219C0A9D00CBEE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2E94241219C0D5A00CBEE7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B7CB6E3661AC827A24168103 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
 		E2B310993C880515CC7A7479 /* Pods-Segmentify-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Segmentify-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		F01CE7DA201F650500275A12 /* RecommendationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationCell.swift; sourceTree = "<group>"; };
 		F01CE7E0201FBD9A00275A12 /* OrderRecommendationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRecommendationCell.swift; sourceTree = "<group>"; };
@@ -55,15 +91,22 @@
 		F0DE637C203579710025C67A /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		F0DE637E20357C570025C67A /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		F832BA76E86CF969599342D9 /* Pods-Segmentify-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Segmentify-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo.release.xcconfig"; sourceTree = "<group>"; };
-		FD6B502BCF14664C57EF6829 /* Pods_Segmentify_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Segmentify_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B2E94232219C0A9D00CBEE7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBA59F0E2166DD21BA115F97 /* libPods-NotificationService.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F02C31F1201B4EFD004DB770 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE19AACE92C9DD51F870D099 /* Pods_Segmentify_Demo.framework in Frameworks */,
+				14FBEAC8AEA3DE0D954AC660 /* libPods-Segmentify-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +118,8 @@
 			children = (
 				E2B310993C880515CC7A7479 /* Pods-Segmentify-Demo.debug.xcconfig */,
 				F832BA76E86CF969599342D9 /* Pods-Segmentify-Demo.release.xcconfig */,
+				B7CB6E3661AC827A24168103 /* Pods-NotificationService.debug.xcconfig */,
+				164E6F0439ECE762D74AD7FA /* Pods-NotificationService.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -82,9 +127,19 @@
 		7424BE25576AB7580FA0F3D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FD6B502BCF14664C57EF6829 /* Pods_Segmentify_Demo.framework */,
+				AED83B8F0F5E3B173CD90A20 /* libPods-NotificationService.a */,
+				10AD6484F99F3D298519A7DA /* libPods-Segmentify-Demo.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2E94236219C0A9D00CBEE7C /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				B2E94237219C0A9D00CBEE7C /* NotificationService.swift */,
+				B2E94239219C0A9D00CBEE7C /* Info.plist */,
+			);
+			path = NotificationService;
 			sourceTree = "<group>";
 		};
 		F01CE7DC201F650900275A12 /* Controller */ = {
@@ -118,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				F02C31F6201B4EFD004DB770 /* Segmentify-Demo */,
+				B2E94236219C0A9D00CBEE7C /* NotificationService */,
 				F02C31F5201B4EFD004DB770 /* Products */,
 				6762075F4277541C49C66D74 /* Pods */,
 				7424BE25576AB7580FA0F3D5 /* Frameworks */,
@@ -128,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				F02C31F4201B4EFD004DB770 /* Segmentify-Demo.app */,
+				B2E94235219C0A9D00CBEE7C /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,6 +197,7 @@
 				F01CE7DC201F650900275A12 /* Controller */,
 				F02C31F7201B4EFD004DB770 /* AppDelegate.swift */,
 				F02C31FB201B4EFD004DB770 /* Main.storyboard */,
+				B2E94241219C0D5A00CBEE7C /* GoogleService-Info.plist */,
 				F02C31FE201B4EFE004DB770 /* Assets.xcassets */,
 				F02C3200201B4EFE004DB770 /* LaunchScreen.storyboard */,
 				F02C3203201B4EFE004DB770 /* Info.plist */,
@@ -160,6 +218,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B2E94234219C0A9D00CBEE7C /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2E9423F219C0A9E00CBEE7C /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				B2D81E8873EEC82A9809307A /* [CP] Check Pods Manifest.lock */,
+				B2E94231219C0A9D00CBEE7C /* Sources */,
+				B2E94232219C0A9D00CBEE7C /* Frameworks */,
+				B2E94233219C0A9D00CBEE7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationService;
+			productName = NotificationService;
+			productReference = B2E94235219C0A9D00CBEE7C /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F02C31F3201B4EFD004DB770 /* Segmentify-Demo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F02C3206201B4EFE004DB770 /* Build configuration list for PBXNativeTarget "Segmentify-Demo" */;
@@ -168,11 +244,12 @@
 				F02C31F0201B4EFD004DB770 /* Sources */,
 				F02C31F1201B4EFD004DB770 /* Frameworks */,
 				F02C31F2201B4EFD004DB770 /* Resources */,
-				AC02799CEC233A6BA36911BF /* [CP] Embed Pods Frameworks */,
+				B2E94240219C0A9E00CBEE7C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2E9423B219C0A9D00CBEE7C /* PBXTargetDependency */,
 			);
 			name = "Segmentify-Demo";
 			productName = "Segmentify-Demo";
@@ -185,10 +262,14 @@
 		F02C31EC201B4EFD004DB770 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = mehmetkoca;
 				TargetAttributes = {
+					B2E94234219C0A9D00CBEE7C = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
+					};
 					F02C31F3201B4EFD004DB770 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -209,16 +290,25 @@
 			projectRoot = "";
 			targets = (
 				F02C31F3201B4EFD004DB770 /* Segmentify-Demo */,
+				B2E94234219C0A9D00CBEE7C /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B2E94233219C0A9D00CBEE7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F02C31F2201B4EFD004DB770 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F02C3202201B4EFE004DB770 /* LaunchScreen.storyboard in Resources */,
+				B2E94242219C0D5A00CBEE7C /* GoogleService-Info.plist in Resources */,
 				F02C31FF201B4EFE004DB770 /* Assets.xcassets in Resources */,
 				F02C31FD201B4EFD004DB770 /* Main.storyboard in Resources */,
 			);
@@ -245,27 +335,35 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AC02799CEC233A6BA36911BF /* [CP] Embed Pods Frameworks */ = {
+		B2D81E8873EEC82A9809307A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Segmentify/Segmentify.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Segmentify.framework",
+				"$(DERIVED_FILE_DIR)/Pods-NotificationService-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Segmentify-Demo/Pods-Segmentify-Demo-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B2E94231219C0A9D00CBEE7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E94238219C0A9D00CBEE7C /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F02C31F0201B4EFD004DB770 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +390,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B2E9423B219C0A9D00CBEE7C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2E94234219C0A9D00CBEE7C /* NotificationService */;
+			targetProxy = B2E9423A219C0A9D00CBEE7C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F02C31FB201B4EFD004DB770 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -312,6 +418,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B2E9423D219C0A9E00CBEE7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7CB6E3661AC827A24168103 /* Pods-NotificationService.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPXAF9Y4FN;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo.NotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B2E9423E219C0A9E00CBEE7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 164E6F0439ECE762D74AD7FA /* Pods-NotificationService.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPXAF9Y4FN;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo.NotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F02C3204201B4EFE004DB770 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -423,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2B310993C880515CC7A7479 /* Pods-Segmentify-Demo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -439,6 +589,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F832BA76E86CF969599342D9 /* Pods-Segmentify-Demo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -454,6 +605,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B2E9423F219C0A9E00CBEE7C /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2E9423D219C0A9E00CBEE7C /* Debug */,
+				B2E9423E219C0A9E00CBEE7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F02C31EF201B4EFD004DB770 /* Build configuration list for PBXProject "Segmentify-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -1,0 +1,6 @@
+module Segmentify {
+  umbrella header "Segmentify-umbrella.h"
+
+  export *
+  module * { export * }
+}

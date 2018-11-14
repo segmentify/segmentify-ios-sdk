@@ -6,6 +6,7 @@
 //  Copyright © 2018 mehmetkoca. All rights reserved.
 //
 import UIKit
+import Firebase
 import Segmentify
 
 class HomeViewController: UIViewController {
@@ -39,6 +40,27 @@ class HomeViewController: UIViewController {
     
     // send page view request
     func sendPageViewRequest() {
+        
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instange ID: \(error)")
+            } else if let result = result {
+                
+                
+                let obj = NotificationModel()
+                obj.deviceToken = result.token
+                obj.type = NotificationType.PERMISSION_INFO
+                obj.params = ["price": "123", "productId": "13", "quantity": "132"]
+                obj.providerType = ProviderType.FIREBASE
+                SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
+            }
+        }
+        
+        
+        
+        
+        
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
         pageViewObj.params = ["homeMapLocation":"İstanbul/Kadıköy/19 Mayıs"] as [String : AnyObject]
@@ -52,13 +74,13 @@ class HomeViewController: UIViewController {
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
             //Eğer scn_21470dcdc6982000 instanceId'li kampanyada products array'i boşsa alt
-            if recObj.instanceId == "scn_1072d71d0df2000" {
+            if recObj.instanceId == "scn_72cdfa5dca000" {
                 self.setProductInfosTableView(products: recObj.products!)
                 self.instanceId = recObj.instanceId!
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
             }
             
-            if recObj.instanceId == "ext_home_rec" {
+            if recObj.instanceId == "scn_72d50554a2000" {
                 self.setProductInfosCollectionView(products: recObj.products!)
                 self.notificationTitle.text = recObj.notificationTitle
                 SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
@@ -88,10 +110,10 @@ class HomeViewController: UIViewController {
         sectionsArray.append(Section(sectionName: "Recommendations Products", sectionObjects: tableViewProducts))
         self.tableView.reloadData()
     }
-
+    
     func setProductInfosCollectionView(products : [ProductRecommendationModel]) {
         for product in products {
-
+            
             if nil == product.price {
                 product.price = 0
             }
@@ -106,7 +128,7 @@ class HomeViewController: UIViewController {
         }
         self.collecView.reloadData()
     }
-
+    
     // send logout request
     @objc func logoutTapped(_ sender: Any) {
         let userObj = UserModel()
@@ -138,7 +160,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         if section == 0 {
             header.tintColor = UIColor(red:0.82, green:0.38, blue:0.57, alpha:1.0)
         } else if section == 1 {
-             header.tintColor = UIColor(red:0.67, green:0.67, blue:0.81, alpha:1.0)
+            header.tintColor = UIColor(red:0.67, green:0.67, blue:0.81, alpha:1.0)
         }
     }
     
@@ -251,3 +273,4 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell!
     }
 }
+

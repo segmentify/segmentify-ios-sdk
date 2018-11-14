@@ -1,0 +1,1 @@
+../../../Segmentify/Pod/Classes/Segmentify.h

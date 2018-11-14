@@ -81,7 +81,6 @@ public class SegmentifyManager : NSObject {
         return sessionKeepSecond
     }
     
-    
     public class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
             segmentifySharedInstance = SegmentifyManager.init()
@@ -280,7 +279,7 @@ public class SegmentifyManager : NSObject {
                 self.sendImpression(instanceId: insId, interactionId: interId)
                 
                 
-        
+                
                 
                 for object in dynamicDic {
                     let dynObj = DynamicItemsModel()
@@ -290,16 +289,16 @@ public class SegmentifyManager : NSObject {
                         dynObj.recommendationSource = recoomendationSource as? String
                         key = "\(object["recommendationSource"]!)"
                     }
-              
+                    
                     if let itemCount = object["itemCount"] {
                         self.itemCounts.append(itemCount as! String)
                         dynObj.itemCount = Int(itemCount as! String)
                     }
                     
-
+                    
                     
                     let timeFrameKey = object["timeFrame"]
-      
+                    
                     if timeFrameKey != nil {
                         self.timeFrameKeys.append(timeFrameKey as! String)
                         dynObj.timeFrame = timeFrameKey as? String
@@ -314,7 +313,7 @@ public class SegmentifyManager : NSObject {
                     }
                     
                     
-     
+                    
                     
                     
                     //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
@@ -540,6 +539,130 @@ public class SegmentifyManager : NSObject {
         }
     }
     
+    
+    
+    
+    open func sendNotification(segmentifyObject : NotificationModel) {
+        
+        
+        if(segmentifyObject.type == NotificationType.PERMISSION_INFO){
+            
+            let deviceToken = segmentifyObject.deviceToken
+            guard  deviceToken != nil else {
+                print("Error - you must fill deviceToken before accessing sendNotification event")
+                return
+            }
+            
+        }
+        
+        let encodedData = try? JSONEncoder().encode(segmentifyObject)
+        
+        
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        
+        let url = URL(string: dataCenter! + "/native/subscription/push?apiKey=" + SegmentifyManager.setup.apiKey!)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        request.httpBody = encodedData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            
+            
+            
+            //            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            //            if let responseJSON = responseJSON as? [String: Any] {
+            //                print(responseJSON)
+            //            }
+        }
+        
+        task.resume()
+        
+    }
+    
+    
+    open func sendNotificationInteraction(segmentifyObject : NotificationModel) {
+        
+        
+        
+        if( segmentifyObject.type == NotificationType.VIEW){
+            
+            let instanceId = segmentifyObject.instanceId
+            
+            guard instanceId != nil  else {
+                print("Error - you must fill instanceId or deviceToken before accessing sendNotification view event")
+                return
+            }
+            
+        }
+        
+        
+        
+        if(segmentifyObject.type == NotificationType.CLICK){
+            let instanceId = segmentifyObject.instanceId
+            let productId = segmentifyObject.productId
+            
+            guard instanceId != nil  else {
+                print("Error - you must fill instanceId or deviceToken before accessing sendNotification click event")
+                return
+            }
+            
+            guard productId != nil  else {
+                print("Error - you must fill instanceId or product before accessing sendNotification click event")
+                return
+            }
+            
+            
+            UserDefaults.standard.set(segmentifyObject.instanceId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_ID")
+            UserDefaults.standard.set(segmentifyObject.productId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_PRODUCT_ID")
+            
+            let model  = InteractionModel()
+            model.impressionId = instanceId
+            model.interactionId = productId
+            
+            
+            sendClick(segmentifyObject: model)
+            
+        }
+        
+        
+        let encodedData = try? JSONEncoder().encode(segmentifyObject)
+        
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        
+        let url = URL(string: dataCenter!  + "/native/interaction/notification?apiKey=" + SegmentifyManager.setup.apiKey!)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        request.httpBody = encodedData
+        
+        
+        
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
+    open func getTrackingParameters()->UtmModel{
+        return UtmModel()
+    }
+    
+    
     //EVENTS
     //Register Event
     open func sendUserRegister(segmentifyObject: UserModel) {
@@ -553,6 +676,11 @@ public class SegmentifyManager : NSObject {
             print("Error - you must fill userId or email before accessing sendUserLogout event")
             return
         }
+        
+        UserDefaults.standard.set(email, forKey: "SEGMENTIFY_EMAIL")
+        UserDefaults.standard.set(username, forKey: "SEGMENTIFY_USERNAME")
+        
+        
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
@@ -578,6 +706,12 @@ public class SegmentifyManager : NSObject {
             print("Error - you must fill userId or email before accessing sendUserLogin event")
             return
         }
+        
+        
+        UserDefaults.standard.set(email, forKey: "SEGMENTIFY_EMAIL")
+        UserDefaults.standard.set(username, forKey: "SEGMENTIFY_USERNAME")
+        
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -603,6 +737,10 @@ public class SegmentifyManager : NSObject {
             print("Error - you must fill userId or email before accessing sendUserLogout event")
             return
         }
+        
+        
+        
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -628,6 +766,11 @@ public class SegmentifyManager : NSObject {
             print("Error - you must fill username or email before accessing sendUserUpdate event")
             return
         }
+        
+        UserDefaults.standard.set(email, forKey: "SEGMENTIFY_EMAIL")
+        UserDefaults.standard.set(username, forKey: "SEGMENTIFY_USERNAME")
+        
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -878,7 +1021,7 @@ public class SegmentifyManager : NSObject {
     
     //Product View Event
     @objc open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-
+        
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
@@ -1627,6 +1770,7 @@ public class SegmentifyManager : NSObject {
 public func daysBetween(start: Date, end: Date) -> Int {
     return Calendar.current.dateComponents([.day], from: start, to: end).day!
 }
+
 
 
 

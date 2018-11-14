@@ -42,7 +42,7 @@ class ProductDetailViewController: UIViewController {
     func sendClickEvent(){
         SegmentifyManager.sharedManager().sendClickView(instanceId: self.instanceId, interactionId: productDetailItem.productId!)
     }
-
+    
     
     func sendPageViewRequest() {
         let pageViewObj = PageModel()
@@ -50,7 +50,7 @@ class ProductDetailViewController: UIViewController {
         pageViewObj.lang = "EN"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
-        
+            
         }
     }
     
@@ -105,7 +105,7 @@ class ProductDetailViewController: UIViewController {
             }
             
         }
-       
+        
         if segue.identifier == "productDetailForProductVC" {
             var indexPath: IndexPath = self.tableView.indexPathForSelectedRow!
             let destinationViewController = segue.destination as? ProductDetailViewController
@@ -178,7 +178,7 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
         cell?.lblproductName.text = tableViewProducts[indexPath.row].name
         cell?.lblproductBrand.text = tableViewProducts[indexPath.row].brand
         cell?.lblproductPrice.text = "€ \(tableViewProducts[indexPath.row].price!)"
-    
+        
         if let imgURL = URL(string: tableViewProducts[indexPath.row].image!) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imgURL)
@@ -193,3 +193,4 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
         return cell!
     }
 }
+

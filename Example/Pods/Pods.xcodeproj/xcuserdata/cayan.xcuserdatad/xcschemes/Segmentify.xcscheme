@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "829B8B813A375DEDC1EAA09DB7FC850C"
+               BlueprintIdentifier = "D67DBA3BB49040148B32141FFC8802B2"
                BlueprintName = "Segmentify"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "Segmentify.framework">
+               BuildableName = "libSegmentify.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
