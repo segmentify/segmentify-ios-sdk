@@ -216,128 +216,138 @@ public class SegmentifyManager : NSObject {
                 return
             }
             self.recommendations.removeAll()
-            
-            for (_, obj) in responses[0].enumerated() {
-                self.minusIndex = Int()
-                guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
-                    return
-                }
-                self.params = params
-                
-                self.type = obj["type"] as? String
-                
-                guard self.type == "recommendProducts"  else {
-                    print("type is not valid")
-                    return
-                }
-                
-                guard let dynamicItems = self.params!["dynamicItems"] as? String else {
-                    print("params['dynamicItems'] is not valid")
-                    return
-                }
-                
-                guard let dynamicDic = SegmentifyTools.convertStringToDictionary(text: dynamicItems) else {
-                    print("cannot converted string to json")
-                    return
-                }
-                
-                guard let recommendedProducts = self.params!["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
-                    print("params['recommendedProducts'] is not valid")
-                    return
-                }
-                self.recommendationArray = recommendedProducts
-                
-                guard let notificationTitle = self.params!["notificationTitle"] as? String else {
-                    print("params['notificationTitle'] is not valid")
-                    return
-                }
-                
-                guard let staticItems = self.params!["staticItems"] as? String else {
-                    print("params['dynamicItems'] is not valid")
-                    return
-                }
-                
-                guard let staticItemsDic = SegmentifyTools.convertStringToDictionary(text: staticItems) else {
-                    print("cannot converted string to json")
-                    return
-                }
-                
-                
-                var insId : String = String()
-                var interId : String = String()
-                if let instanceId = self.params!["instanceId"] as? String {
-                    insId = instanceId
-                }
-                
-                if let interactionId = self.params!["actionId"] as? String {
-                    interId = interactionId
-                }
-                
-                if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
-                    self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
-                }
-                self.sendImpression(instanceId: insId, interactionId: interId)
-                
-                
-        
-                
-                for object in dynamicDic {
-                    let dynObj = DynamicItemsModel()
-                    var key = String()
-                    if let recoomendationSource = object["recommendationSource"] {
-                        self.recommendationSourceKeys.append(recoomendationSource as! String)
-                        dynObj.recommendationSource = recoomendationSource as? String
-                        key = "\(object["recommendationSource"]!)"
-                    }
-              
-                    if let itemCount = object["itemCount"] {
-                        self.itemCounts.append(itemCount as! String)
-                        dynObj.itemCount = Int(itemCount as! String)
-                    }
-                    
 
+            if(responses.isEmpty){
+                print("error : response is not valid or empty")
+                return
+            }
+            else{
+                
+                for (_, obj) in responses[0].enumerated() {
+                    self.minusIndex = Int()
+                    guard let params = obj["params"] as? Dictionary<AnyHashable, Any> else {
+                        return
+                    }
+                    self.params = params
                     
-                    let timeFrameKey = object["timeFrame"]
-      
-                    if timeFrameKey != nil {
-                        self.timeFrameKeys.append(timeFrameKey as! String)
-                        dynObj.timeFrame = timeFrameKey as? String
-                        key = key + "|\(object["timeFrame"]!)"
-                        let scoreKey = object["score"]
-                        //Score key
-                        if scoreKey != nil {
-                            self.scoreKeys.append(scoreKey as! String)
-                            dynObj.score = scoreKey as? String
-                            key = key + "|\(object["score"]!)"
+                    self.type = obj["type"] as? String
+                    
+                    guard self.type == "recommendProducts"  else {
+                        print("type is not valid")
+                        return
+                    }
+                    
+                    guard let dynamicItems = self.params!["dynamicItems"] as? String else {
+                        print("params['dynamicItems'] is not valid")
+                        return
+                    }
+                    
+                    guard let dynamicDic = SegmentifyTools.convertStringToDictionary(text: dynamicItems) else {
+                        print("cannot converted string to json")
+                        return
+                    }
+                    
+                    guard let recommendedProducts = self.params!["recommendedProducts"] as? Dictionary<AnyHashable, Any> else {
+                        print("params['recommendedProducts'] is not valid")
+                        return
+                    }
+                    self.recommendationArray = recommendedProducts
+                    
+                    guard let notificationTitle = self.params!["notificationTitle"] as? String else {
+                        print("params['notificationTitle'] is not valid")
+                        return
+                    }
+                    
+                    guard let staticItems = self.params!["staticItems"] as? String else {
+                        print("params['dynamicItems'] is not valid")
+                        return
+                    }
+                    
+                    guard let staticItemsDic = SegmentifyTools.convertStringToDictionary(text: staticItems) else {
+                        print("cannot converted string to json")
+                        return
+                    }
+                    
+                    
+                    var insId : String = String()
+                    var interId : String = String()
+                    if let instanceId = self.params!["instanceId"] as? String {
+                        insId = instanceId
+                    }
+                    
+                    if let interactionId = self.params!["actionId"] as? String {
+                        interId = interactionId
+                    }
+                    
+                    if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                        self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+                    }
+                    self.sendImpression(instanceId: insId, interactionId: interId)
+                    
+                    
+                    
+                    
+                    for object in dynamicDic {
+                        let dynObj = DynamicItemsModel()
+                        var key = String()
+                        if let recoomendationSource = object["recommendationSource"] {
+                            self.recommendationSourceKeys.append(recoomendationSource as! String)
+                            dynObj.recommendationSource = recoomendationSource as? String
+                            key = "\(object["recommendationSource"]!)"
+                        }
+                        
+                        if let itemCount = object["itemCount"] {
+                            self.itemCounts.append(itemCount as! String)
+                            dynObj.itemCount = Int(itemCount as! String)
+                        }
+                        
+                        
+                        
+                        let timeFrameKey = object["timeFrame"]
+                        
+                        if timeFrameKey != nil {
+                            self.timeFrameKeys.append(timeFrameKey as! String)
+                            dynObj.timeFrame = timeFrameKey as? String
+                            key = key + "|\(object["timeFrame"]!)"
+                            let scoreKey = object["score"]
+                            //Score key
+                            if scoreKey != nil {
+                                self.scoreKeys.append(scoreKey as! String)
+                                dynObj.score = scoreKey as? String
+                                key = key + "|\(object["score"]!)"
+                            }
+                        }
+                        
+                        
+                        
+                        
+                        
+                        //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
+                        if key != "" {
+                            dynObj.key = key
+                            self.keys.append(key)
+                            self.dynamicItemsArray.append(dynObj)
                         }
                     }
                     
                     
-     
                     
-                    
-                    //let key = "\(object["recommendationSource"]!)|\(object["timeFrame"]!)"
-                    if key != "" {
-                        dynObj.key = key
-                        self.keys.append(key)
-                        self.dynamicItemsArray.append(dynObj)
+                    if staticItemsDic.count > 0 {
+                        self.validStaticItem = true
+                        
+                        self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
+                        
                     }
-                }
-                
-                
-                
-                if staticItemsDic.count > 0 {
-                    self.validStaticItem = true
                     
-                    self.getStaticItemsArray(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts,interactionId: interId,impressionId : insId)
+                    self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
+                    
+                    
                     
                 }
-                
-                self.getRecommendations(notificationTitle: notificationTitle, recommendedProducts: recommendedProducts, staticItems: nil, keys: self.keys,interactionId: interId,impressionId : insId)
-                
-                
-                
+          
             }
+            
+       
             callback(self.recommendations)
             
         }, failure: {(error: Error) in

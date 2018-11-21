@@ -4,7 +4,7 @@
 target 'Segmentify-Demo' do
   # Comment the next line if you're not using Swift and don't want to use dynamic
 
-pod "Segmentify"
+pod "Segmentify" , '~> 1.1.0'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
   # Pods for Segmentify-Demo

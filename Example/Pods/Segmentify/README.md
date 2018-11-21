@@ -3,6 +3,8 @@ Segmentify  SDK for sending events and rendering recommendations for iOS based d
 
 > **Supports iOS 9 and higher devices.**
 
+> **Current Version 1.0.28**
+
 
 ## Installation
 

@@ -57,12 +57,12 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.1)
-  - Segmentify (1.0.24)
+  - Segmentify (1.1.0)
 
 DEPENDENCIES:
   - Firebase/Core
   - Firebase/Messaging
-  - Segmentify
+  - Segmentify (~> 1.1.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -87,8 +87,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 760ccb53b7c7f40f9c02d8c241f76f841a7a6162
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  Segmentify: 469d1e64272173504c19b2a125195425122eefc4
+  Segmentify: 3713142bd81b78cfa7996dab8ed316ca3d45c4d2
 
-PODFILE CHECKSUM: 3e6a76a8827fc14ec4fac4efbbdf0c966317703c
+PODFILE CHECKSUM: 83bb9a58e9c71aab77a045af9490f560a061af15
 
 COCOAPODS: 1.5.3

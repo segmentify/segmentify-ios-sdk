@@ -103,12 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if(application.applicationState == UIApplicationState.background){
             
-            InstanceID.instanceID().instanceID { (result, error) in
-                if let error = error {
-                    print("Error fetching remote instange ID: \(error)")
-                } else if let result = result {
-                    
-                    
+
                     let apns_instanceId = userInfo["instanceId"]
                     let f_instanceId = userInfo["gcm.notification.instanceId"]
                     var instanceId_  = ""
@@ -130,8 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     SegmentifyManager.sharedManager().sendNotificationInteraction(segmentifyObject: obj)
                     
                     
-                }
-            }
+            
+            
         }
         
         
@@ -232,12 +227,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                
+
                 
                 let apns_instanceId = userInfo["instanceId"]
                 let f_instanceId = userInfo["gcm.notification.instanceId"]
@@ -266,6 +256,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                 }
    
 
+        var utm_model = SegmentifyManager.sharedManager().getTrackingParameters();
                 let obj = NotificationModel()
                 obj.instanceId = instanceId_ as! String
                 obj.productId = productId_ as! String
@@ -274,8 +265,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 
                 SegmentifyManager.sharedManager().sendNotificationInteraction(segmentifyObject: obj)
 
-            }
-        }
+        
+        
 
         
         // Print full message.
