@@ -81,6 +81,15 @@ public class SegmentifyManager : NSObject {
         return sessionKeepSecond
     }
     
+    
+    public class func setConfig(apiKey: String,dataCenterUrl : String, subDomain : String) {
+        SegmentifyManager.setup.apiKey = apiKey
+        SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
+        SegmentifyManager.setup.subDomain = subDomain
+        segmentifySharedInstance = SegmentifyManager.init()
+        
+    }
+    
     public class func sharedManager() -> SegmentifyManager {
         if segmentifySharedInstance == nil {
             segmentifySharedInstance = SegmentifyManager.init()
