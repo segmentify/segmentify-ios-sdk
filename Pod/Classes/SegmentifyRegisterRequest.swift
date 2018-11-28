@@ -84,7 +84,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var instanceId:String?
     var interactionId:String?
     var noUpdate:Bool?
-    
+    var testMode:Bool?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -192,6 +192,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.instanceId = nil
         self.interactionId = nil
         self.noUpdate = nil
+        self.testMode = nil
     }
     
     
@@ -242,6 +243,13 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         if let eventName = self.eventName {
             dictionary["name"] = eventName as Any?
         }
+        
+        if let testMode = self.testMode {
+            dictionary["testMode"] = testMode as Any?
+        }else{
+            dictionary["testMode"] = nil
+        }
+        
         
         if self.eventName == "PAGE_VIEW" {
             dictionary["category"] = category as Any?

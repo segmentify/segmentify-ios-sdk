@@ -41,7 +41,6 @@ class HomeViewController: UIViewController {
     // send page view request
     func sendPageViewRequest() {
         
-        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
@@ -64,6 +63,7 @@ class HomeViewController: UIViewController {
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
         pageViewObj.params = ["homeMapLocation":"İstanbul/Kadıköy/19 Mayıs"] as [String : AnyObject]
+        pageViewObj.testMode = true
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)

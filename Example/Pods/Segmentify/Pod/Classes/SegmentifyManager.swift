@@ -470,6 +470,7 @@ public class SegmentifyManager : NSObject {
         
         for (_, obj) in products.enumerated() {
             let proObj = ProductRecommendationModel()
+            
             if let noUpdate = obj["noUpdate"] {
                 proObj.noUpdate = noUpdate as? Bool
             }
@@ -1046,6 +1047,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
         
+        if segmentifyObject.testMode != nil {
+            eventRequest.testMode = segmentifyObject.testMode
+        }
+        
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
@@ -1134,6 +1139,10 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        
+        if segmentifyObject.testMode != nil {
+            eventRequest.testMode = segmentifyObject.testMode
+        }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
@@ -1183,6 +1192,12 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        
+        if segmentifyObject.testMode != nil {
+            eventRequest.testMode = segmentifyObject.testMode
+        }
+        
+        
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
@@ -1495,6 +1510,7 @@ public class SegmentifyManager : NSObject {
             eventRequest.lang = lang
         }
         
+        
         if let params = params {
             eventRequest.params = params
         }
@@ -1547,7 +1563,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Page View Event
-    @objc open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? ,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+    @objc open func sendPageView(category : String, subCategory : String?,recommendIds: [String]?, lang: String?, params :[String:AnyObject]? , callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.category = category
         eventRequest.interactionId = nil
@@ -1557,6 +1573,7 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
+                
         if let recommendIds = recommendIds {
             eventRequest.recommendIds = recommendIds
         }
