@@ -145,6 +145,19 @@ public class SegmentifyManager : NSObject {
         }
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
         
+        #if swift(>=4.2)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeDeactive),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
+        
+        #else
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationDidBecomeActive),
                                                name: .UIApplicationDidBecomeActive,
@@ -153,15 +166,28 @@ public class SegmentifyManager : NSObject {
                                                selector: #selector(applicationDidBecomeDeactive),
                                                name: .UIApplicationDidEnterBackground,
                                                object: nil)
+        
+        #endif
     }
     
     deinit {
+        #if swift(>=4.2)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIApplication.didBecomeActiveNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIApplication.didEnterBackgroundNotification,
+                                                  object: nil)
+        #else
+        
         NotificationCenter.default.removeObserver(self,
                                                   name: .UIApplicationDidBecomeActive,
                                                   object: nil)
         NotificationCenter.default.removeObserver(self,
                                                   name: .UIApplicationDidEnterBackground,
                                                   object: nil)
+        
+        #endif
     }
     
     @objc private func applicationDidBecomeActive() {
@@ -589,7 +615,7 @@ public class SegmentifyManager : NSObject {
         request.httpBody = encodedData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
@@ -668,7 +694,7 @@ public class SegmentifyManager : NSObject {
 
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
