@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var basketButton: UIBarButtonItem!
     
     var recommendations: [RecommendationModel] = []
+    var response = SearchModel()
     var collectionViewProducts = [Product]()
     var tableViewProducts = [Product]()
     var sectionsArray = [Section]()
@@ -33,9 +34,21 @@ class HomeViewController: UIViewController {
         // no large title
         navigationController?.navigationBar.prefersLargeTitles = false
         // pageView Request
-        sendPageViewRequest()
+        //sendPageViewRequest()
+        sendSearchPageViewRequest()
         // update table view
         tableView.reloadData()
+    }
+    
+    func sendSearchPageViewRequest() {
+        let pageViewObj = SearchPageModel()
+        pageViewObj.query = ""
+        pageViewObj.lang = "TR"
+        SegmentifyManager.sharedManager().sendSearchPageView(segmentifyObject: pageViewObj){
+            (response: SearchModel) in
+            self.response = response
+        }
+        //SegmentifyManager.sharedManager().sendSearchClickView(instanceId: "SEARCH", interactionId: "1")
     }
     
     // send page view request
@@ -55,10 +68,6 @@ class HomeViewController: UIViewController {
                 SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
             }
         }
-        
-        
-        
-        
         
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
