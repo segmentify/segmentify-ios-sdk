@@ -211,7 +211,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         dictionary["apiKey"] = apiKey as Any?
         
         dictionary["os"] = "ios"
-        dictionary["device"] = "mobile"
+        dictionary["device"] = "ios"
         
         if let osVersion = self.osVersion {
             dictionary["osversion"] = osVersion as Any?
