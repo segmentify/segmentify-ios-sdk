@@ -48,7 +48,6 @@ class HomeViewController: UIViewController {
             (response: SearchModel) in
             self.response = response
         }
-        //SegmentifyManager.sharedManager().sendSearchClickView(instanceId: "SEARCH", interactionId: "1")
     }
     
     // send page view request
