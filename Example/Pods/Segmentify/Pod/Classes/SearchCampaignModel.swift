@@ -7,54 +7,13 @@
 
 import Foundation
 
-public class SearchCampaignModel : NSObject, Codable {
+public class SearchCampaignModel : NSObject {
     public func copy(with zone: NSZone? = nil) -> Any {
         let copy = SearchCampaignModel(instanceId :instanceId,name:name,accountId:accountId,status:status,devices:devices,searchDelay:searchDelay,minCharacterCount:minCharacterCount,searchUrlPrefix:searchUrlPrefix,searchInputSelector:searchInputSelector,hideCurrentSelector:hideCurrentSelector,desktopItemCount:desktopItemCount,mobileItemCount:mobileItemCount,searchAssets:searchAssets,stringSearchAssetTextMap: stringSearchAssetTextMap ,html:html,preJs:preJs,postJs:postJs,css:css,triggerSelector:triggerSelector,openingDirection:openingDirection)
         return copy
     }
-    enum CodingKeys: String, CodingKey {
-      case instanceId
-      case name
-      case accountId
-      case status
-      case devices
-      case searchDelay
-      case minCharacterCount
-      case searchUrlPrefix
-      case searchInputSelector
-      case hideCurrentSelector
-      case desktopItemCount
-      case mobileItemCount
-      case searchAssets
-      case stringSearchAssetTextMap
-      case html
-      case preJs
-      case postJs
-      case css
-    }
     public override init() {}
     
-    required public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        instanceId = try values.decode(String.self, forKey:  .instanceId)
-        name = try values.decode(String.self, forKey:  .name)
-        accountId = try values.decode(String.self, forKey:  .accountId)
-        status = try values.decode(String.self, forKey:  .status)
-        devices = try values.decode([String].self, forKey:  .devices)
-        searchDelay = try values.decode(Int.self, forKey:  .searchDelay)
-        minCharacterCount = try values.decode(Int.self, forKey:  .minCharacterCount)
-        searchUrlPrefix = try values.decode(String.self, forKey:  .searchUrlPrefix)
-        searchInputSelector = try values.decode(String.self, forKey:  .searchInputSelector)
-        hideCurrentSelector = try values.decode(String.self, forKey:  .hideCurrentSelector)
-        desktopItemCount = try values.decode(Int.self, forKey:  .desktopItemCount)
-        mobileItemCount = try values.decode(Int.self, forKey:  .mobileItemCount)
-        searchAssets = try values.decode([SearchAssetModel].self, forKey:  .searchAssets)
-        stringSearchAssetTextMap = try values.decode([String:SearchAssetTextModel].self, forKey:  .stringSearchAssetTextMap)
-        html = try values.decode(String.self, forKey:  .html)
-        preJs = try values.decode(String.self, forKey:  .preJs)
-        postJs = try values.decode(String.self, forKey:  .postJs)
-        css = try values.decode(String.self, forKey:  .css)
-    }
     
         var instanceId : String?
         var name:String?

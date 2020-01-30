@@ -7,28 +7,12 @@
 
 import Foundation
 
-public class SearchModel : NSObject, NSCopying, Codable {
+public class SearchModel : NSObject, NSCopying {
     public var campaign:SearchCampaignModel?
     public var products:[ProductSearchModel]?
     public var errorString:String?
     public var instanceId:String?
     public var interactionId:String?
-    enum CodingKeys: String, CodingKey {
-        case campaign
-        case products
-        case errorString
-        case instanceId
-        case interactionId
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        campaign = try values.decode(SearchCampaignModel?.self, forKey: .campaign)
-        products = try values.decode([ProductSearchModel]?.self, forKey: .products)
-        errorString = ""
-        instanceId = ""
-        interactionId = ""
-    }
     
     public  override init() {
         

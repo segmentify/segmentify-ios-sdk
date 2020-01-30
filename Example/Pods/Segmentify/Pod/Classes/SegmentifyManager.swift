@@ -842,6 +842,7 @@ public class SegmentifyManager : NSObject {
             if let oldPrice = obj["oldPrice"] {
                 proObj.oldPrice = oldPrice as? Double
             }
+        
             if let params = obj["params"]{
                 proObj.params = params as? [String:String]
             }

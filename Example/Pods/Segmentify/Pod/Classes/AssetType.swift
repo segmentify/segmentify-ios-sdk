@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AssetType:String,Codable {
+public enum AssetType:String {
     case CATEGORY, BRAND, KEYWORD
     
 }
