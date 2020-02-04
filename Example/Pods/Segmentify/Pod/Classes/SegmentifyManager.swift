@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum SearchCodingKeys: String, CodingKey {
+    case search
+}
+
 public class SegmentifyManager : NSObject {
     
     static let sdkVersion = "1.0"
@@ -24,6 +28,7 @@ public class SegmentifyManager : NSObject {
     static let userChangeEventName = "USER_CHANGE"
     static let customEventName = "CUSTOM_EVENT"
     static let interactionEventName = "INTERACTION"
+    static let searchEventName = "SEARCH"
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -36,7 +41,7 @@ public class SegmentifyManager : NSObject {
     static let impressionStep = "impression"
     static let widgetViewStep = "widget-view"
     static let clickStep = "click"
-    
+    static let searchStep = "search"
     static let startIndex = 0
     
     private var params : Dictionary<AnyHashable, Any>?
@@ -50,7 +55,9 @@ public class SegmentifyManager : NSObject {
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
     private var recommendationArray = [AnyHashable : Any]()
+    private var searcResponseProductsArray = [ProductSearchModel]()
     private var recommendations :[RecommendationModel] = []
+    private var searchResponse = SearchModel()
     private var currentKey : String?
     private var type : String?
     private var staticItemsArrayCount : Int = Int()
@@ -214,6 +221,65 @@ public class SegmentifyManager : NSObject {
         }
     }
     
+    func parseJson(anyObj:AnyObject) -> SearchModel{
+        var b:SearchModel = SearchModel()
+        b.campaign = (anyObj["campaign"] as! SearchCampaignModel?)
+        b.products  =  (anyObj["products"]  as! [ProductSearchModel]? )
+        return b
+    }
+    
+    func sendSearchEvent(callback: @escaping (_ recommendation: SearchModel) -> Void) {
+        SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
+            
+            guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
+                print("error : \(response["statusCode"]! as Any)")
+                return
+            }
+            
+            if(searches.isEmpty){
+                print("error : search response is not valid or empty")
+                return
+            }
+            else{
+                for (_, obj) in searches[0].enumerated() {
+                    
+                    guard let products = obj["products"] as? [Dictionary<AnyHashable,Any>] else {
+                        return
+                    }
+                    self.createSearchProducts(products: products)
+                    
+                    guard let campaign = obj["campaign"] as?  Dictionary<AnyHashable, Any> else {
+                        return
+                    }
+                    self.createSearchCampaign(campaignParam: campaign)
+                    
+                }
+                
+                var insId : String = String()
+                if let instanceId = self.searchResponse.campaign?.instanceId as String? {
+                    insId = instanceId
+                }
+                let interactionId = "static"
+                
+                if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                    self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+                }
+                self.sendImpression(instanceId: insId, interactionId: interactionId)
+                self.sendWidgetView(instanceId: insId, interactionId: interactionId)
+
+            }
+            
+            callback(self.searchResponse)
+            
+        }, failure: {(error: Error) in
+            if (self.debugMode) {
+                print("Request failed : \(error)")
+            }
+            let errorRecModel = SearchModel()
+            errorRecModel.errorString = "error"
+            callback(self.searchResponse)
+        })
+    }
     
     func sendEvent(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         
@@ -225,7 +291,7 @@ public class SegmentifyManager : NSObject {
                 return
             }
             self.recommendations.removeAll()
-
+            
             if(responses.isEmpty){
                 print("error : response is not valid or empty")
                 return
@@ -353,10 +419,10 @@ public class SegmentifyManager : NSObject {
                     
                     
                 }
-          
+                
             }
             
-       
+            
             callback(self.recommendations)
             
         }, failure: {(error: Error) in
@@ -381,6 +447,7 @@ public class SegmentifyManager : NSObject {
         self.dynamicItemsArray.removeAll()
         self.recommendationArray.removeAll()
         self.recommendations.removeAll()
+        self.searchResponse = SearchModel()
         self.currentKey = nil
         self.type = nil
         self.staticItemsArrayCount = Int()
@@ -553,6 +620,237 @@ public class SegmentifyManager : NSObject {
         self.currentRecModel.notificationTitle = title
     }
     
+    private func createSearchCampaign(campaignParam: Dictionary<AnyHashable, Any>){
+        let campaign = SearchCampaignModel()
+        
+        if let searchAssets = campaignParam["searchAssets"] {
+            guard let assets = searchAssets as? [Dictionary<AnyHashable,Any>] else {
+                print(searchAssets.self)
+                return
+            }
+            for (_, obj) in assets.enumerated() {
+                
+                let asset = SearchAssetModel()
+                if let type = obj["type"] {
+                    asset.assetType = self.findAssetType(type: (type as? String)!)
+                }
+                if let categoryTreeView = obj["categoryTreeView"] {
+                    asset.categoryTreeView = categoryTreeView as? Bool
+                }
+                if let clickable = obj["clickable"] {
+                    asset.clickable = clickable as? Bool
+                }
+                if let itemCount = obj["itemCount"] {
+                    asset.itemCount = itemCount as? Int
+                }
+                campaign.searchAssets.append(asset)
+            }
+            
+        }
+        if let searchAssetTexts = campaignParam["stringSearchAssetTextMap"] {
+            guard let assetTexts = searchAssetTexts as? [String:AnyObject] else {
+                print(searchAssetTexts.self)
+                return
+            }
+            var textMap = [String:SearchAssetTextModel]()
+            for (key, val) in assetTexts {
+                guard let assets = val as? Dictionary<AnyHashable,Any> else {
+                    print(val.self)
+                    return
+                }
+                let assetTexts = SearchAssetTextModel()
+                if let popularCategoriesText = assets["popularCategoriesText"] {
+                    assetTexts.popularCategoriesText = popularCategoriesText as! String
+                }
+                if let popularBrandsText = assets["popularBrandsText"] {
+                    assetTexts.popularBrandsText = popularBrandsText as! String
+                }
+                if let popularKeywordsText = assets["popularKeywordsText"] {
+                    assetTexts.popularKeywordsText = popularKeywordsText as! String
+                }
+                if let popularProductsText = assets["popularProductsText"] {
+                    assetTexts.popularProductsText = popularProductsText as! String
+                }
+                if let brandsText = assets["brandsText"] {
+                    assetTexts.brandsText = brandsText as! String
+                }
+                if let categoriesText = assets["categoriesText"] {
+                    assetTexts.categoriesText = categoriesText as! String
+                }
+                if let mobileCancelText = assets["mobileCancelText"] {
+                    assetTexts.mobileCancelText = mobileCancelText as! String
+                }
+                if let notFoundText = assets["notFoundText"] {
+                    assetTexts.notFoundText = notFoundText as! String
+                }
+                textMap[key as String] = assetTexts as SearchAssetTextModel;
+            }
+            campaign.stringSearchAssetTextMap = textMap
+            
+        }
+        if let instanceId = campaignParam["instanceId"] {
+            campaign.instanceId = instanceId as? String
+        }
+        if let name = campaignParam["name"] {
+            campaign.name = name as? String
+        }
+        if let accountId = campaignParam["accountId"] {
+            campaign.accountId = accountId as? String
+        }
+        if let status = campaignParam["status"] {
+            campaign.status = status as? String
+        }
+        if let devices = campaignParam["devices"] {
+            campaign.devices = devices as? [String]
+        }
+        if let searchDelay = campaignParam["searchDelay"] {
+            campaign.searchDelay = searchDelay as? Int
+        }
+        if let minCharacterCount = campaignParam["minCharacterCount"] {
+            campaign.minCharacterCount = minCharacterCount as? Int
+        }
+        if let searchUrlPrefix = campaignParam["searchUrlPrefix"] {
+            campaign.searchUrlPrefix = searchUrlPrefix as? String
+        }
+        if let searchInputSelector = campaignParam["searchInputSelector"] {
+            campaign.searchInputSelector = searchInputSelector as? String
+        }
+        if let hideCurrentSelector = campaignParam["hideCurrentSelector"] {
+            campaign.hideCurrentSelector = hideCurrentSelector as? String
+        }
+        if let desktopItemCount = campaignParam["desktopItemCount"] {
+            campaign.desktopItemCount = desktopItemCount as? Int
+        }
+        if let mobileItemCount = campaignParam["mobileItemCount"] {
+            campaign.mobileItemCount = mobileItemCount as? Int
+        }
+        if let html = campaignParam["html"] {
+            campaign.html = html as? String
+        }
+        if let preJs = campaignParam["preJs"] {
+            campaign.preJs = preJs as? String
+        }
+        if let postJs = campaignParam["postJs"] {
+            campaign.postJs = postJs as? String
+        }
+        if let css = campaignParam["css"] {
+            campaign.css = css as? String
+        }
+        if let triggerSelector = campaignParam["triggerSelector"] {
+            campaign.triggerSelector = triggerSelector as? String
+        }
+        if let openingDirection = campaignParam["openingDirection"] {
+            campaign.openingDirection = openingDirection as? String
+        }
+        self.searchResponse.campaign = campaign
+    }
+    
+    private func findAssetType(type:String) -> AssetType?{
+        if(type == "CATEGORY"){
+            return AssetType.CATEGORY
+        }
+        if(type == "BRAND"){
+            return AssetType.BRAND
+        }
+        if(type == "KEYWORD"){
+            return AssetType.KEYWORD
+        }
+        return nil
+    }
+    
+    private func createSearchProducts(products:[[AnyHashable:Any]]) {
+        self.searcResponseProductsArray.removeAll()
+        for (_, obj) in products.enumerated() {
+            let proObj = ProductSearchModel()
+            
+            if let noUpdate = obj["noUpdate"] {
+                proObj.noUpdate = noUpdate as? Bool
+            }
+            if let quantity = obj["quantity"] {
+                proObj.quantity = quantity as? String
+            }
+            if let currency = obj["currency"] {
+                proObj.currency = currency as? String
+            }
+            if let language = obj["language"] {
+                proObj.language = language as? String
+            }
+            if let oldPriceText = obj["oldPriceText"] {
+                proObj.oldPriceText = oldPriceText as? String
+            }
+            if let priceText = obj["priceText"] {
+                proObj.priceText = priceText as? String
+            }
+            if let labels = obj["labels"] {
+                proObj.labels = labels as? [String]
+            }
+            if let sizes = obj["sizes"] {
+                proObj.sizes = sizes as? [String]
+            }
+            if let colors = obj["colors"] {
+                proObj.colors = colors as? [String]
+            }
+            if let gender = obj["gender"] {
+                proObj.gender = gender as? String
+            }
+            if let categories = obj["categories"] {
+                proObj.categories = categories as? [String]
+            }
+            if let category = obj["category"] {
+                proObj.category = category as? String
+            }
+            if let imageXL = obj["imageXL"] {
+                proObj.imageXL = imageXL as? String
+            }
+            if let imageL = obj["imageL"] {
+                proObj.imageL = imageL as? String
+            }
+            if let imageM = obj["imageM"] {
+                proObj.imageM = imageM as? String
+            }
+            if let imageS = obj["imageS"] {
+                proObj.imageS = imageS as? String
+            }
+            if let imageXS = obj["imageXS"] {
+                proObj.imageXS = imageXS as? String
+            }
+            if let mUrl = obj["mUrl"] {
+                proObj.mUrl = mUrl as? String
+            }
+            if let url = obj["url"] {
+                proObj.url = url as? String
+            }
+            if let brand = obj["brand"] {
+                proObj.brand = brand as? String
+            }
+            if let name = obj["name"] {
+                proObj.name = name as? String
+            }
+            if let productId = obj["productId"] {
+                proObj.productId = productId as? String
+            }
+            if let image = obj["image"] {
+                proObj.image = image as? String
+            }
+            if let inStock = obj["inStock"] {
+                proObj.inStock = inStock as? Bool
+            }
+            
+            if let price = obj["price"] {
+                proObj.price = price as? Double
+            }
+            if let oldPrice = obj["oldPrice"] {
+                proObj.oldPrice = oldPrice as? Double
+            }
+        
+            if let params = obj["params"]{
+                proObj.params = params as? [String:String]
+            }
+            self.searcResponseProductsArray.append(proObj)
+        }
+        self.searchResponse.products = self.searcResponseProductsArray
+    }
+    
     private func addProduct(proObj : ProductRecommendationModel) {
         if !self.products.contains(where: {$0.productId == proObj.productId}) {
             self.products.append(proObj)
@@ -576,7 +874,7 @@ public class SegmentifyManager : NSObject {
         }
         
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
-  
+        
         
         let dataCenter  = SegmentifyManager.setup.dataCenterUrl
         
@@ -596,10 +894,10 @@ public class SegmentifyManager : NSObject {
             
             
             
-//            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-//            if let responseJSON = responseJSON as? [String: Any] {
-//                print(responseJSON)
-//            }
+            //            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            //            if let responseJSON = responseJSON as? [String: Any] {
+            //                print(responseJSON)
+            //            }
         }
         
         task.resume()
@@ -609,7 +907,7 @@ public class SegmentifyManager : NSObject {
     
     open func sendNotificationInteraction(segmentifyObject : NotificationModel) {
         
-
+        
         
         if( segmentifyObject.type == NotificationType.VIEW){
             
@@ -665,7 +963,7 @@ public class SegmentifyManager : NSObject {
         request.httpBody = encodedData
         
         
-
+        
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -758,7 +1056,7 @@ public class SegmentifyManager : NSObject {
             return
         }
         
-    
+        
         
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
@@ -1041,7 +1339,7 @@ public class SegmentifyManager : NSObject {
     
     //Product View Event
     @objc open func sendProductView(segmentifyObject : ProductModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-
+        
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
@@ -1126,7 +1424,42 @@ public class SegmentifyManager : NSObject {
         
         setIDAndSendEventWithCallback(callback: callback)
     }
-    
+    @objc open func sendSearchPageView(segmentifyObject : SearchPageModel, callback: @escaping (_ searchResponse : SearchModel) -> Void) {
+        eventRequest.eventName = SegmentifyManager.searchEventName
+        eventRequest.interactionId = nil
+        eventRequest.instanceId = nil
+        eventRequest.testMode = true
+        eventRequest.oldUserId = nil
+        eventRequest.query = segmentifyObject.query
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        
+        if segmentifyObject.testMode != nil {
+            eventRequest.testMode = segmentifyObject.testMode
+        }
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        if self.eventRequest.sessionID == nil {
+            self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                self.sendSearchEvent(callback: { (response: SearchModel) in
+                    callback(response)
+                })
+            })
+        } else {
+            self.sendSearchEvent(callback: { (response: SearchModel) in
+                callback(response)
+                self.clearData()
+                
+            })
+        }
+        
+    }
     //Page View Event
     @objc open func sendPageView(segmentifyObject : PageModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         
@@ -1573,7 +1906,7 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
-                
+        
         if let recommendIds = recommendIds {
             eventRequest.recommendIds = recommendIds
         }
@@ -1649,6 +1982,24 @@ public class SegmentifyManager : NSObject {
     open func sendWidgetView(instanceId : String, interactionId : String) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
         eventRequest.type = SegmentifyManager.widgetViewStep
+        eventRequest.instanceId = instanceId
+        eventRequest.interactionId = interactionId
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        }else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        eventRequest.oldUserId = nil
+        setIDAndSendEvent()
+    }
+    
+    
+    open func sendSearchClickView(instanceId : String, interactionId : String) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.type = SegmentifyManager.searchStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
         
