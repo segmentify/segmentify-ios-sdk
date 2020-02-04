@@ -8,12 +8,7 @@
 import Foundation
 
 public class SearchAssetTextModel:  NSObject {
-    var popularCategoriesText:String = ""
-    var popularBrandsText:String = ""
-    var popularKeywordsText:String = ""
     var popularProductsText:String = ""
-    var categoriesText:String = ""
-    var brandsText:String = ""
     var mobileCancelText:String = ""
     var notFoundText:String = ""
     

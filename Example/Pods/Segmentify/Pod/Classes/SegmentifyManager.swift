@@ -628,23 +628,9 @@ public class SegmentifyManager : NSObject {
                     return
                 }
                 let assetTexts = SearchAssetTextModel()
-                if let popularCategoriesText = assets["popularCategoriesText"] {
-                    assetTexts.popularCategoriesText = popularCategoriesText as! String
-                }
-                if let popularBrandsText = assets["popularBrandsText"] {
-                    assetTexts.popularBrandsText = popularBrandsText as! String
-                }
-                if let popularKeywordsText = assets["popularKeywordsText"] {
-                    assetTexts.popularKeywordsText = popularKeywordsText as! String
-                }
+                
                 if let popularProductsText = assets["popularProductsText"] {
                     assetTexts.popularProductsText = popularProductsText as! String
-                }
-                if let brandsText = assets["brandsText"] {
-                    assetTexts.brandsText = brandsText as! String
-                }
-                if let categoriesText = assets["categoriesText"] {
-                    assetTexts.categoriesText = categoriesText as! String
                 }
                 if let mobileCancelText = assets["mobileCancelText"] {
                     assetTexts.mobileCancelText = mobileCancelText as! String
