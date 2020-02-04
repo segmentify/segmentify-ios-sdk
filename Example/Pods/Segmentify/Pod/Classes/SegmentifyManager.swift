@@ -692,9 +692,6 @@ public class SegmentifyManager : NSObject {
             if let noUpdate = obj["noUpdate"] {
                 proObj.noUpdate = noUpdate as? Bool
             }
-            if let quantity = obj["quantity"] {
-                proObj.quantity = quantity as? String
-            }
             if let currency = obj["currency"] {
                 proObj.currency = currency as? String
             }
