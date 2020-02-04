@@ -16,13 +16,13 @@ public class Product {
     var brand: String?
     var url: String?
     var inStock: Bool?
-    var category: String?
+    var category: [String]?
     var categories: [String]?
     var count: Int!
     
     init() {}
 
-    init(image: String?, name: String?, price : NSNumber?, oldPrice: Int?, productId: String?, brand: String?, url: String?, inStock: Bool?, category: String?, categories: [String]?) {
+    init(image: String?, name: String?, price : NSNumber?, oldPrice: Int?, productId: String?, brand: String?, url: String?, inStock: Bool?, category: [String]?, categories: [String]?) {
         self.image = image
         self.name = name
         self.price = price!

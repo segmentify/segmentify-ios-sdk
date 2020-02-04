@@ -55,7 +55,7 @@ public class SegmentifyManager : NSObject {
     private var itemCounts : [String] = []
     private var dynamicItemsArray : [DynamicItemsModel] = []
     private var recommendationArray = [AnyHashable : Any]()
-    private var searcResponseProductsArray = [ProductSearchModel]()
+    private var searcResponseProductsArray = [ProductRecommendationModel]()
     private var recommendations :[RecommendationModel] = []
     private var searchResponse = SearchModel()
     private var currentKey : String?
@@ -219,13 +219,6 @@ public class SegmentifyManager : NSObject {
                 
             })
         }
-    }
-    
-    func parseJson(anyObj:AnyObject) -> SearchModel{
-        var b:SearchModel = SearchModel()
-        b.campaign = (anyObj["campaign"] as! SearchCampaignModel?)
-        b.products  =  (anyObj["products"]  as! [ProductSearchModel]? )
-        return b
     }
     
     func sendSearchEvent(callback: @escaping (_ recommendation: SearchModel) -> Void) {
@@ -557,7 +550,7 @@ public class SegmentifyManager : NSObject {
                 proObj.categories = categories as? [String]
             }
             if let category = obj["category"] {
-                proObj.category = category as? String
+                proObj.category = category as? [String]
             }
             if let imageXL = obj["imageXL"] {
                 proObj.imageXL = imageXL as? String
@@ -623,30 +616,6 @@ public class SegmentifyManager : NSObject {
     private func createSearchCampaign(campaignParam: Dictionary<AnyHashable, Any>){
         let campaign = SearchCampaignModel()
         
-        if let searchAssets = campaignParam["searchAssets"] {
-            guard let assets = searchAssets as? [Dictionary<AnyHashable,Any>] else {
-                print(searchAssets.self)
-                return
-            }
-            for (_, obj) in assets.enumerated() {
-                
-                let asset = SearchAssetModel()
-                if let type = obj["type"] {
-                    asset.assetType = self.findAssetType(type: (type as? String)!)
-                }
-                if let categoryTreeView = obj["categoryTreeView"] {
-                    asset.categoryTreeView = categoryTreeView as? Bool
-                }
-                if let clickable = obj["clickable"] {
-                    asset.clickable = clickable as? Bool
-                }
-                if let itemCount = obj["itemCount"] {
-                    asset.itemCount = itemCount as? Int
-                }
-                campaign.searchAssets.append(asset)
-            }
-            
-        }
         if let searchAssetTexts = campaignParam["stringSearchAssetTextMap"] {
             guard let assetTexts = searchAssetTexts as? [String:AnyObject] else {
                 print(searchAssetTexts.self)
@@ -694,9 +663,6 @@ public class SegmentifyManager : NSObject {
         if let name = campaignParam["name"] {
             campaign.name = name as? String
         }
-        if let accountId = campaignParam["accountId"] {
-            campaign.accountId = accountId as? String
-        }
         if let status = campaignParam["status"] {
             campaign.status = status as? String
         }
@@ -712,56 +678,16 @@ public class SegmentifyManager : NSObject {
         if let searchUrlPrefix = campaignParam["searchUrlPrefix"] {
             campaign.searchUrlPrefix = searchUrlPrefix as? String
         }
-        if let searchInputSelector = campaignParam["searchInputSelector"] {
-            campaign.searchInputSelector = searchInputSelector as? String
-        }
-        if let hideCurrentSelector = campaignParam["hideCurrentSelector"] {
-            campaign.hideCurrentSelector = hideCurrentSelector as? String
-        }
-        if let desktopItemCount = campaignParam["desktopItemCount"] {
-            campaign.desktopItemCount = desktopItemCount as? Int
-        }
         if let mobileItemCount = campaignParam["mobileItemCount"] {
             campaign.mobileItemCount = mobileItemCount as? Int
         }
-        if let html = campaignParam["html"] {
-            campaign.html = html as? String
-        }
-        if let preJs = campaignParam["preJs"] {
-            campaign.preJs = preJs as? String
-        }
-        if let postJs = campaignParam["postJs"] {
-            campaign.postJs = postJs as? String
-        }
-        if let css = campaignParam["css"] {
-            campaign.css = css as? String
-        }
-        if let triggerSelector = campaignParam["triggerSelector"] {
-            campaign.triggerSelector = triggerSelector as? String
-        }
-        if let openingDirection = campaignParam["openingDirection"] {
-            campaign.openingDirection = openingDirection as? String
-        }
         self.searchResponse.campaign = campaign
-    }
-    
-    private func findAssetType(type:String) -> AssetType?{
-        if(type == "CATEGORY"){
-            return AssetType.CATEGORY
-        }
-        if(type == "BRAND"){
-            return AssetType.BRAND
-        }
-        if(type == "KEYWORD"){
-            return AssetType.KEYWORD
-        }
-        return nil
     }
     
     private func createSearchProducts(products:[[AnyHashable:Any]]) {
         self.searcResponseProductsArray.removeAll()
         for (_, obj) in products.enumerated() {
-            let proObj = ProductSearchModel()
+            let proObj = ProductRecommendationModel()
             
             if let noUpdate = obj["noUpdate"] {
                 proObj.noUpdate = noUpdate as? Bool
@@ -797,7 +723,7 @@ public class SegmentifyManager : NSObject {
                 proObj.categories = categories as? [String]
             }
             if let category = obj["category"] {
-                proObj.category = category as? String
+                proObj.category = category as? [String]
             }
             if let imageXL = obj["imageXL"] {
                 proObj.imageXL = imageXL as? String
@@ -837,14 +763,14 @@ public class SegmentifyManager : NSObject {
             }
             
             if let price = obj["price"] {
-                proObj.price = price as? Double
+                proObj.price = price as? NSNumber
             }
             if let oldPrice = obj["oldPrice"] {
-                proObj.oldPrice = oldPrice as? Double
+                proObj.oldPrice = oldPrice as? NSNumber
             }
         
             if let params = obj["params"]{
-                proObj.params = params as? [String:String]
+                proObj.params = params as? [String:AnyObject]
             }
             self.searcResponseProductsArray.append(proObj)
         }

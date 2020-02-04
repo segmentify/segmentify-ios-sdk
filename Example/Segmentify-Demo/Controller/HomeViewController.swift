@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
         // no large title
         navigationController?.navigationBar.prefersLargeTitles = false
         // pageView Request
-        //sendPageViewRequest()
+        //sendPageViewRequest();
         sendSearchPageViewRequest()
         // update table view
         tableView.reloadData()
@@ -97,9 +97,9 @@ class HomeViewController: UIViewController {
     }
     
     func setProductInfosTableView(products : [ProductRecommendationModel]) {
-        let staticProduct = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/product_necklace_mariacalderara_anchor-necklace01_300x300.jpg?v=1475499408", name: "Necklace Mariacalderara", price: 775, oldPrice: 350, productId: "25800412873", brand: "Maria Calderara", url: "https://segmentify-shop.myshopify.com/products/anchor-necklace-no-color", inStock: true, category: "Accessories", categories: ["Accessories"])
-        let staticProduct2 = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/20141215_Lana-1302_300x300.jpg?v=1475500812", name: "Babydoll Tank in White", price: 678, oldPrice: 100, productId: "25801129801", brand: "Pero", url: "https://segmentify-shop.myshopify.com/products/babydoll-tank-in-white", inStock: true, category: "Accessories", categories: ["Accessories"])
-        let staticProduct3 = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/0810_lana_look01_43_300x300.jpg?v=1475498494", name: "Knit Hooded Jumpsuit in Black", price: 208, oldPrice: 0, productId: "25800126985", brand: "Album di Famiglia", url: "https://segmentify-shop.myshopify.com/products/ball-point-sock", inStock: true, category: "Womenswear", categories: ["Womenswear"])
+        let staticProduct = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/product_necklace_mariacalderara_anchor-necklace01_300x300.jpg?v=1475499408", name: "Necklace Mariacalderara", price: 775, oldPrice: 350, productId: "25800412873", brand: "Maria Calderara", url: "https://segmentify-shop.myshopify.com/products/anchor-necklace-no-color", inStock: true, category: ["Accessories"], categories: ["Accessories"])
+        let staticProduct2 = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/20141215_Lana-1302_300x300.jpg?v=1475500812", name: "Babydoll Tank in White", price: 678, oldPrice: 100, productId: "25801129801", brand: "Pero", url: "https://segmentify-shop.myshopify.com/products/babydoll-tank-in-white", inStock: true, category: ["Accessories"], categories: ["Accessories"])
+        let staticProduct3 = Product(image: "https://cdn.shopify.com/s/files/1/1524/5822/products/0810_lana_look01_43_300x300.jpg?v=1475498494", name: "Knit Hooded Jumpsuit in Black", price: 208, oldPrice: 0, productId: "25800126985", brand: "Album di Famiglia", url: "https://segmentify-shop.myshopify.com/products/ball-point-sock", inStock: true, category: ["Womenswear"], categories: ["Womenswear"])
         sectionsArray = [Section(sectionName: "Static Products", sectionObjects: [staticProduct,staticProduct2,staticProduct3])]
         //tableViewProducts.append(staticProduct)
         for product in products {
@@ -110,7 +110,7 @@ class HomeViewController: UIViewController {
                 product.oldPrice = 0
             }
             if nil == product.category {
-                product.category = ""
+                product.category = []
             }
             let newProduct = Product(image: "https:" + product.image!, name: product.name, price: product.price, oldPrice: product.oldPrice as? Int, productId: product.productId, brand: product.brand, url: product.url, inStock: product.inStock, category: product.category, categories: product.categories)
             tableViewProducts.append(newProduct)
@@ -129,7 +129,7 @@ class HomeViewController: UIViewController {
                 product.oldPrice = 0
             }
             if nil == product.category {
-                product.category = ""
+                product.category = []
             }
             let newProduct = Product(image: "https:" + product.image!, name: product.name, price: product.price, oldPrice: product.oldPrice as? Int, productId: product.productId, brand: product.brand, url: product.url, inStock: product.inStock, category: product.category, categories: product.categories)
             collectionViewProducts.append(newProduct)
