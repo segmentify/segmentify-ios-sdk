@@ -62,7 +62,7 @@ class ProductDetailViewController: UIViewController {
         prodViewObj.lang = "EN"
         prodViewObj.inStock = true
         prodViewObj.image = self.productDetailItem.image?.replacingOccurrences(of: "https:", with: "")
-        prodViewObj.category = self.productDetailItem.category
+        prodViewObj.category = self.productDetailItem.category?.last
         prodViewObj.price = self.productDetailItem.price
         SegmentifyManager.sharedManager().sendProductView(segmentifyObject: prodViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -138,7 +138,7 @@ class ProductDetailViewController: UIViewController {
                 product.oldPrice = 0
             }
             if nil == product.category {
-                product.category = ""
+                product.category = []
             }
             let newProduct = Product(image: "https:" + product.image!, name: product.name, price: product.price, oldPrice: product.oldPrice as? Int, productId: product.productId, brand: product.brand, url: product.url, inStock: product.inStock, category: product.category, categories: product.categories)
             tableViewProducts.append(newProduct)

@@ -71,7 +71,7 @@ class PurchaseSuccessViewController: UIViewController {
                 product.oldPrice = 0
             }
             if nil == product.category {
-                product.category = ""
+                product.category = []
             }
             let newProduct = Product(image: "https:" + product.image!, name: product.name, price: product.price, oldPrice: product.oldPrice as? Int, productId: product.productId, brand: product.brand, url: product.url, inStock: product.inStock, category: product.category, categories: product.categories)
             tableViewProducts.append(newProduct)

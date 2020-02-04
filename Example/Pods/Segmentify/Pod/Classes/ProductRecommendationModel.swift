@@ -21,7 +21,7 @@ public class ProductRecommendationModel : NSObject,NSCopying {
     public var imageM:String?
     public var imageL:String?
     public var imageXL: String?
-    public var category:String?
+    public var category:[String]?
     public var categories:[String]?
     public var brand:String?
     public var price:NSNumber?
@@ -32,16 +32,20 @@ public class ProductRecommendationModel : NSObject,NSCopying {
     public var labels:[String]?
     public var noUpdate:Bool?
     public var params:[String:AnyObject]?
+    public var priceText:String?
+    public var oldPriceText:String?
+    public var language:String?
+    public var currency:String?
     
     public func copy(with zone: NSZone? = nil) -> Any {
         let copy = ProductRecommendationModel(productId: productId
-            , name: name, inStock: inStock, url: url, mUrl: mUrl, image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category, categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes, labels: labels, noUpdate: noUpdate, params : params)
+            , name: name, inStock: inStock, url: url, mUrl: mUrl, image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category, categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes, labels: labels, noUpdate: noUpdate, params : params, priceText : priceText, oldPriceText : oldPriceText, language : language, currency : currency)
         return copy
     }
     
     public override init() {}
     
-    public init(productId: String?, name: String?, inStock: Bool?, url: String?, mUrl: String?, image: String?, imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: String?, categories: [String]?, brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?, labels: [String]?, noUpdate: Bool?,params: [String:AnyObject]? ) {
+    public init(productId: String?, name: String?, inStock: Bool?, url: String?, mUrl: String?, image: String?, imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: [String]?, categories: [String]?, brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?, labels: [String]?, noUpdate: Bool?,params: [String:AnyObject]?, priceText: String?, oldPriceText: String?, language: String?, currency: String?) {
         
         self.productId = productId
         self.name = name
@@ -65,6 +69,10 @@ public class ProductRecommendationModel : NSObject,NSCopying {
         self.labels = labels
         self.noUpdate = noUpdate
         self.params = params
+        self.priceText = priceText
+        self.oldPriceText = oldPriceText
+        self.language = language
+        self.currency = currency
     }
     
     
