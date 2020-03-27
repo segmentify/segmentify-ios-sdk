@@ -212,7 +212,9 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         dictionary["os"] = "ios"
         dictionary["device"] = "ios"
-        
+
+        dictionary["region"] = ""
+
         if let osVersion = self.osVersion {
             dictionary["osversion"] = osVersion as Any?
         }
