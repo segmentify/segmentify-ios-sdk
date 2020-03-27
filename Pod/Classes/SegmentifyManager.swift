@@ -796,7 +796,7 @@ public class SegmentifyManager : NSObject {
         request.httpBody = encodedData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
@@ -875,7 +875,7 @@ public class SegmentifyManager : NSObject {
         
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
