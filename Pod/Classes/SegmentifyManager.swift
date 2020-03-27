@@ -151,24 +151,50 @@ public class SegmentifyManager : NSObject {
             eventRequest.extra = (lastRequest?.extra)!
         }
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
-        
+
+        #if swift(>=4.2)
+
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive),
-                                               name: .UIApplicationDidBecomeActive,
-                                               object: nil)
+                selector: #selector(applicationDidBecomeActive),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeDeactive),
-                                               name: .UIApplicationDidEnterBackground,
-                                               object: nil)
+                selector: #selector(applicationDidBecomeDeactive),
+                name: UIApplication.didEnterBackgroundNotification,
+                object: nil)
+
+        #else
+
+        NotificationCenter.default.addObserver(self,
+                selector: #selector(applicationDidBecomeActive),
+                name: .UIApplicationDidBecomeActive,
+                object: nil)
+        NotificationCenter.default.addObserver(self,
+                selector: #selector(applicationDidBecomeDeactive),
+                name: .UIApplicationDidEnterBackground,
+                object: nil)
+
+        #endif
     }
     
     deinit {
+        #if swift(>=4.2)
         NotificationCenter.default.removeObserver(self,
-                                                  name: .UIApplicationDidBecomeActive,
-                                                  object: nil)
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil)
         NotificationCenter.default.removeObserver(self,
-                                                  name: .UIApplicationDidEnterBackground,
-                                                  object: nil)
+                name: UIApplication.didEnterBackgroundNotification,
+                object: nil)
+        #else
+
+        NotificationCenter.default.removeObserver(self,
+                name: .UIApplicationDidBecomeActive,
+                object: nil)
+        NotificationCenter.default.removeObserver(self,
+                name: .UIApplicationDidEnterBackground,
+                object: nil)
+
+        #endif
     }
     
     @objc private func applicationDidBecomeActive() {
@@ -796,7 +822,7 @@ public class SegmentifyManager : NSObject {
         request.httpBody = encodedData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
@@ -875,7 +901,7 @@ public class SegmentifyManager : NSObject {
         
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
@@ -917,6 +943,14 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
         setIDAndSendEvent()
     }
     
@@ -946,6 +980,14 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.username = username
@@ -975,6 +1017,14 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
         eventRequest.username = username
@@ -1005,6 +1055,13 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
@@ -1032,6 +1089,14 @@ public class SegmentifyManager : NSObject {
             print("Error - you must fill userId before accessing change user event")
             return
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
         eventRequest.oldUserId = nil
@@ -1078,6 +1143,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
@@ -1115,6 +1183,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
@@ -1137,6 +1208,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -1155,10 +1229,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
-        if segmentifyObject.lang != nil {
-            eventRequest.lang = segmentifyObject.lang
-        }
+
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -1181,6 +1252,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         
         
         let totalPrice = segmentifyObject.totalPrice
@@ -1200,9 +1274,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        if segmentifyObject.lang != nil {
-            eventRequest.lang = segmentifyObject.lang
-        }
+
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -1243,6 +1315,14 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
         setIDAndSendEvent()
     }
     
@@ -1257,9 +1337,11 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
         }
-        
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
         }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
@@ -1343,6 +1425,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
         
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
@@ -1377,9 +1462,11 @@ public class SegmentifyManager : NSObject {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
-        
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
         }
         
         if segmentifyObject.testMode != nil {
@@ -1430,9 +1517,11 @@ public class SegmentifyManager : NSObject {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.type = segmentifyObject.type
-        
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
         }
         
         if segmentifyObject.testMode != nil {
