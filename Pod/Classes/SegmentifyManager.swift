@@ -89,10 +89,11 @@ public class SegmentifyManager : NSObject {
     }
     
     
-    public class func setConfig(apiKey: String,dataCenterUrl : String, subDomain : String) {
+    public class func setConfig(apiKey: String,dataCenterUrl : String, subDomain : String, dataCenterUrlPush : String) {
         SegmentifyManager.setup.apiKey = apiKey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
+        SegmentifyManager.setup.dataCenterUrlPush = dataCenterUrlPush
         segmentifySharedInstance = SegmentifyManager.init()
         
     }
@@ -104,11 +105,11 @@ public class SegmentifyManager : NSObject {
         return segmentifySharedInstance!
     }
     
-    public class func config(appkey: String, dataCenterUrl: String, subDomain: String) {
+    public class func config(appkey: String, dataCenterUrl: String, subDomain: String, dataCenterUrlPush : String) {
         SegmentifyManager.setup.apiKey = appkey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
-        
+        SegmentifyManager.setup.dataCenterUrlPush = dataCenterUrlPush
         _ = sharedManager()
     }
     
@@ -807,11 +808,15 @@ public class SegmentifyManager : NSObject {
             }
             
         }
+        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == "" ){
+            print("Error - you must set dataCenterUrlPush in setConfig before accessing sendNotification event")
+            return
+        }
         
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
         
         
-        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrlPush
         
         let url = URL(string: dataCenter! + "/native/subscription/push?apiKey=" + SegmentifyManager.setup.apiKey!)!
         var request = URLRequest(url: url)
@@ -842,7 +847,10 @@ public class SegmentifyManager : NSObject {
     
     open func sendNotificationInteraction(segmentifyObject : NotificationModel) {
         
-        
+        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == "" ){
+            print("Error - you must set dataCenterUrlPush in setConfig before accessing sendNotificationInteraction event")
+            return
+        }
         
         if( segmentifyObject.type == NotificationType.VIEW){
             
@@ -887,7 +895,7 @@ public class SegmentifyManager : NSObject {
         
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
         
-        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrlPush
         
         let url = URL(string: dataCenter!  + "/native/interaction/notification?apiKey=" + SegmentifyManager.setup.apiKey!)!
         var request = URLRequest(url: url)
