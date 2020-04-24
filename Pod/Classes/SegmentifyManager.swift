@@ -69,6 +69,7 @@ public class SegmentifyManager : NSObject {
     private var testOtherProducts : [AnyHashable:Any]?
     private var minusIndex : Int?
     
+    private static let pushDomain = "https://gimli.segmentify.com"
     private var currentRecModel = RecommendationModel()
     private var products : [ProductRecommendationModel] = []
     private static var segmentifySharedInstance: SegmentifyManager?
@@ -811,7 +812,7 @@ public class SegmentifyManager : NSObject {
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
         
         
-        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrl!.contains("dce1") ? SegmentifyManager.setup.dataCenterUrl : SegmentifyManager.pushDomain
         
         let url = URL(string: dataCenter! + "/native/subscription/push?apiKey=" + SegmentifyManager.setup.apiKey!)!
         var request = URLRequest(url: url)
@@ -887,7 +888,7 @@ public class SegmentifyManager : NSObject {
         
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
         
-        let dataCenter  = SegmentifyManager.setup.dataCenterUrl
+        let dataCenter  = SegmentifyManager.setup.dataCenterUrl!.contains("dce1") ? SegmentifyManager.setup.dataCenterUrl : SegmentifyManager.pushDomain
         
         let url = URL(string: dataCenter!  + "/native/interaction/notification?apiKey=" + SegmentifyManager.setup.apiKey!)!
         var request = URLRequest(url: url)
