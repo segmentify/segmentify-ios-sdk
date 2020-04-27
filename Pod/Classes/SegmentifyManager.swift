@@ -89,13 +89,17 @@ public class SegmentifyManager : NSObject {
     }
     
     
-    public class func setConfig(apiKey: String,dataCenterUrl : String, subDomain : String, dataCenterUrlPush : String) {
+    public class func setConfig(apiKey: String,dataCenterUrl : String, subDomain : String) {
         SegmentifyManager.setup.apiKey = apiKey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
-        SegmentifyManager.setup.dataCenterUrlPush = dataCenterUrlPush
         segmentifySharedInstance = SegmentifyManager.init()
         
+    }
+    
+    
+    public class func setPushConfig(dataCenterUrlPush : String) {
+        SegmentifyManager.setup.dataCenterUrlPush = dataCenterUrlPush        
     }
     
     public class func sharedManager() -> SegmentifyManager {
@@ -105,11 +109,10 @@ public class SegmentifyManager : NSObject {
         return segmentifySharedInstance!
     }
     
-    public class func config(appkey: String, dataCenterUrl: String, subDomain: String, dataCenterUrlPush : String) {
+    public class func config(appkey: String, dataCenterUrl: String, subDomain: String) {
         SegmentifyManager.setup.apiKey = appkey
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
-        SegmentifyManager.setup.dataCenterUrlPush = dataCenterUrlPush
         _ = sharedManager()
     }
     
