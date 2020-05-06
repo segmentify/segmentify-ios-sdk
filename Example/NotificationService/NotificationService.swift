@@ -1,10 +1,6 @@
 //
 //  NotificationService.swift
 //  NotificationService
-//
-//  Created by Cem Ayan on 26.09.2018.
-//  Copyright © 2018 mehmetkoca. All rights reserved.
-//
 
 import UserNotifications
 

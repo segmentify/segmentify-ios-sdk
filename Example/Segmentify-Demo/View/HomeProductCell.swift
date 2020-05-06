@@ -1,10 +1,6 @@
 //
 //  HomeProductCell.swift
 //  Segmentify-Demo
-//
-//  Created by Mehmet Koca on 26.01.2018.
-//  Copyright © 2018 mehmetkoca. All rights reserved.
-//
 
 import UIKit
 import Segmentify

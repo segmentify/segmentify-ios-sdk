@@ -1,10 +1,7 @@
 //
 //  Product.swift
 //  Segmentify-Demo
-//
-//  Created by Mehmet Koca on 5.02.2018.
-//  Copyright © 2018 mehmetkoca. All rights reserved.
-//
+
 
 import Foundation
 public class Product {

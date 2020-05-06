@@ -1,10 +1,6 @@
 //
 //  RecommendationCell.swift
 //  Segmentify-Demo
-//
-//  Created by Mehmet Koca on 29.01.2018.
-//  Copyright © 2018 mehmetkoca. All rights reserved.
-//
 
 import UIKit
 

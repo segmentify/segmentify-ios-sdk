@@ -1,9 +1,6 @@
 //
 //  SearchPageModel.swift
-//  Pods
-//
-//  Created by Ebru Goksal on 8.01.2020.
-//
+//  Segmentify
 
 import Foundation
 

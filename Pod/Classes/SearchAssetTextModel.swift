@@ -1,9 +1,6 @@
 //
 //  SearchAssetTextModel.swift
 //  Segmentify
-//
-//  Created by Ebru Goksal on 9.01.2020.
-//
 
 import Foundation
 
