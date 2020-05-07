@@ -32,7 +32,11 @@ class HomeViewController: UIViewController {
         let leftButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(logoutTapped(_:)))
         navigationItem.leftBarButtonItem = leftButton
         // no large title
-        navigationController?.navigationBar.prefersLargeTitles = false
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        } else {
+            // Fallback on earlier versions
+        }
         // pageView Request
         //sendPageViewRequest();
         sendSearchPageViewRequest()
