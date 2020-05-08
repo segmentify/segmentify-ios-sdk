@@ -791,13 +791,9 @@ public class SegmentifyManager : NSObject {
             self.products.append(proObj)
         }
     }
-    
-    
-    
-    
+
     open func sendNotification(segmentifyObject : NotificationModel) {
-        
-        
+
         if(segmentifyObject.type == NotificationType.PERMISSION_INFO){
             
             let deviceToken = segmentifyObject.deviceToken
@@ -807,22 +803,17 @@ public class SegmentifyManager : NSObject {
             }
             
         }
-        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == "" ){
+        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == ""){
             print("Error - you must set dataCenterUrlPush in setConfig before accessing sendNotification event")
             return
         }
         
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
-        
-        
         let dataCenter  = SegmentifyManager.setup.dataCenterUrlPush
-        
         let url = URL(string: dataCenter! + "/native/subscription/push?apiKey=" + SegmentifyManager.setup.apiKey!)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
         request.httpBody = encodedData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -830,40 +821,26 @@ public class SegmentifyManager : NSObject {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
-            
-            
-            
-            //            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            //            if let responseJSON = responseJSON as? [String: Any] {
-            //                print(responseJSON)
-            //            }
         }
-        
         task.resume()
-        
     }
     
     
     open func sendNotificationInteraction(segmentifyObject : NotificationModel) {
         
-        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == "" ){
+        if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == ""){
             print("Error - you must set dataCenterUrlPush in setConfig before accessing sendNotificationInteraction event")
             return
         }
         
         if( segmentifyObject.type == NotificationType.VIEW){
-            
             let instanceId = segmentifyObject.instanceId
-            
             guard instanceId != nil  else {
                 print("Error - you must fill instanceId or deviceToken before accessing sendNotification view event")
                 return
             }
-            
         }
-        
-        
-        
+
         if(segmentifyObject.type == NotificationType.CLICK){
             let instanceId = segmentifyObject.instanceId
             let productId = segmentifyObject.productId
@@ -877,18 +854,15 @@ public class SegmentifyManager : NSObject {
                 print("Error - you must fill instanceId or product before accessing sendNotification click event")
                 return
             }
-            
-            
+
             UserDefaults.standard.set(segmentifyObject.instanceId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_ID")
             UserDefaults.standard.set(segmentifyObject.productId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_PRODUCT_ID")
             
             let model  = InteractionModel()
             model.impressionId = instanceId
             model.interactionId = productId
-            
-            
+
             sendClick(segmentifyObject: model)
-            
         }
         
         
@@ -916,13 +890,11 @@ public class SegmentifyManager : NSObject {
         
         task.resume()
     }
-    
-    
+
     open func getTrackingParameters()->UtmModel{
         return UtmModel()
     }
-    
-    
+
     //EVENTS
     //Register Event
     open func sendUserRegister(segmentifyObject: UserModel) {
@@ -1422,6 +1394,7 @@ public class SegmentifyManager : NSObject {
         
         setIDAndSendEventWithCallback(callback: callback)
     }
+
     @objc open func sendSearchPageView(segmentifyObject : SearchPageModel, callback: @escaping (_ searchResponse : SearchModel) -> Void) {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
@@ -1461,10 +1434,10 @@ public class SegmentifyManager : NSObject {
         }
         
     }
+
     //Page View Event
     @objc open func sendPageView(segmentifyObject : PageModel, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-        
-        
+
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
@@ -1682,8 +1655,7 @@ public class SegmentifyManager : NSObject {
         }
         setIDAndSendEvent()
     }
-    
-    
+
     //Checkout Purchase Event
     open func sendPurchase(totalPrice : NSNumber, productList:[Any], orderNo : String?,lang :String?,  params :[String:AnyObject]?, callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
         eventRequest.eventName = SegmentifyManager.checkoutEventName
@@ -2000,8 +1972,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
     }
-    
-    
+
     open func sendSearchClickView(instanceId : String, interactionId : String) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
         eventRequest.type = SegmentifyManager.searchStep
@@ -2063,9 +2034,7 @@ public class SegmentifyManager : NSObject {
     func removeUserParameters() {
         eventRequest.extra.removeAll()
     }
-    
-    
-    
+
     func initSessionId(sessionId :String!){
         let nw  =  NSDate().timeIntervalSince1970
         _ = round(NSDate().timeIntervalSince1970)
@@ -2082,14 +2051,14 @@ public class SegmentifyManager : NSObject {
     }
     
     //private func
-    
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
         
         var requestURL : URL!
+        var dataCenterUrl:String = SegmentifyManager.setup.dataCenterUrl!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
-            requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=1")!
+            requestURL = URL(string: dataCenterUrl + "/get/key?count=1")!
         } else {
-            requestURL = URL(string: "https://dce1.segmentify.com/get/key?count=2")!
+            requestURL = URL(string: dataCenterUrl + "/get/key?count=2")!
         }
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
         let session = URLSession.shared

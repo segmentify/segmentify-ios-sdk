@@ -37,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-         SegmentifyManager.config(appkey: "da3d5f6f-63bf-48e5-ac6b-3b62585a824f", dataCenterUrl: "https://dce1.segmentify.com", subDomain: "renklidolap.com")
+         SegmentifyManager.config(appkey: "603a135e-9b7d-483f-a40d-7cbcf8f31e37", dataCenterUrl: "https://gandalf-test.segmentify.com", subDomain: "demo-test.segmentify.com")
+         SegmentifyManager.setPushConfig(dataCenterUrlPush: "https://gimli-test.segmentify.com")
         // option to show or hide console log
         let _ = SegmentifyManager.logStatus(isVisible: true)
         let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)
