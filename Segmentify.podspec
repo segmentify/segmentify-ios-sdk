@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.author       = { "Ata Anıl Turgay" => "ata.turgay@appcent.mobi" }
   s.source       = { :git => "https://github.com/segmentify/segmentify-ios-sdk.git", :tag => "#{s.version}" }
   s.source_files  = "Pod/Classes/**/*swift"
-  s.swift_versions = ['4.0', '4.1', '4.2', '5.0', '5.1', '5.2']
+  s.swift_versions = ['3.0', '3.1', '4.0', '4.1', '4.2', '5.0', '5.1', '5.2']
 
 end
