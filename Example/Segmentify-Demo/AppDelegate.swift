@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
     
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // define Segmentify config
         FirebaseApp.configure()
         // [START set_messaging_delegate]
@@ -87,17 +87,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Message ID: \(messageID)")
         }
         
-        if(application.applicationState == UIApplicationState.inactive){
+        if(application.applicationState == UIApplication.State.inactive){
             print("inactive")
         }
         
-        if(application.applicationState == UIApplicationState.active){
+        if(application.applicationState == UIApplication.State.active){
             print("active")
         }
         
     
         
-        if(application.applicationState == UIApplicationState.background){
+        if(application.applicationState == UIApplication.State.background){
             
 
                     let apns_instanceId = userInfo["instanceId"]
@@ -283,6 +283,12 @@ extension AppDelegate : MessagingDelegate {
         
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+        
+        let obj = NotificationModel()
+        obj.deviceToken = fcmToken
+        obj.type = NotificationType.PERMISSION_INFO
+        obj.providerType = ProviderType.FIREBASE
+        SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }

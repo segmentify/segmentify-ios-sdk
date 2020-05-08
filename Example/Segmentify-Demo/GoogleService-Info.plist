@@ -2,39 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>935112749957-l8ti45uvk3t0b501te79hbr85l8rt0hr.apps.googleusercontent.com</string>
+	<string>278017438335-akhe08ufukcjqkakcrdo56e055rfpat0.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.935112749957-l8ti45uvk3t0b501te79hbr85l8rt0hr</string>
+	<string>com.googleusercontent.apps.278017438335-akhe08ufukcjqkakcrdo56e055rfpat0</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAIF2uf2MeYNN7NX3PXX-7hI2C_Oubroeo</string>
+	<string>AIzaSyCd7gdrpModuel9izNKIuwAz9JahfROiVg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>935112749957</string>
+	<string>278017438335</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.segmentify.sdk</string>
+	<string>com.segmentify.Segmentify-Demo-2</string>
 	<key>PROJECT_ID</key>
-	<string>segmentify-ios-sdk-7058d</string>
+	<string>sdk-push-server</string>
 	<key>STORAGE_BUCKET</key>
-	<string>segmentify-ios-sdk-7058d.appspot.com</string>
+	<string>sdk-push-server.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
 	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:935112749957:ios:b52bb7e042edf4e8</string>
+	<string>1:278017438335:ios:e31e529c21a3a75e7f454a</string>
 	<key>DATABASE_URL</key>
-	<string>https://segmentify-ios-sdk-7058d.firebaseio.com</string>
+	<string>https://sdk-push-server.firebaseio.com</string>
 </dict>
 </plist>

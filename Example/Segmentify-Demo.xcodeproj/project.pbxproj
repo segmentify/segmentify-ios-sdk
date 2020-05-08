@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0649C8162463E13400CFB4AE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F02C3203201B4EFE004DB770 /* Info.plist */; };
+		0649C8172463E1EA00CFB4AE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2E94239219C0A9D00CBEE7C /* Info.plist */; };
 		14FBEAC8AEA3DE0D954AC660 /* libPods-Segmentify-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AD6484F99F3D298519A7DA /* libPods-Segmentify-Demo.a */; };
 		B2E94238219C0A9D00CBEE7C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E94237219C0A9D00CBEE7C /* NotificationService.swift */; };
 		B2E9423C219C0A9D00CBEE7C /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B2E94235219C0A9D00CBEE7C /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -264,9 +266,10 @@
 		F02C31EC201B4EFD004DB770 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = mehmetkoca;
+				ORGANIZATIONNAME = "Segmentify Dev Team";
 				TargetAttributes = {
 					B2E94234219C0A9D00CBEE7C = {
 						CreatedOnToolsVersion = 10.1;
@@ -284,7 +287,7 @@
 				};
 			};
 			buildConfigurationList = F02C31EF201B4EFD004DB770 /* Build configuration list for PBXProject "Segmentify-Demo" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -316,7 +319,9 @@
 			files = (
 				F02C3202201B4EFE004DB770 /* LaunchScreen.storyboard in Resources */,
 				B2E94242219C0D5A00CBEE7C /* GoogleService-Info.plist in Resources */,
+				0649C8172463E1EA00CFB4AE /* Info.plist in Resources */,
 				F02C31FF201B4EFE004DB770 /* Assets.xcassets in Resources */,
+				0649C8162463E13400CFB4AE /* Info.plist in Resources */,
 				F02C31FD201B4EFD004DB770 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,17 +438,22 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = XPXAF9Y4FN;
 				INFOPLIST_FILE = NotificationService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo.NotificationService";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo-2.NotificationService";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -455,16 +465,21 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = XPXAF9Y4FN;
 				INFOPLIST_FILE = NotificationService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo.NotificationService";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo-2.NotificationService";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -516,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -567,10 +582,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -583,12 +599,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Segmentify-Demo/Segmentify-Demo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = XPXAF9Y4FN;
 				INFOPLIST_FILE = "Segmentify-Demo/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -601,12 +622,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Segmentify-Demo/Segmentify-Demo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = XPXAF9Y4FN;
 				INFOPLIST_FILE = "Segmentify-Demo/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.segmentify.Segmentify-Demo-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -621,7 +647,7 @@
 				B2E9423E219C0A9E00CBEE7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		F02C31EF201B4EFD004DB770 /* Build configuration list for PBXProject "Segmentify-Demo" */ = {
 			isa = XCConfigurationList;
@@ -630,7 +656,7 @@
 				F02C3205201B4EFE004DB770 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		F02C3206201B4EFE004DB770 /* Build configuration list for PBXNativeTarget "Segmentify-Demo" */ = {
 			isa = XCConfigurationList;
@@ -639,7 +665,7 @@
 				F02C3208201B4EFE004DB770 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
