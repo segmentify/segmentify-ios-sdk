@@ -34,13 +34,14 @@ public class ProductRecommendationModel: NSObject, NSCopying {
     public var currency: String?
     public var specialPrice: NSNumber?
     public var specialPriceText: String?
+    public var region: String?
 
     public func copy(with zone: NSZone? = nil) -> Any {
         let copy = ProductRecommendationModel(productId: productId, name: name, inStock: inStock, url: url, mUrl: mUrl,
                 image: image, imageXS: imageXS, imageS: imageS, imageM: imageM, imageL: imageL, imageXL: imageXL, category: category,
                 categories: categories, brand: brand, price: price, oldPrice: oldPrice, gender: gender, colors: colors, sizes: sizes,
                 labels: labels, noUpdate: noUpdate, params: params, priceText: priceText, oldPriceText: oldPriceText,
-                language: language, currency: currency, specialPrice: specialPrice, specialPriceText: specialPriceText)
+                language: language, currency: currency, specialPrice: specialPrice, specialPriceText: specialPriceText, region:region)
         return copy
     }
 
@@ -51,7 +52,7 @@ public class ProductRecommendationModel: NSObject, NSCopying {
                 imageS: String?, imageM: String?, imageL: String?, imageXL: String?, category: [String]?, categories: [String]?,
                 brand: String?, price: NSNumber?, oldPrice: NSNumber?, gender: String?, colors: [String]?, sizes: [String]?,
                 labels: [String]?, noUpdate: Bool?, params: [String: AnyObject]?, priceText: String?, oldPriceText: String?,
-                language: String?, currency: String?, specialPrice: NSNumber?, specialPriceText: String?) {
+                language: String?, currency: String?, specialPrice: NSNumber?, specialPriceText: String?, region: String?) {
 
         self.productId = productId
         self.name = name
@@ -81,6 +82,7 @@ public class ProductRecommendationModel: NSObject, NSCopying {
         self.currency = currency
         self.specialPrice = specialPrice
         self.specialPriceText = specialPriceText
+        self.region = region
     }
 }
 

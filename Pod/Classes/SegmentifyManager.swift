@@ -11,7 +11,7 @@ enum SearchCodingKeys: String, CodingKey {
 public class SegmentifyManager : NSObject {
     
     static let sdkVersion = "1.0"
-    
+
     static let tokenKey = "SEGMENTIFY_TOKEN_KEY"
     static let registerKey = "SEGMENTIFY_REGISTER_KEY"
     static let lastRequestDateKey = "SEGMENTIFY_LAST_REQUEST_DATE_KEY"
@@ -89,7 +89,6 @@ public class SegmentifyManager : NSObject {
         SegmentifyManager.setup.dataCenterUrl = dataCenterUrl
         SegmentifyManager.setup.subDomain = subDomain
         segmentifySharedInstance = SegmentifyManager.init()
-        
     }
     
     public class func setPushConfig(dataCenterUrlPush : String) {
@@ -442,10 +441,8 @@ public class SegmentifyManager : NSObject {
         self.currentNewArray?.removeAll()
         self.key = String()
         self.newRecommendationArray.removeAll()
-        
         self.currentRecModel = RecommendationModel()
         self.products.removeAll()
-        //self.eventRequest = SegmentifyRegisterRequest()
     }
     
     private func getStaticItemsArray(notificationTitle: String, recommendedProducts: Dictionary<AnyHashable, Any>,interactionId: String!,impressionId : String!) {
@@ -746,7 +743,6 @@ public class SegmentifyManager : NSObject {
             if let oldPrice = obj["oldPrice"] {
                 proObj.oldPrice = oldPrice as? NSNumber
             }
-        
             if let params = obj["params"]{
                 proObj.params = params as? [String:AnyObject]
             }
@@ -793,8 +789,7 @@ public class SegmentifyManager : NSObject {
         }
         task.resume()
     }
-    
-    
+
     open func sendNotificationInteraction(segmentifyObject : NotificationModel) {
         
         if(SegmentifyManager.setup.dataCenterUrlPush == nil || SegmentifyManager.setup.dataCenterUrlPush == ""){
@@ -1083,6 +1078,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -1123,6 +1121,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
@@ -1144,6 +1145,9 @@ public class SegmentifyManager : NSObject {
         }
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
+        }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
         }
         
         let totalPrice = segmentifyObject.totalPrice
@@ -1189,8 +1193,10 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
         }
-        
-        
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
+
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
             print("Error - you must fill userId before accessing sendViewBasket event")
@@ -1256,7 +1262,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
         }
-
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
         setIDAndSendEvent()
     }
     
@@ -1279,6 +1287,9 @@ public class SegmentifyManager : NSObject {
         }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
         }
         
         let productId = segmentifyObject.productId
@@ -1363,7 +1374,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
         }
-        
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
         }
@@ -1384,10 +1397,8 @@ public class SegmentifyManager : NSObject {
             self.sendSearchEvent(callback: { (response: SearchModel) in
                 callback(response)
                 self.clearData()
-                
             })
         }
-        
     }
 
     //Page View Event
@@ -1403,12 +1414,14 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
         }
-        
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
         }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
         }
         let category = segmentifyObject.category
         guard category != nil else {
@@ -1423,11 +1436,11 @@ public class SegmentifyManager : NSObject {
             }
         }
         eventRequest.category = segmentifyObject.category
-        
-        if(segmentifyObject.subCategory != nil){
+
+        if (segmentifyObject.subCategory != nil) {
             eventRequest.subCategory = segmentifyObject.subCategory
         }
-        if(segmentifyObject.recommendIds != nil){
+        if (segmentifyObject.recommendIds != nil) {
             eventRequest.recommendIds = segmentifyObject.recommendIds
         }
         setIDAndSendEventWithCallback(callback: callback)
@@ -1458,14 +1471,14 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.currency != nil {
             eventRequest.currency = segmentifyObject.currency
         }
-        
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
         }
-        
-        
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
+        }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
         }
         
         setIDAndSendEventWithCallback(callback: callback)
@@ -1576,7 +1589,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1622,7 +1635,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1634,7 +1647,6 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
-        
         
         if let params = params {
             eventRequest.params = params
@@ -1653,22 +1665,19 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        
-        
+
         if let lang = lang {
             eventRequest.lang = lang
         }
-        
-        
+
         if let params = params {
             eventRequest.params = params
         }
-        
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1684,7 +1693,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1693,8 +1702,7 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
-        
-        
+
         if let params = params {
             eventRequest.params = params
         }
@@ -1716,18 +1724,16 @@ public class SegmentifyManager : NSObject {
         }
         if let currency = currency {
             eventRequest.currency = currency
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
         
-        
         if let lang = lang {
             eventRequest.lang = lang
         }
-        
-        
+
         if let params = params {
             eventRequest.params = params
         }
@@ -1746,7 +1752,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1758,7 +1764,7 @@ public class SegmentifyManager : NSObject {
     }
     
     //Product View Event
-    @objc open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, inStock : AnyObject?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:AnyObject? ,lang :String?,  params :[String:AnyObject]?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
+    @objc open func sendProductView(productID : String, title : String, category : [String], price : NSNumber, brand : String?, inStock : AnyObject?, url: String, image : String,imageXS: String?, imageS: String?, imageM: String?, imageL: String?, imageXL: String?, gender:String?, colors:[String]?, sizes:[String]?, labels:[String]?,noUpdate:AnyObject? ,lang :String?,  params :[String:AnyObject]?, region :String?,  callback: @escaping (_ recommendation: [RecommendationModel]) -> Void ) {
         
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.productID = productID
@@ -1774,16 +1780,12 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
-        
-        
         if let params = params {
             eventRequest.params = params
         }
-        
-        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1824,6 +1826,9 @@ public class SegmentifyManager : NSObject {
         if let noUpdate = noUpdate {
             eventRequest.noUpdate = noUpdate as? Bool
         }
+        if let region = region {
+            eventRequest.region = region as? region
+        }
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1847,11 +1852,10 @@ public class SegmentifyManager : NSObject {
         if let params = params {
             eventRequest.params = params
         }
-        
-        
+
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1885,9 +1889,7 @@ public class SegmentifyManager : NSObject {
         if let params = params {
             eventRequest.params = params
         }
-        
-        
-        
+
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
@@ -1933,10 +1935,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.type = SegmentifyManager.searchStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
-        
+
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -1950,10 +1952,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.type = SegmentifyManager.clickStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
-        
+
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
-        }else {
+        } else {
             if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
@@ -2001,8 +2003,6 @@ public class SegmentifyManager : NSObject {
         _ = Date(timeIntervalSince1970: TimeInterval(addedInterval))
         UserDefaults.standard.set(sessionId ,forKey: "SEGMENTIFY_SESSION_ID")
         UserDefaults.standard.set(addedInterval,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
-        
-        
     }
     
     //private func
@@ -2045,29 +2045,25 @@ public class SegmentifyManager : NSObject {
                                 let nowInterval = round(NSDate().timeIntervalSince1970)
                                 _ = Date(timeIntervalSince1970: nw)
                                 
-                                
                                 if UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP") != nil{
                                     let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
                                     UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                 } else{
                                     self.initSessionId(sessionId: jsonArray[1] as? String)
                                 }
-                                
-                                
+
                                 let getLastStamp = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
                                 let getLastStampToDouble = getLastStamp  as! Double
-                                if(nowInterval<=getLastStampToDouble ){
-                                    
+                                if (nowInterval <= getLastStampToDouble) {
                                     print(nowInterval)
-                                    print(getLastStampToDouble )
-                                    
+                                    print(getLastStampToDouble)
+
                                     let sessionId = UserDefaults.standard.object(forKey: "SEGMENTIFY_SESSION_ID") as? String
                                     self.eventRequest.sessionID = sessionId
-                                }
-                                else{
+                                } else {
                                     let lastStamp = nowInterval + round(Double(SegmentifyManager._sessionKeepSecond))
-                                    UserDefaults.standard.set(lastStamp,forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
-                                    UserDefaults.standard.set(jsonArray[0] as? String ,forKey: "SEGMENTIFY_SESSION_ID")
+                                    UserDefaults.standard.set(lastStamp, forKey: "SEGMENTIFY_SESSION_ID_TIMESTAMP")
+                                    UserDefaults.standard.set(jsonArray[0] as? String, forKey: "SEGMENTIFY_SESSION_ID")
                                     self.eventRequest.sessionID = jsonArray[0] as? String
                                 }
                             }
@@ -2086,6 +2082,3 @@ public class SegmentifyManager : NSObject {
 public func daysBetween(start: Date, end: Date) -> Int {
     return Calendar.current.dateComponents([.day], from: start, to: end).day!
 }
-
-
-
