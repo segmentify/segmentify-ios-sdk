@@ -1780,6 +1780,9 @@ public class SegmentifyManager : NSObject {
         if let lang = lang {
             eventRequest.lang = lang
         }
+        if let region = region {
+            eventRequest.region = region
+        }
         if let params = params {
             eventRequest.params = params
         }
@@ -1825,9 +1828,6 @@ public class SegmentifyManager : NSObject {
         }
         if let noUpdate = noUpdate {
             eventRequest.noUpdate = noUpdate as? Bool
-        }
-        if let region = region {
-            eventRequest.region = region as? region
         }
         setIDAndSendEventWithCallback(callback: callback)
     }

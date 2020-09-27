@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
         let pageViewObj = SearchPageModel()
         pageViewObj.query = ""
         pageViewObj.lang = "TR"
+        pageViewObj.region = "TURKEY"
         SegmentifyManager.sharedManager().sendSearchPageView(segmentifyObject: pageViewObj){
             (response: SearchModel) in
             self.response = response
@@ -73,6 +74,7 @@ class HomeViewController: UIViewController {
         pageViewObj.category = "Home Page"
         pageViewObj.params = ["homeMapLocation":"İstanbul/Kadıköy/19 Mayıs"] as [String : AnyObject]
         pageViewObj.testMode = true
+        pageViewObj.region = "TURKEY"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
