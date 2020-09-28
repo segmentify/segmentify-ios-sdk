@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
             // Fallback on earlier versions
         }
         // pageView Request
-        //sendPageViewRequest();
+        sendPageViewRequest();
         sendSearchPageViewRequest()
         // update table view
         tableView.reloadData()
@@ -54,13 +54,10 @@ class HomeViewController: UIViewController {
     
     // send page view request
     func sendPageViewRequest() {
-        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
             } else if let result = result {
-                
-                
                 let obj = NotificationModel()
                 obj.deviceToken = result.token
                 obj.type = NotificationType.PERMISSION_INFO
@@ -73,7 +70,7 @@ class HomeViewController: UIViewController {
         let pageViewObj = PageModel()
         pageViewObj.category = "Home Page"
         pageViewObj.params = ["homeMapLocation":"İstanbul/Kadıköy/19 Mayıs"] as [String : AnyObject]
-        pageViewObj.testMode = true
+        pageViewObj.testMode = false
         pageViewObj.region = "TURKEY"
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
             self.recommendations = response
@@ -84,18 +81,10 @@ class HomeViewController: UIViewController {
     //
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            //Eğer scn_21470dcdc6982000 instanceId'li kampanyada products array'i boşsa alt
-            if recObj.instanceId == "scn_72cdfa5dca000" {
-                self.setProductInfosTableView(products: recObj.products!)
-                self.instanceId = recObj.instanceId!
-                SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
-            }
-            
-            if recObj.instanceId == "scn_72d50554a2000" {
-                self.setProductInfosCollectionView(products: recObj.products!)
-                self.notificationTitle.text = recObj.notificationTitle
-                SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
-            }
+            self.setProductInfosTableView(products: recObj.products!)
+            self.instanceId = recObj.instanceId!
+            self.notificationTitle.text = recObj.notificationTitle
+            SegmentifyManager.sharedManager().sendWidgetView(instanceId: recObj.instanceId!, interactionId: recObj.interactionId!)
         }
     }
     
