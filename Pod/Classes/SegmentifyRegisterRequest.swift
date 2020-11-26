@@ -1,6 +1,10 @@
 //
 //  SegmentifyRegisterRequest.swift
 //  Segmentify
+//
+//  Created by Ata Anıl Turgay on 22.01.2018.
+//  Copyright © 2018 segmentify. All rights reserved.
+//
 
 import Foundation
 import UIKit
@@ -81,7 +85,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var interactionId:String?
     var noUpdate:Bool?
     var testMode:Bool?
-    var query:String?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -190,7 +193,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.interactionId = nil
         self.noUpdate = nil
         self.testMode = nil
-        self.query = nil
     }
     
     
@@ -208,9 +210,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         dictionary["os"] = "ios"
         dictionary["device"] = "ios"
-
-        dictionary["region"] = ""
-
+        
         if let osVersion = self.osVersion {
             dictionary["osversion"] = osVersion as Any?
         }
@@ -250,9 +250,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["testMode"] = nil
         }
         
-        if self.eventName == "SEARCH" {
-            dictionary["query"] = query
-        }
         
         if self.eventName == "PAGE_VIEW" {
             dictionary["category"] = category as Any?
