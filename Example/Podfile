@@ -5,6 +5,8 @@ target 'Segmentify-Demo' do
   # Comment the next line if you're not using Swift and don't want to use dynamic
 
 pod "Segmentify"
+# Use following POD for local development
+  #pod 'Segmentify', :path => '/Users/ihalilaltun/Development/SEGMENTIFY_GIT/segmentify-ios-sdk'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
   # Pods for Segmentify-Demo

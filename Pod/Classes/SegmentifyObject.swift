@@ -13,4 +13,5 @@ public class SegmentifyObject:NSObject {
     public var params:[String:AnyObject]?
     public var nextPage: Bool?
     public var testMode: Bool?
+    public var region: String?
 }
