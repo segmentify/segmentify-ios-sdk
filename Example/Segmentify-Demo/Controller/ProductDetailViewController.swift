@@ -47,7 +47,8 @@ class ProductDetailViewController: UIViewController {
         pageViewObj.lang = "EN"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
-            
+            self.recommendations = response
+            self.createProducts(recommendations: self.recommendations)
         }
     }
     
@@ -100,7 +101,6 @@ class ProductDetailViewController: UIViewController {
                     product.count = product.count + 1
                 }
             }
-            
         }
         
         if segue.identifier == "productDetailForProductVC" {
@@ -122,7 +122,7 @@ class ProductDetailViewController: UIViewController {
                     }
                 }
             }
-            //tableView.reloadData()
+            tableView.reloadData()
         }
     }
     
@@ -145,11 +145,9 @@ class ProductDetailViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "scn_6186faba63568000" {
-                self.setProductInfos(products: recObj.products!)
-                self.instanceId = recObj.instanceId!
-                self.notificationTitle.text = recObj.notificationTitle
-            }
+            self.setProductInfos(products: recObj.products!)
+            self.instanceId = recObj.instanceId!
+            self.notificationTitle.text = recObj.notificationTitle
         }
     }
 }
