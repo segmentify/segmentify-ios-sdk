@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Segmentify"
-  s.version      = "1.2.8"
+  s.version      = "1.2.9"
   s.summary      = "Segmentify iOS SDK"
   s.platform      = :ios, "9.0"
   s.description  = "Segmentify iOS SDK to enable product recommendations and real-time conversion analytics"
