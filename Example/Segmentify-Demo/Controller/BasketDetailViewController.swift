@@ -57,7 +57,8 @@ class BasketDetailViewController: UIViewController {
         pageViewObj.category = "Basket Page"
         
         SegmentifyManager.sharedManager().sendPageView(segmentifyObject: pageViewObj) { (response: [RecommendationModel]) in
-            
+            self.recommendations = response
+            self.createProducts(recommendations: self.recommendations)
         }
     }
     
@@ -96,11 +97,9 @@ class BasketDetailViewController: UIViewController {
     
     func createProducts(recommendations : [RecommendationModel]) {
         for recObj in recommendations {
-            if recObj.instanceId == "ext_basket_rec" {
-                self.setProductInfos(products: recObj.products!)
-                self.notificationTitle.text = recObj.notificationTitle
-                self.instanceId = recObj.instanceId
-            }
+            self.setProductInfos(products: recObj.products!)
+            self.notificationTitle.text = recObj.notificationTitle
+            self.instanceId = recObj.instanceId
         }
     }
     

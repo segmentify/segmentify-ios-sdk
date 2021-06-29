@@ -497,6 +497,28 @@ public class SegmentifyManager : NSObject {
             newRecModel.instanceId = impressionId
             newRecModel.interactionId = interactionId
             recommendations.append(newRecModel)
+        } else if validStaticItem {
+            if let products = recommendedProducts[self.currentKey!] as? [[AnyHashable:Any]] {
+                if products.count > 0 {
+                    self.createRecomendation(title: notificationTitle, itemCount: products.count, products: products,interactionId: interactionId,impressionId: impressionId)
+                    for product in currentRecModel.products!{
+                        if newProdArray.contains(where: {$0.productId==product.productId}){ }
+                        else {
+                            if(!checkIfItemRecommendedBefore(item: product)) {
+                                newProdArray.append(product)
+                            }
+                        }
+                    }
+                    self.products.removeAll()
+                    currentRecModel = RecommendationModel()
+                }
+            }
+            let newRecModel = RecommendationModel()
+            newRecModel.notificationTitle = notificationTitle
+            newRecModel.products = newProdArray
+            newRecModel.instanceId = impressionId
+            newRecModel.interactionId = interactionId
+            recommendations.append(newRecModel)
         }
     }
     
