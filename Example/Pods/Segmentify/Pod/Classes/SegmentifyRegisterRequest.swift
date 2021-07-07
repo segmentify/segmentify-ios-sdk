@@ -1,10 +1,6 @@
 //
 //  SegmentifyRegisterRequest.swift
 //  Segmentify
-//
-//  Created by Ata Anıl Turgay on 22.01.2018.
-//  Copyright © 2018 segmentify. All rights reserved.
-//
 
 import Foundation
 import UIKit
@@ -86,6 +82,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var noUpdate:Bool?
     var testMode:Bool?
     var query:String?
+    var region:String?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -117,6 +114,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.deviceName = device.name
         self.local = NSLocale.preferredLanguages.first
         self.firstTime = NSNumber.init(value: 1)
+        self.region = ""
     }
     
     init(withDictionary dictionary: Dictionary<AnyHashable, Any>) {
@@ -195,14 +193,12 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.noUpdate = nil
         self.testMode = nil
         self.query = nil
+        self.region = nil
     }
     
     
     func toDictionary() -> Dictionary<AnyHashable, Any> {
         var dictionary = [AnyHashable: Any]()
-        
-        //self.basketStep = ""
-        //self.checkoutStep = ""
         
         if let token = self.token {
             dictionary["token"] = token as Any?
@@ -212,7 +208,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         dictionary["os"] = "ios"
         dictionary["device"] = "ios"
-        
+
         if let osVersion = self.osVersion {
             dictionary["osversion"] = osVersion as Any?
         }
@@ -259,71 +255,106 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         if self.eventName == "PAGE_VIEW" {
             dictionary["category"] = category as Any?
         }
-        
-        if self.eventName == "PAGE_VIEW"{
+
+        if self.eventName == "PAGE_VIEW" {
             dictionary["subCategory"] = subCategory as Any?
+        } else {
+            dictionary["subCategory"] = nil
         }
-        else{ dictionary["subCategory"] = nil  }
-        
-        if  self.eventName == "PRODUCT_VIEW" || self.eventName == "BASKET_OPERATIONS" {
+
+        if self.eventName == "PRODUCT_VIEW" || self.eventName == "BASKET_OPERATIONS" {
             dictionary["productId"] = productID as Any?
-        }else{dictionary["productId"] = nil}
-        
-        if  self.eventName == "PRODUCT_VIEW" {
+        } else {
+            dictionary["productId"] = nil
+        }
+
+        if self.eventName == "PRODUCT_VIEW" {
             dictionary["title"] = title as Any?
-        }else{dictionary["title"] = nil}
-        
-        if  self.eventName == "PRODUCT_VIEW" {
+        } else {
+            dictionary["title"] = nil
+        }
+
+        if self.eventName == "PRODUCT_VIEW" {
             dictionary["brand"] = brand as Any?
-        }else{dictionary["brand"] = nil}
-        
+        } else {
+            dictionary["brand"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" || self.eventName == "BASKET_OPERATIONS" {
             dictionary["price"] = price as Any?
-        }else{dictionary["price"] = nil}
-        
-        if (self.eventName == "CHECKOUT" && self.basketStep != nil) || (self.eventName == "CHECKOUT" && self.checkoutStep != nil)  {
+        } else {
+            dictionary["price"] = nil
+        }
+
+        if (self.eventName == "CHECKOUT" && self.basketStep != nil) || (self.eventName == "CHECKOUT" && self.checkoutStep != nil) {
             dictionary["totalPrice"] = totalPrice as Any?
-        }else{dictionary["totalPrice"] = nil}
-        
+        } else {
+            dictionary["totalPrice"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["gender"] = gender as Any?
-        }else{dictionary["gender"] = nil}
-        
+        } else {
+            dictionary["gender"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["age"] = age as Any?
-        }else{dictionary["age"] = nil}
-        
-        if self.eventName == "PRODUCT_VIEW"  {
+        } else {
+            dictionary["age"] = nil
+        }
+
+        if self.eventName == "PRODUCT_VIEW" {
             dictionary["noUpdate"] = noUpdate as Any?
-        }else{dictionary["noUpdate"] = nil}
-        
+        } else {
+            dictionary["noUpdate"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["memberSince"] = memberSince as Any?
-        }else{dictionary["memberSince"] = nil}
+        } else {
+            dictionary["memberSince"] = nil
+        }
         
         if let lang = self.lang {
             dictionary["lang"] = lang as Any?
         }
-        
+
+        if let region = self.region {
+            dictionary["region"] = region as Any?
+        } else {
+            dictionary["region"] = ""
+        }
+
         if let currency = self.currency {
             dictionary["currency"] = currency as Any?
-        }else{dictionary["currency"] = nil}
-        
+        } else {
+            dictionary["currency"] = nil
+        }
+
         if (self.eventName == "CHECKOUT" && self.basketStep != nil) || self.eventName == "BASKET_OPERATIONS" {
             dictionary["quantity"] = quantity as Any?
-        }else{dictionary["quantity"] = nil}
-        
-        if let recommendIds = self.recommendIds{
+        } else {
+            dictionary["quantity"] = nil
+        }
+
+        if let recommendIds = self.recommendIds {
             dictionary["recommendIds"] = recommendIds as Any?
-        }else{dictionary["recommendIds"] = nil}
-        
-        if self.eventName == "CHECKOUT"  {
+        } else {
+            dictionary["recommendIds"] = nil
+        }
+
+        if self.eventName == "CHECKOUT" {
             dictionary["basketId"] = basketID as Any?
-        }else{dictionary["basketId"] = nil}
-        
+        } else {
+            dictionary["basketId"] = nil
+        }
+
         if self.eventName == "CHECKOUT" {
             dictionary["productList"] = products as Any
-        }else{dictionary["productList"] = nil}
+        } else {
+            dictionary["productList"] = nil
+        }
         
         if let userID = self.userID {
             dictionary["userId"] = userID as Any?
@@ -336,27 +367,36 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         if self.eventName == "USER_OPERATIONS" && self.userOperationStep != nil  {
             dictionary["step"] = userOperationStep
         }
-        
+
         if let pageUrl = self.pageUrl {
             dictionary["pageUrl"] = pageUrl
-        }else{dictionary["pageUrl"] = nil}
-        
-        
+        } else {
+            dictionary["pageUrl"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["oldPrice"] = oldPrice
-        }else{dictionary["oldPrice"] = nil}
-        
+        } else {
+            dictionary["oldPrice"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["inStock"] = inStock
-        }else{dictionary["inStock"] = nil}
-        
+        } else {
+            dictionary["inStock"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["image"] = image
-        }else{dictionary["image"] = nil}
-        
+        } else {
+            dictionary["image"] = nil
+        }
+
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["categories"] = categories
-        }else{dictionary["categories"] = nil}
+        } else {
+            dictionary["categories"] = nil
+        }
         
         if let url = self.url {
             dictionary["url"] = url
@@ -369,70 +409,91 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         if self.eventName == "BASKET_OPERATIONS" && basketStep != nil{
             dictionary["step"] = self.basketStep
         }
-        
+
         if self.eventName == "CHECKOUT" && basketStep != nil {
             dictionary["orderNo"] = orderNo
-        }else{dictionary["orderNo"] = nil}
+        } else {
+            dictionary["orderNo"] = nil
+        }
         
         if self.eventName == "USER_CHANGE" {
             dictionary["oldUserId"] = oldUserId
         }
-        
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["username"] = username
-        }else{ dictionary["username"] = nil}
-        
+        } else {
+            dictionary["username"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["email"] = username
-        }else{ dictionary["email"] = nil}
-        
+        } else {
+            dictionary["email"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["phone"] = mobilePhone
-        }else{ dictionary["phone"] = nil}
-        
+        } else {
+            dictionary["phone"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["fullName"] = fullName
-        }else{ dictionary["fullName"] = nil}
-        
+        } else {
+            dictionary["fullName"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["segments"] = segments
-        }else{ dictionary["segments"] = nil}
-        
+        } else {
+            dictionary["segments"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["location"] = location
-        }else{ dictionary["location"] = nil}
-        
+        } else {
+            dictionary["location"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["isLogin"] = isLogin
-        }else{ dictionary["isLogin"] = nil}
-        
+        } else {
+            dictionary["isLogin"] = nil
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["isRegistered"] = isRegistered
-        }else{ dictionary["isRegistered"] = nil}
-        
+        } else {
+            dictionary["isRegistered"] = nil
+        }
+
         if self.eventName == "INTERACTION" {
             dictionary["interactionId"] = interactionId
-        }else{dictionary["interactionId"] = nil}
-        
+        } else {
+            dictionary["interactionId"] = nil
+        }
+
         if self.eventName == "INTERACTION" {
             dictionary["instanceId"] = instanceId
-        }else{dictionary["instanceId"] = nil}
-        
+        } else {
+            dictionary["instanceId"] = nil
+        }
+
         if self.eventName == "INTERACTION" || self.eventName == "CUSTOM_EVENT" {
             dictionary["type"] = type
-        }else{dictionary["type"] = nil}
-        
+        } else {
+            dictionary["type"] = nil
+        }
+
         if let params = self.params {
             dictionary["params"] = params
-        }else{dictionary["params"] = nil}
-        
-        
+        } else {
+            dictionary["params"] = nil
+        }
         
         dictionary["extra"] = extra as Any?
-        
-        
         return dictionary
-        
     }
     
     convenience init?(withJsonString jsonString: String) {

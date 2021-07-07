@@ -1,4 +1,4 @@
-framework module Segmentify {
+module Segmentify {
   umbrella header "Segmentify-umbrella.h"
 
   export *

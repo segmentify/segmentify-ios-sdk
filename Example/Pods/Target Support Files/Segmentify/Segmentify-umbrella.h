@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "Segmentify.h"
 
 FOUNDATION_EXPORT double SegmentifyVersionNumber;
 FOUNDATION_EXPORT const unsigned char SegmentifyVersionString[];
