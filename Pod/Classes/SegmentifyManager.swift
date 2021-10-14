@@ -25,6 +25,12 @@ public class SegmentifyManager : NSObject {
     static let customEventName = "CUSTOM_EVENT"
     static let interactionEventName = "INTERACTION"
     static let searchEventName = "SEARCH"
+    static let bannerOperationsEventName = "BANNER_OPERATIONS"
+    static let bannerGroupViewEventName = "BANNER_GROUP_VIEW"
+    static let internalBannerGroupEventName = "INTERNAL_BANNER_GROUP"
+    static let bannerImpressionStep = "impression"
+    static let bannerClickStep = "click"
+    static let bannerUpdateStep = "update"
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -60,6 +66,7 @@ public class SegmentifyManager : NSObject {
     private var currentNewArray : [RecommendationModel]?
     private var key : String = String()
     private var newRecommendationArray : [RecommendationModel] = []
+    private var clickedBanners: [ClickedBannerObject] = []
     
     private var testStaticProducts : [AnyHashable:Any]?
     private var testOtherProducts : [AnyHashable:Any]?
@@ -1313,6 +1320,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.region != nil {
             eventRequest.region = segmentifyObject.region
         }
+        if segmentifyObject.activeBanners != nil {
+            eventRequest.activeBanners = segmentifyObject.activeBanners
+        }
         
         let productId = segmentifyObject.productId
         guard productId != nil else {
@@ -1984,6 +1994,82 @@ public class SegmentifyManager : NSObject {
         }
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
+    }
+    
+    /* bannerify events */
+    
+    //Banner Impression Event
+    open func sendBannerImpressionEvent(segmentifyObject : BannerOperationsModel) {
+        
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerImpressionStep
+        }
+
+        setIDAndSendEvent()
+    }
+    
+    //Banner Click Event
+    open func sendBannerClickEvent(segmentifyObject : BannerOperationsModel) {
+        
+        self.addClickedBanner(banner: segmentifyObject)
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerClickStep
+        }
+
+        setIDAndSendEvent()
+    }
+    
+    //Banner Update Event
+    open func sendBannerUpdateEvent(segmentifyObject : BannerOperationsModel) {
+        
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerUpdateStep
+        }
+
+        setIDAndSendEvent()
+    }
+    
+    //Banner GroupView Event
+    open func sendBannerGroupViewEvent(segmentifyObject : BannerGroupViewModel) {
+        
+        eventRequest.eventName = SegmentifyManager.bannerGroupViewEventName
+        
+        setIDAndSendEvent()
+    }
+    
+    //Banner InternalBannerGroup Event
+    open func sendInternalBannerGroupEvent(segmentifyObject : BannerGroupViewModel) {
+        
+        eventRequest.eventName = SegmentifyManager.internalBannerGroupEventName
+        
+        setIDAndSendEvent()
+    }
+    
+    func addClickedBanner(banner: BannerOperationsModel) {
+        clickedBanners.forEach { it in
+            if (it.group == banner.group &&
+                it.title == banner.title &&
+                it.order == banner.order) {
+                return
+            }
+        }
+        
+        if (clickedBanners.count > 20) {
+            clickedBanners.removeFirst()
+        }
+        
+        let cbo = ClickedBannerObject()
+        cbo.group = banner.group
+        cbo.order = banner.order
+        cbo.title = banner.title
+        
+        clickedBanners.append(cbo)
     }
     
     func setAdvertisingIdentifier(adIdentifier: String?) {

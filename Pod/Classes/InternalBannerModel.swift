@@ -8,8 +8,8 @@ import Foundation
 
 public class InternalBannerModel:SegmentifyObject{
     public override init() {}
-    var title:String?
-    var image:String?
-    var order:NSNumber?
-    var urls:[String]?
+    public var title:String?
+    public var image:String?
+    public var order:NSNumber?
+    public var urls:[String]?
 }

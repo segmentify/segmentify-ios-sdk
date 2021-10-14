@@ -6,7 +6,7 @@
 import Foundation
 
 public class ClickedBannerObject:NSObject {
-    var title:String?
-    var group:String?
-    var order:NSNumber?
+    public var title:String?
+    public var group:String?
+    public var order:NSNumber?
 }

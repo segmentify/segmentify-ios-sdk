@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     var sectionsArray = [Section]()
     var instanceId = String()
     var currentProduct = Product()
+    var internalBannerViewArray = [InternalBannerModel]()
     // selected button's tag number
     var buttonIndex = Int()
     
@@ -76,6 +77,51 @@ class HomeViewController: UIViewController {
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
+    }
+    
+    // send banner view request
+    func sendBannerViewRequest() {
+        let bannerGroupViewModel = BannerGroupViewModel()
+        bannerGroupViewModel.group = "Home Page Slider"
+        let internalBannerModel = InternalBannerModel()
+        internalBannerModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        internalBannerModel.order = 1
+        internalBannerModel.image = "https://www.example.com/gorgeous-duo-tshirt-trousers.jpg"
+        internalBannerModel.urls = ["https://www.example.com/gorgeous-duo-tshirt-trousers"]
+        
+        internalBannerViewArray.append(internalBannerModel)
+        
+        let internalBannerModel2 = InternalBannerModel()
+        internalBannerModel2.title = "Ready to Renew"
+        internalBannerModel2.order = 2
+        internalBannerModel2.image = "https://www.example.com/ready-to-renew.jpg"
+        internalBannerModel2.urls = ["https://www.example.com/ready-to-renew"]
+        
+        internalBannerViewArray.append(internalBannerModel2)
+        SegmentifyManager.sharedManager().sendInternalBannerGroupEvent(segmentifyObject: bannerGroupViewModel)
+        
+        //BannerOperationsModel bannerImpressionOperationModel = new BannerOperationsModel();
+        //bannerImpressionOperationModel.setBannerType("impression");
+        //bannerImpressionOperationModel.setTitle("New Season Men Shoes");
+        //bannerImpressionOperationModel.setGroup("Home Page Slider");
+        //bannerImpressionOperationModel.setOrder(1);
+        //SegmentifyManager.INSTANCE.sendBannerImpressionEvent(bannerImpressionOperationModel);
+        //
+        //BannerOperationsModel bannerClickOperationModel = new BannerOperationsModel();
+        //bannerClickOperationModel.setBannerType("click");
+        //bannerClickOperationModel.setTitle("New Season Women Shoes");
+        //bannerClickOperationModel.setGroup("Home Page Slider");
+        //bannerClickOperationModel.setOrder(2);
+        //SegmentifyManager.INSTANCE.sendBannerClickEvent(bannerClickOperationModel);
+        //
+        //BannerOperationsModel bannerUpdateOperationModel = new BannerOperationsModel();
+        //bannerUpdateOperationModel.setBannerType("update");
+        //bannerUpdateOperationModel.setTitle("New Season Women Shoes");
+        //bannerUpdateOperationModel.setGroup("Home Page Slider");
+        //bannerUpdateOperationModel.setOrder(3);
+        //SegmentifyManager.INSTANCE.sendBannerUpdateEvent(bannerUpdateOperationModel);
+        //
+        
     }
     
     //

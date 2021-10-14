@@ -7,13 +7,13 @@ import Foundation
 
 public class BannerOperationsModel:SegmentifyObject{
     public override init() {}
-    var title:String?
-    var group:String?
-    var order:NSNumber?
-    var productId:String?
-    var category:[String]?
-    var brand:String?
-    var label:String?
-    var type:String?
-    var async:Bool?
+    public var title:String?
+    public var group:String?
+    public var order:NSNumber?
+    public var productId:String?
+    public var category:[String]?
+    public var brand:String?
+    public var label:String?
+    public var type:String?
+    public var async:Bool?
 }

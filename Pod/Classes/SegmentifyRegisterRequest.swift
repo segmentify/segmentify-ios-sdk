@@ -83,6 +83,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var testMode:Bool?
     var query:String?
     var region:String?
+    var activeBanners:[Any]?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -194,6 +195,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.testMode = nil
         self.query = nil
         self.region = nil
+        self.activeBanners = nil
     }
     
     
@@ -308,6 +310,12 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["noUpdate"] = noUpdate as Any?
         } else {
             dictionary["noUpdate"] = nil
+        }
+        
+        if self.eventName == "PRODUCT_VIEW" {
+            dictionary["activeBanners"] = activeBanners as Any?
+        } else {
+            dictionary["activeBanners"] = nil
         }
 
         if self.eventName == "USER_OPERATIONS" {
