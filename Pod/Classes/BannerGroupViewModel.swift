@@ -6,8 +6,8 @@
 
 import Foundation
 
-public class BannerGroupViewModel:SegmentifyObject{
-    public override init() {}
+public class BannerGroupViewModel{
+    public init() {}
     public var group:String?
-    public var banners:[Any]?
+    public var banners:[InternalBannerModel]?
 }
