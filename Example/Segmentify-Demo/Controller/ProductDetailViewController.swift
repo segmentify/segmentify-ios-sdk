@@ -14,6 +14,7 @@ class ProductDetailViewController: UIViewController {
     var recommendations : [RecommendationModel] = []
     var tableViewProducts = [Product]()
     var productDetailItem = Product()
+    var internalBannerViewArray = [InternalBannerModel]()
     @IBOutlet weak var addToBasketButton: UIButton!
     
     var instanceId = String()
@@ -32,6 +33,7 @@ class ProductDetailViewController: UIViewController {
         sendPageViewRequest()
         sendProductViewRequest()
         sendClickEvent()
+        sendBannerViewRequest()
         loadImage()
     }
     
@@ -79,6 +81,71 @@ class ProductDetailViewController: UIViewController {
         
         // send request
         SegmentifyManager.sharedManager().sendAddOrRemoveBasket(segmentifyObject: basketObj)
+    }
+    
+    // send banner view request
+    func sendBannerViewRequest() {
+        let bannerGroupViewModel = BannerGroupViewModel()
+        bannerGroupViewModel.group = "Product Page Slider"
+        let internalBannerModel = InternalBannerModel()
+        internalBannerModel.title = "Gorgeous Duo T-Shirt & Trousers - From Product Page"
+        internalBannerModel.order = 1
+        internalBannerModel.image = "https://cdn.segmentify.com/demo/banner-img2.jpg"
+        internalBannerModel.urls = ["https://www.example.com/gorgeous-duo-tshirt-trousers"]
+        
+        self.internalBannerViewArray.append(internalBannerModel)
+        
+        let internalBannerModel2 = InternalBannerModel()
+        internalBannerModel2.title = "Ready to Renew  - From Product Page"
+        internalBannerModel2.order = 2
+        internalBannerModel2.image = "https://cdn.segmentify.com/demo/banner-img1.jpg"
+        internalBannerModel2.urls = ["https://www.example.com/ready-to-renew"]
+        self.internalBannerViewArray.append(internalBannerModel2)
+        
+        bannerGroupViewModel.banners = self.internalBannerViewArray
+        SegmentifyManager.sharedManager().sendInternalBannerGroupEvent(segmentifyObject: bannerGroupViewModel)
+        SegmentifyManager.sharedManager().sendBannerGroupViewEvent(segmentifyObject: bannerGroupViewModel)
+        
+        let bannerImpressionOperationModel = BannerOperationsModel()
+        bannerImpressionOperationModel.type = "impression"
+        bannerImpressionOperationModel.title = "Gorgeous Duo T-Shirt & Trousers - From Product Page"
+        bannerImpressionOperationModel.group = "Product Page Slider"
+        bannerImpressionOperationModel.order = 1
+        
+        let bannerImpressionOperationModel2 = BannerOperationsModel()
+        bannerImpressionOperationModel2.type = "impression"
+        bannerImpressionOperationModel2.title = "Ready to Renew - From Product Page"
+        bannerImpressionOperationModel2.group = "Product Page Slider"
+        bannerImpressionOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel)
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel2)
+        
+        
+        let bannerClickOperationModel = BannerOperationsModel()
+        bannerClickOperationModel.type = "click"
+        bannerClickOperationModel.title = "Gorgeous Duo T-Shirt & Trousers - From Product Page"
+        bannerClickOperationModel.group = "Product Page Slider"
+        bannerClickOperationModel.order = 1
+        
+        let bannerClickOperationModel2 = BannerOperationsModel()
+        bannerClickOperationModel2.type = "click"
+        bannerClickOperationModel2.title = "Ready to Renew - From Product Page"
+        bannerClickOperationModel2.group = "Product Page Slider"
+        bannerClickOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel)
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel2)
+        
+        
+        let bannerUpdateOperationModel = BannerOperationsModel()
+        bannerUpdateOperationModel.type = "update"
+        bannerUpdateOperationModel.title = "Ready to Renew - From Product Page"
+        bannerUpdateOperationModel.group = "Product Page Slider"
+        bannerUpdateOperationModel.order = 3
+        SegmentifyManager.sharedManager().sendBannerUpdateEvent(segmentifyObject: bannerUpdateOperationModel);
+        
+        
     }
     
     @IBAction func addToBasketBUtton(_ sender: UIButton) {

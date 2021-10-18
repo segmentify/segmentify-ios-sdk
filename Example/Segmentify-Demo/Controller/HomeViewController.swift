@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
         // pageView Request
         sendPageViewRequest();
         sendSearchPageViewRequest()
+        sendBannerViewRequest()
         // update table view
         tableView.reloadData()
     }
@@ -86,42 +87,60 @@ class HomeViewController: UIViewController {
         let internalBannerModel = InternalBannerModel()
         internalBannerModel.title = "Gorgeous Duo T-Shirt & Trousers"
         internalBannerModel.order = 1
-        internalBannerModel.image = "https://www.example.com/gorgeous-duo-tshirt-trousers.jpg"
+        internalBannerModel.image = "https://cdn.segmentify.com/demo/banner-img2.jpg"
         internalBannerModel.urls = ["https://www.example.com/gorgeous-duo-tshirt-trousers"]
         
-        internalBannerViewArray.append(internalBannerModel)
+        self.internalBannerViewArray.append(internalBannerModel)
         
         let internalBannerModel2 = InternalBannerModel()
         internalBannerModel2.title = "Ready to Renew"
         internalBannerModel2.order = 2
-        internalBannerModel2.image = "https://www.example.com/ready-to-renew.jpg"
+        internalBannerModel2.image = "https://cdn.segmentify.com/demo/banner-img1.jpg"
         internalBannerModel2.urls = ["https://www.example.com/ready-to-renew"]
+        self.internalBannerViewArray.append(internalBannerModel2)
         
-        internalBannerViewArray.append(internalBannerModel2)
+        bannerGroupViewModel.banners = self.internalBannerViewArray
         SegmentifyManager.sharedManager().sendInternalBannerGroupEvent(segmentifyObject: bannerGroupViewModel)
+        SegmentifyManager.sharedManager().sendBannerGroupViewEvent(segmentifyObject: bannerGroupViewModel)
         
-        //BannerOperationsModel bannerImpressionOperationModel = new BannerOperationsModel();
-        //bannerImpressionOperationModel.setBannerType("impression");
-        //bannerImpressionOperationModel.setTitle("New Season Men Shoes");
-        //bannerImpressionOperationModel.setGroup("Home Page Slider");
-        //bannerImpressionOperationModel.setOrder(1);
-        //SegmentifyManager.INSTANCE.sendBannerImpressionEvent(bannerImpressionOperationModel);
-        //
-        //BannerOperationsModel bannerClickOperationModel = new BannerOperationsModel();
-        //bannerClickOperationModel.setBannerType("click");
-        //bannerClickOperationModel.setTitle("New Season Women Shoes");
-        //bannerClickOperationModel.setGroup("Home Page Slider");
-        //bannerClickOperationModel.setOrder(2);
-        //SegmentifyManager.INSTANCE.sendBannerClickEvent(bannerClickOperationModel);
-        //
-        //BannerOperationsModel bannerUpdateOperationModel = new BannerOperationsModel();
-        //bannerUpdateOperationModel.setBannerType("update");
-        //bannerUpdateOperationModel.setTitle("New Season Women Shoes");
-        //bannerUpdateOperationModel.setGroup("Home Page Slider");
-        //bannerUpdateOperationModel.setOrder(3);
-        //SegmentifyManager.INSTANCE.sendBannerUpdateEvent(bannerUpdateOperationModel);
-        //
+        let bannerImpressionOperationModel = BannerOperationsModel()
+        bannerImpressionOperationModel.type = "impression"
+        bannerImpressionOperationModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        bannerImpressionOperationModel.group = "Home Page Slider"
+        bannerImpressionOperationModel.order = 1
         
+        let bannerImpressionOperationModel2 = BannerOperationsModel()
+        bannerImpressionOperationModel2.type = "impression"
+        bannerImpressionOperationModel2.title = "Ready to Renew"
+        bannerImpressionOperationModel2.group = "Home Page Slider"
+        bannerImpressionOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel)
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel2)
+        
+        
+        let bannerClickOperationModel = BannerOperationsModel()
+        bannerClickOperationModel.type = "click"
+        bannerClickOperationModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        bannerClickOperationModel.group = "Home Page Slider"
+        bannerClickOperationModel.order = 1
+        
+        let bannerClickOperationModel2 = BannerOperationsModel()
+        bannerClickOperationModel2.type = "click"
+        bannerClickOperationModel2.title = "Ready to Renew"
+        bannerClickOperationModel2.group = "Home Page Slider"
+        bannerClickOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel)
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel2)
+        
+        
+        let bannerUpdateOperationModel = BannerOperationsModel()
+        bannerUpdateOperationModel.type = "update"
+        bannerUpdateOperationModel.title = "Ready to Renew"
+        bannerUpdateOperationModel.group = "Home Page Slider"
+        bannerUpdateOperationModel.order = 3
+        SegmentifyManager.sharedManager().sendBannerUpdateEvent(segmentifyObject: bannerUpdateOperationModel);
     }
     
     //
