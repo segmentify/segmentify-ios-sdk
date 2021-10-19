@@ -56,17 +56,18 @@ class HomeViewController: UIViewController {
     
     // send page view request
     func sendPageViewRequest() {
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                let obj = NotificationModel()
-                obj.deviceToken = result.token
-                obj.type = NotificationType.PERMISSION_INFO
-                obj.params = ["price": "123", "productId": "13", "quantity": "132"]
-                obj.providerType = ProviderType.FIREBASE
-                SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
-            }
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+              let obj = NotificationModel()
+              obj.deviceToken = token
+              obj.type = NotificationType.PERMISSION_INFO
+              obj.params = ["price": "123", "productId": "13", "quantity": "132"]
+              obj.providerType = ProviderType.FIREBASE
+              SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
+          }
         }
         
         let pageViewObj = PageModel()
