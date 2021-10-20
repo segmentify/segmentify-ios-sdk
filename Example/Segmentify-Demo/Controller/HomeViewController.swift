@@ -83,8 +83,11 @@ class HomeViewController: UIViewController {
     
     // send banner view request
     func sendBannerViewRequest() {
+        // Banner Group View Model
         let bannerGroupViewModel = BannerGroupViewModel()
         bannerGroupViewModel.group = "Home Page Slider"
+        
+        // optional parameters
         let internalBannerModel = InternalBannerModel()
         internalBannerModel.title = "Gorgeous Duo T-Shirt & Trousers"
         internalBannerModel.order = 1
@@ -99,8 +102,9 @@ class HomeViewController: UIViewController {
         internalBannerModel2.image = "https://cdn.segmentify.com/demo/banner-img1.jpg"
         internalBannerModel2.urls = ["https://www.example.com/ready-to-renew"]
         self.internalBannerViewArray.append(internalBannerModel2)
-        
         bannerGroupViewModel.banners = self.internalBannerViewArray
+        // optional parameters end
+        
         SegmentifyManager.sharedManager().sendInternalBannerGroupEvent(segmentifyObject: bannerGroupViewModel)
         SegmentifyManager.sharedManager().sendBannerGroupViewEvent(segmentifyObject: bannerGroupViewModel)
         

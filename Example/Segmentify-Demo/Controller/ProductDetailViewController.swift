@@ -171,7 +171,7 @@ class ProductDetailViewController: UIViewController {
         }
         
         if segue.identifier == "productDetailForProductVC" {
-            var indexPath: IndexPath = self.tableView.indexPathForSelectedRow!
+            let indexPath: IndexPath = self.tableView.indexPathForSelectedRow!
             let destinationViewController = segue.destination as? ProductDetailViewController
             destinationViewController?.productDetailItem = tableViewProducts[indexPath.row]
             destinationViewController?.instanceId = self.instanceId

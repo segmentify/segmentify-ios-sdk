@@ -2063,7 +2063,6 @@ public class SegmentifyManager : NSObject {
         eventRequest.label = segmentifyObject.label
         eventRequest.type = segmentifyObject.type
         
-
         setIDAndSendEvent()
     }
     
@@ -2176,7 +2175,7 @@ public class SegmentifyManager : NSObject {
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
         
         var requestURL : URL!
-        var dataCenterUrl:String = SegmentifyManager.setup.dataCenterUrl!
+        let dataCenterUrl:String = SegmentifyManager.setup.dataCenterUrl!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             requestURL = URL(string: dataCenterUrl + "/get/key?count=1")!
         } else {
