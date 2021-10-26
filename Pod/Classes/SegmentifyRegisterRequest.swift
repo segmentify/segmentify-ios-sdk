@@ -83,6 +83,13 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var testMode:Bool?
     var query:String?
     var region:String?
+    // bannerify related objects
+    var activeBanners:[Any]?
+    var group:String?
+    var banners:[Any]?
+    var order:NSNumber?
+    var urls:[String]?
+    var label:String?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -194,6 +201,12 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.testMode = nil
         self.query = nil
         self.region = nil
+        // bannerify related parameters
+        self.activeBanners = nil
+        self.group = nil
+        self.banners = nil
+        self.order = nil
+        self.urls = nil
     }
     
     
@@ -484,6 +497,74 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["type"] = type
         } else {
             dictionary["type"] = nil
+        }
+
+        if self.eventName == "BANNER_OPERATIONS" || self.eventName == "BANNER_GROUP_VIEW" || self.eventName == "INTERNAL_BANNER_GROUP" {
+            if self.activeBanners != nil{
+                dictionary["activeBanners"] = activeBanners as Any?
+            } else {
+                dictionary["activeBanners"] = nil
+            }
+            if self.group != nil {
+                dictionary["group"] = group as Any?
+            } else {
+                dictionary["group"] = nil
+            }
+            if self.banners != nil {
+                dictionary["banners"] = banners as Any?
+            } else {
+                dictionary["banners"] = nil
+            }
+            if self.order != nil{
+                dictionary["order"] = order as Any?
+            } else {
+                dictionary["order"] = nil
+            }
+            if self.urls != nil {
+                dictionary["urls"] = urls as Any?
+            } else {
+                dictionary["urls"] = nil
+            }
+            if self.title != nil {
+                dictionary["title"] = title as Any
+            } else {
+                dictionary["title"] = nil
+            }
+            if self.productID != nil {
+                dictionary["productId"] = productID as Any
+            } else {
+                dictionary["productId"] = nil
+            }
+            if self.category != nil {
+                dictionary["category"] = category as Any
+            } else {
+                dictionary["category"] = nil
+            }
+            if self.brand != nil {
+                dictionary["brand"] = brand as Any
+            } else {
+                dictionary["brand"] = nil
+            }
+            if self.label != nil {
+                dictionary["label"] = label as Any
+            } else {
+                dictionary["label"] = nil
+            }
+            if self.type != nil {
+                dictionary["type"] = type
+            } else {
+                dictionary["type"] = nil
+            }
+        }
+        
+        if self.eventName == "PRODUCT_VIEW" || self.eventName == "CHECKOUT" || self.eventName == "BASKET_OPERATIONS" {
+            if self.activeBanners != nil{
+                dictionary["activeBanners"] = activeBanners as Any?
+            } else {
+                dictionary["activeBanners"] = nil
+            }
+        } else {
+            dictionary["activeBanners"] = nil
         }
 
         if let params = self.params {

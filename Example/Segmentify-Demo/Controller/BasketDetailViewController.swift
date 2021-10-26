@@ -106,7 +106,7 @@ class BasketDetailViewController: UIViewController {
     // pass data another view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "productDetailForBasketVC" {
-            var indexPath: IndexPath = self.tableView.indexPathForSelectedRow!
+            let indexPath: IndexPath = self.tableView.indexPathForSelectedRow!
             let destinationViewController = segue.destination as? ProductDetailViewController
             destinationViewController?.productDetailItem = BasketProducts.basketProducts[indexPath.row]
             destinationViewController?.instanceId = self.instanceId!

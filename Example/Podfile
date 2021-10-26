@@ -7,11 +7,9 @@ target 'Segmentify-Demo' do
 pod "Segmentify"
 # Use following POD for local development
   #pod 'Segmentify', :path => '/Users/ihalilaltun/Development/SEGMENTIFY_GIT/segmentify-ios-sdk'
-pod 'Firebase/Core'
 pod 'Firebase/Messaging'
   # Pods for Segmentify-Demo
   target 'NotificationService' do
       inherit! :search_paths
   end
-
 end

@@ -27,4 +27,5 @@ public class ProductModel:SegmentifyObject {
     public var sizes:[String]?
     public var labels:[String]?
     public var noUpdate:Bool?
+    public var activeBanners:[ClickedBannerObject]?
 }

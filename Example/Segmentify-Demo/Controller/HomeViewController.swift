@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     var sectionsArray = [Section]()
     var instanceId = String()
     var currentProduct = Product()
+    var internalBannerViewArray = [InternalBannerModel]()
     // selected button's tag number
     var buttonIndex = Int()
     
@@ -37,6 +38,7 @@ class HomeViewController: UIViewController {
         // pageView Request
         sendPageViewRequest();
         sendSearchPageViewRequest()
+        sendBannerViewRequest()
         // update table view
         tableView.reloadData()
     }
@@ -54,17 +56,18 @@ class HomeViewController: UIViewController {
     
     // send page view request
     func sendPageViewRequest() {
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                let obj = NotificationModel()
-                obj.deviceToken = result.token
-                obj.type = NotificationType.PERMISSION_INFO
-                obj.params = ["price": "123", "productId": "13", "quantity": "132"]
-                obj.providerType = ProviderType.FIREBASE
-                SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
-            }
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+              let obj = NotificationModel()
+              obj.deviceToken = token
+              obj.type = NotificationType.PERMISSION_INFO
+              obj.params = ["price": "123", "productId": "13", "quantity": "132"]
+              obj.providerType = ProviderType.FIREBASE
+              SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
+          }
         }
         
         let pageViewObj = PageModel()
@@ -76,6 +79,73 @@ class HomeViewController: UIViewController {
             self.recommendations = response
             self.createProducts(recommendations: self.recommendations)
         }
+    }
+    
+    // send banner view request
+    func sendBannerViewRequest() {
+        // Banner Group View Model
+        let bannerGroupViewModel = BannerGroupViewModel()
+        bannerGroupViewModel.group = "Home Page Slider"
+        
+        // optional parameters
+        let internalBannerModel = InternalBannerModel()
+        internalBannerModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        internalBannerModel.order = 1
+        internalBannerModel.image = "https://cdn.segmentify.com/demo/banner-img2.jpg"
+        internalBannerModel.urls = ["https://www.example.com/gorgeous-duo-tshirt-trousers"]
+        
+        self.internalBannerViewArray.append(internalBannerModel)
+        
+        let internalBannerModel2 = InternalBannerModel()
+        internalBannerModel2.title = "Ready to Renew"
+        internalBannerModel2.order = 2
+        internalBannerModel2.image = "https://cdn.segmentify.com/demo/banner-img1.jpg"
+        internalBannerModel2.urls = ["https://www.example.com/ready-to-renew"]
+        self.internalBannerViewArray.append(internalBannerModel2)
+        bannerGroupViewModel.banners = self.internalBannerViewArray
+        // optional parameters end
+        
+        SegmentifyManager.sharedManager().sendInternalBannerGroupEvent(segmentifyObject: bannerGroupViewModel)
+        SegmentifyManager.sharedManager().sendBannerGroupViewEvent(segmentifyObject: bannerGroupViewModel)
+        
+        let bannerImpressionOperationModel = BannerOperationsModel()
+        bannerImpressionOperationModel.type = "impression"
+        bannerImpressionOperationModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        bannerImpressionOperationModel.group = "Home Page Slider"
+        bannerImpressionOperationModel.order = 1
+        
+        let bannerImpressionOperationModel2 = BannerOperationsModel()
+        bannerImpressionOperationModel2.type = "impression"
+        bannerImpressionOperationModel2.title = "Ready to Renew"
+        bannerImpressionOperationModel2.group = "Home Page Slider"
+        bannerImpressionOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel)
+        SegmentifyManager.sharedManager().sendBannerImpressionEvent(segmentifyObject: bannerImpressionOperationModel2)
+        
+        
+        let bannerClickOperationModel = BannerOperationsModel()
+        bannerClickOperationModel.type = "click"
+        bannerClickOperationModel.title = "Gorgeous Duo T-Shirt & Trousers"
+        bannerClickOperationModel.group = "Home Page Slider"
+        bannerClickOperationModel.order = 1
+        
+        let bannerClickOperationModel2 = BannerOperationsModel()
+        bannerClickOperationModel2.type = "click"
+        bannerClickOperationModel2.title = "Ready to Renew"
+        bannerClickOperationModel2.group = "Home Page Slider"
+        bannerClickOperationModel2.order = 2
+        
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel)
+        SegmentifyManager.sharedManager().sendBannerClickEvent(segmentifyObject: bannerClickOperationModel2)
+        
+        
+        let bannerUpdateOperationModel = BannerOperationsModel()
+        bannerUpdateOperationModel.type = "update"
+        bannerUpdateOperationModel.title = "Ready to Renew"
+        bannerUpdateOperationModel.group = "Home Page Slider"
+        bannerUpdateOperationModel.order = 3
+        SegmentifyManager.sharedManager().sendBannerUpdateEvent(segmentifyObject: bannerUpdateOperationModel);
     }
     
     //
