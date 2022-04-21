@@ -2032,6 +2032,14 @@ public class SegmentifyManager : NSObject {
             segmentifyObject.type = SegmentifyManager.bannerImpressionStep
         }
         
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
         eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
         eventRequest.title = segmentifyObject.title
         eventRequest.group = segmentifyObject.group
@@ -2052,6 +2060,14 @@ public class SegmentifyManager : NSObject {
             segmentifyObject.type = SegmentifyManager.bannerClickStep
         }
         
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
         self.addClickedBanner(banner: segmentifyObject)
         eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
         eventRequest.title = segmentifyObject.title
@@ -2069,11 +2085,19 @@ public class SegmentifyManager : NSObject {
     //Banner Update Event
     open func sendBannerUpdateEvent(segmentifyObject : BannerOperationsModel) {
         
-        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
-        
         if segmentifyObject.type == nil {
             segmentifyObject.type = SegmentifyManager.bannerUpdateStep
         }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
 
         setIDAndSendEvent()
     }
@@ -2085,6 +2109,14 @@ public class SegmentifyManager : NSObject {
         segmentifyObject.banners?.forEach {
             banner in
             bannerArray.append(banner.nsDictionary)
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         
         eventRequest.group = segmentifyObject.group
@@ -2101,6 +2133,14 @@ public class SegmentifyManager : NSObject {
         segmentifyObject.banners?.forEach {
             banner in
             bannerArray.append(banner.nsDictionary)
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
         }
         
         eventRequest.group = segmentifyObject.group
