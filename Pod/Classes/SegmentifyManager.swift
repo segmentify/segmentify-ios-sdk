@@ -1393,6 +1393,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.price = segmentifyObject.price
         eventRequest.image = segmentifyObject.image
         eventRequest.url = segmentifyObject.url
+        eventRequest.mUrl = segmentifyObject.mUrl
         eventRequest.imageL = segmentifyObject.imageL
         eventRequest.imageM = segmentifyObject.imageM
         eventRequest.imageS = segmentifyObject.imageS

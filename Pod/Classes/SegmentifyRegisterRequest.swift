@@ -411,8 +411,20 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["categories"] = nil
         }
         
+        if self.eventName == "PRODUCT_VIEW" {
+            dictionary["category"] = category as Any?
+        } else {
+            dictionary["category"] = nil
+        }
+        
         if let url = self.url {
             dictionary["url"] = url
+        }
+        
+        if let mUrl = self.mUrl {
+            dictionary["mUrl"] = mUrl
+        } else {
+            dictionary["mUrl"] = nil
         }
         
         if self.eventName == "CHECKOUT" && checkoutStep != nil{
