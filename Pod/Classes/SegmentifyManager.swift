@@ -274,6 +274,30 @@ public class SegmentifyManager : NSObject {
                     }
                     self.createSearchCampaign(campaignParam: campaign)
                     
+                    if let _categoryProducts = obj["categoryProducts"] as?  Dictionary<AnyHashable, Any>{
+                        self.createCategoryProducts(categoryProducts: _categoryProducts)
+                    }
+                    
+                    if let _brandProducts = obj["brandProducts"] as?  Dictionary<AnyHashable, Any>{
+                        self.createBrandProducts(brandProducts: _brandProducts)
+                    }
+                    
+                    if let _keywordProducts = obj["keywords"] as?  Dictionary<AnyHashable, Any>{
+                        self.createKeywordProducts(keywordProducts: _keywordProducts)
+                    }
+                    
+                    if let _searchCategories = obj["categories"] as?  Dictionary<AnyHashable, Any>{
+                        self.createSearchCategories(categories: _searchCategories)
+                    }
+                    
+                    if let _searchBrands = obj["brands"] as?  Dictionary<AnyHashable, Any>{
+                        self.createSearchBrands(brands: _searchBrands)
+                    }
+                    
+                    if let _lastSearches = obj["lastSearches"] as? [String]{
+                        self.createLastSearches(lastSearches: _lastSearches)
+                    }
+                    
                 }
                 
                 var insId : String = String()
@@ -778,6 +802,67 @@ public class SegmentifyManager : NSObject {
             self.searcResponseProductsArray.append(proObj)
         }
         self.searchResponse.products = self.searcResponseProductsArray
+    }
+    
+    private func createCategoryProducts(categoryProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.categoryProducts.removeAll()
+        var _categoryProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in categoryProducts {
+            _categoryProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.categoryProducts = _categoryProducts
+    }
+    
+    private func createBrandProducts(brandProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.brandProducts.removeAll()
+        var _brandProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in brandProducts {
+            _brandProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.brandProducts = _brandProducts
+    }
+    
+    private func createKeywordProducts(keywordProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.keywords.removeAll()
+        var _keywordProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in keywordProducts {
+            _keywordProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.keywords = _keywordProducts
+    }
+    
+    private func createSearchCategories(categories: Dictionary<AnyHashable, Any>){
+        self.searchResponse.categories.removeAll()
+        var _categories = [String:String]()
+        
+        for(key, val) in categories {
+            _categories.updateValue(val as! String, forKey: key as! String)
+        }
+        self.searchResponse.categories = _categories
+    }
+    
+    private func createSearchBrands(brands: Dictionary<AnyHashable, Any>){
+        self.searchResponse.brands.removeAll()
+        var _brands = [String:String]()
+        
+        for(key, val) in brands {
+            _brands.updateValue(val as! String, forKey: key as! String)
+        }
+        self.searchResponse.brands = _brands
+    }
+    
+    private func createLastSearches(lastSearches: [String]){
+        self.searchResponse.lastSearches.removeAll()
+        var _lastSearches = [String]()
+    
+        for(key) in lastSearches {
+            _lastSearches.append(key)
+        }
+        
+        self.searchResponse.lastSearches = _lastSearches
     }
     
     private func addProduct(proObj : ProductRecommendationModel) {
