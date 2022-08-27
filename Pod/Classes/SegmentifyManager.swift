@@ -60,7 +60,7 @@ public class SegmentifyManager : NSObject {
     private var searcResponseProductsArray = [ProductRecommendationModel]()
     private var recommendations :[RecommendationModel] = []
     private var searchResponse = SearchModel()
-    private var facetedResponse = FacetedBaseResponseModel()
+    private var facetedResponse : FacetedResponseModel?
     private var currentKey : String?
     private var type : String?
     private var staticItemsArrayCount : Int = Int()
@@ -327,7 +327,7 @@ public class SegmentifyManager : NSObject {
         })
     }
     
-    func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedBaseResponseModel) -> Void) {
+    func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedResponseModel) -> Void) {
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -342,44 +342,22 @@ public class SegmentifyManager : NSObject {
             else{
                 for (_, obj) in searches[0].enumerated() {
                     
-                    guard let products = obj["products"] as? [Dictionary<AnyHashable,Any>] else {
+                    guard obj["products"] is [Dictionary<AnyHashable,Any>] else {
                         return
                     }
-                    self.createSearchFacetedProducts(products: products)
-                    
-                    if let facets = obj["facets"] {
-                        self.facetedResponse.facets = (facets as? [Facet])!
-                    }
-                    
-                    if let meta = obj["meta"] {
-                        self.facetedResponse.meta = meta as? FacetMetaModel
-                    }
-                    
-                    
+                    let jsonData = try? JSONSerialization.data(withJSONObject: obj)
+                    let decodedData = try? JSONDecoder().decode(FacetedResponseModel.self, from: jsonData!)
+                    self.facetedResponse = decodedData
                 }
-                
-                //var insId : String = String()
-                //if let instanceId = self.searchResponse.campaign?.instanceId as String? {
-                //    insId = instanceId
-                //}
-                //let interactionId = "static"
-                //
-                //if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
-                //    self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
-                //}
-                //self.sendImpression(instanceId: insId, interactionId: interactionId)
-                //self.sendWidgetView(instanceId: insId, interactionId: interactionId)
-
             }
             
-            callback(self.facetedResponse)
+            callback(self.facetedResponse!)
             
         }, failure: {(error: Error) in
             if (self.debugMode) {
                 print("Request failed : \(error)")
             }
-            let errorRecModel = FacetedBaseResponseModel()
-            callback(self.facetedResponse)
+            callback(self.facetedResponse!)
         })
     }
     
@@ -859,94 +837,6 @@ public class SegmentifyManager : NSObject {
             self.searcResponseProductsArray.append(proObj)
         }
         self.searchResponse.products = self.searcResponseProductsArray
-    }
-    
-    private func createSearchFacetedProducts(products:[[AnyHashable:Any]]) {
-        self.searcResponseProductsArray.removeAll()
-        for (_, obj) in products.enumerated() {
-            let proObj = ProductRecommendationModel()
-            
-            if let noUpdate = obj["noUpdate"] {
-                proObj.noUpdate = noUpdate as? Bool
-            }
-            if let currency = obj["currency"] {
-                proObj.currency = currency as? String
-            }
-            if let language = obj["language"] {
-                proObj.language = language as? String
-            }
-            if let oldPriceText = obj["oldPriceText"] {
-                proObj.oldPriceText = oldPriceText as? String
-            }
-            if let priceText = obj["priceText"] {
-                proObj.priceText = priceText as? String
-            }
-            if let labels = obj["labels"] {
-                proObj.labels = labels as? [String]
-            }
-            if let sizes = obj["sizes"] {
-                proObj.sizes = sizes as? [String]
-            }
-            if let colors = obj["colors"] {
-                proObj.colors = colors as? [String]
-            }
-            if let gender = obj["gender"] {
-                proObj.gender = gender as? String
-            }
-            if let categories = obj["categories"] {
-                proObj.categories = categories as? [String]
-            }
-            if let category = obj["category"] {
-                proObj.category = category as? [String]
-            }
-            if let imageXL = obj["imageXL"] {
-                proObj.imageXL = imageXL as? String
-            }
-            if let imageL = obj["imageL"] {
-                proObj.imageL = imageL as? String
-            }
-            if let imageM = obj["imageM"] {
-                proObj.imageM = imageM as? String
-            }
-            if let imageS = obj["imageS"] {
-                proObj.imageS = imageS as? String
-            }
-            if let imageXS = obj["imageXS"] {
-                proObj.imageXS = imageXS as? String
-            }
-            if let mUrl = obj["mUrl"] {
-                proObj.mUrl = mUrl as? String
-            }
-            if let url = obj["url"] {
-                proObj.url = url as? String
-            }
-            if let brand = obj["brand"] {
-                proObj.brand = brand as? String
-            }
-            if let name = obj["name"] {
-                proObj.name = name as? String
-            }
-            if let productId = obj["productId"] {
-                proObj.productId = productId as? String
-            }
-            if let image = obj["image"] {
-                proObj.image = image as? String
-            }
-            if let inStock = obj["inStock"] {
-                proObj.inStock = inStock as? Bool
-            }
-            if let price = obj["price"] {
-                proObj.price = price as? NSNumber
-            }
-            if let oldPrice = obj["oldPrice"] {
-                proObj.oldPrice = oldPrice as? NSNumber
-            }
-            if let params = obj["params"]{
-                proObj.params = params as? [String:AnyObject]
-            }
-            self.searcResponseProductsArray.append(proObj)
-        }
-        self.facetedResponse.products = self.searcResponseProductsArray
     }
     
     private func createCategoryProducts(categoryProducts: Dictionary<AnyHashable, Any>){
@@ -1691,7 +1581,7 @@ public class SegmentifyManager : NSObject {
         }
     }
     
-    @objc open func sendFacetedSearchPageView(segmentifyObject : SearchFacetPageModel, callback: @escaping (_ facetedResponse : FacetedBaseResponseModel) -> Void) {
+    open func sendFacetedSearchPageView(segmentifyObject : SearchFacetPageModel, callback: @escaping (_ facetedResponse : FacetedResponseModel) -> Void) {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
@@ -1729,12 +1619,12 @@ public class SegmentifyManager : NSObject {
         }
         if self.eventRequest.sessionID == nil {
             self.getUserIdAndSessionIdRequest( success: { () -> Void in
-                self.sendSearchFacetedEvent(callback: { (response: FacetedBaseResponseModel) in
+                self.sendSearchFacetedEvent(callback: { (response: FacetedResponseModel) in
                     callback(response)
                 })
             })
         } else {
-            self.sendSearchFacetedEvent(callback: { (response: FacetedBaseResponseModel) in
+            self.sendSearchFacetedEvent(callback: { (response: FacetedResponseModel) in
                 callback(response)
                 self.clearData()
             })

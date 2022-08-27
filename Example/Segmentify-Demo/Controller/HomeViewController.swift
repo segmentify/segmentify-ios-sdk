@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     
     var recommendations: [RecommendationModel] = []
     var response = SearchModel()
+    var facetedResponse:FacetedResponseModel?
     var collectionViewProducts = [Product]()
     var tableViewProducts = [Product]()
     var sectionsArray = [Section]()
@@ -36,21 +37,37 @@ class HomeViewController: UIViewController {
             // Fallback on earlier versions
         }
         // pageView Request
-        sendPageViewRequest();
+        //sendPageViewRequest();
         sendSearchPageViewRequest()
-        sendBannerViewRequest()
+        //sendBannerViewRequest()
         // update table view
+        //sendSearchFacetedPageViewRequest()
         tableView.reloadData()
     }
     
     func sendSearchPageViewRequest() {
         let pageViewObj = SearchPageModel()
-        pageViewObj.query = ""
+        pageViewObj.query = "peynir"
         pageViewObj.lang = "TR"
         pageViewObj.region = "TURKEY"
         SegmentifyManager.sharedManager().sendSearchPageView(segmentifyObject: pageViewObj){
             (response: SearchModel) in
             self.response = response
+        }
+    }
+    
+    func sendSearchFacetedPageViewRequest() {
+        let pageViewObj = SearchFacetPageModel()
+        pageViewObj.query = "domates"
+        pageViewObj.lang = "TR"
+        pageViewObj.region = "3006.5000"
+        pageViewObj.trigger = "keyword"
+        pageViewObj.type = "faceted"
+        pageViewObj.ordering = FacetedOrdering()
+        pageViewObj.ordering?.page = 1
+        SegmentifyManager.sharedManager().sendFacetedSearchPageView(segmentifyObject: pageViewObj){
+            (response: FacetedResponseModel) in
+            self.facetedResponse = response
         }
     }
     
