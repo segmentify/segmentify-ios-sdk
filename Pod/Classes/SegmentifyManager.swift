@@ -335,7 +335,7 @@ public class SegmentifyManager : NSObject {
                 return
             }
             
-            if(searches.isEmpty){
+            if(searches.isEmpty || searches[0].isEmpty){
                 print("error : search response is not valid or empty")
                 return
             }
@@ -345,8 +345,8 @@ public class SegmentifyManager : NSObject {
                     guard obj["products"] is [Dictionary<AnyHashable,Any>] else {
                         return
                     }
-                    let jsonData = try? JSONSerialization.data(withJSONObject: obj)
-                    let decodedData = try? JSONDecoder().decode(FacetedResponseModel.self, from: jsonData!)
+                    let jsonData = try! JSONSerialization.data(withJSONObject: obj)
+                    let decodedData = try! FacetedResponseModel(data: jsonData)
                     self.facetedResponse = decodedData
                 }
             }

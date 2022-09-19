@@ -1,25 +1,23 @@
 //
-//  FacetedResponseModel.swift
+//  SegmentifyRegisterRequest.swift
 //  Segmentify
-
 
 import Foundation
 
+// MARK: - FacetedResponseModel
 public class FacetedResponseModel: Codable {
-    let facets: [FacetElement]
-    let meta: Meta
-    let contents: [JSONAny]
-    let queryVerboseLog: QueryVerboseLog
-    let banners: [Banners]
-    let meanings: [JSONAny]
-    let products: [Product]
-    let executable: Bool
+    var facets: [Facet]?
+    var meta: Meta?
+    var contents: [Content]?
+    var banners: [Banner]?
+    var meanings: [JSONAny]?
+    var products: [Product]?
+    var executable: Bool?
 
-    init(facets: [FacetElement], meta: Meta, contents: [JSONAny], queryVerboseLog: QueryVerboseLog, banners: [Banners], meanings: [JSONAny], products: [Product], executable: Bool) {
+    init(facets: [Facet]?, meta: Meta?, contents: [Content]?, banners: [Banner]?, meanings: [JSONAny]?, products: [Product]?, executable: Bool?) {
         self.facets = facets
         self.meta = meta
         self.contents = contents
-        self.queryVerboseLog = queryVerboseLog
         self.banners = banners
         self.meanings = meanings
         self.products = products
@@ -27,13 +25,202 @@ public class FacetedResponseModel: Codable {
     }
 }
 
-class FacetElement: Codable {
-    let property: String
-    let items: [Item]
-    let filtered: [JSONAny]
-    let viewMode: String
+// MARK: FacetedResponseModel convenience initializers and mutators
 
-    init(property: String, items: [Item], filtered: [JSONAny], viewMode: String) {
+extension FacetedResponseModel {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(FacetedResponseModel.self, from: data)
+        self.init(facets: me.facets, meta: me.meta, contents: me.contents, banners: me.banners, meanings: me.meanings, products: me.products, executable: me.executable)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        facets: [Facet]?? = nil,
+        meta: Meta?? = nil,
+        contents: [Content]?? = nil,
+        banners: [Banner]?? = nil,
+        meanings: [JSONAny]?? = nil,
+        products: [Product]?? = nil,
+        executable: Bool?? = nil
+    ) -> FacetedResponseModel {
+        return FacetedResponseModel(
+            facets: facets ?? self.facets,
+            meta: meta ?? self.meta,
+            contents: contents ?? self.contents,
+            banners: banners ?? self.banners,
+            meanings: meanings ?? self.meanings,
+            products: products ?? self.products,
+            executable: executable ?? self.executable
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Banner
+public class Banner: Codable {
+    var id, instanceID, status, searchType: String?
+    var name: String?
+    var bannerURL: String?
+    var targetURL: String?
+    var position, width, height, method: String?
+    var newtab: Bool?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case instanceID = "instanceId"
+        case status, searchType, name
+        case bannerURL = "bannerUrl"
+        case targetURL = "targetUrl"
+        case position, width, height, method, newtab
+    }
+
+    init(id: String?, instanceID: String?, status: String?, searchType: String?, name: String?, bannerURL: String?, targetURL: String?, position: String?, width: String?, height: String?, method: String?, newtab: Bool?) {
+        self.id = id
+        self.instanceID = instanceID
+        self.status = status
+        self.searchType = searchType
+        self.name = name
+        self.bannerURL = bannerURL
+        self.targetURL = targetURL
+        self.position = position
+        self.width = width
+        self.height = height
+        self.method = method
+        self.newtab = newtab
+    }
+}
+
+// MARK: Banner convenience initializers and mutators
+
+extension Banner {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Banner.self, from: data)
+        self.init(id: me.id, instanceID: me.instanceID, status: me.status, searchType: me.searchType, name: me.name, bannerURL: me.bannerURL, targetURL: me.targetURL, position: me.position, width: me.width, height: me.height, method: me.method, newtab: me.newtab)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        id: String?? = nil,
+        instanceID: String?? = nil,
+        status: String?? = nil,
+        searchType: String?? = nil,
+        name: String?? = nil,
+        bannerURL: String?? = nil,
+        targetURL: String?? = nil,
+        position: String?? = nil,
+        width: String?? = nil,
+        height: String?? = nil,
+        method: String?? = nil,
+        newtab: Bool?? = nil
+    ) -> Banner {
+        return Banner(
+            id: id ?? self.id,
+            instanceID: instanceID ?? self.instanceID,
+            status: status ?? self.status,
+            searchType: searchType ?? self.searchType,
+            name: name ?? self.name,
+            bannerURL: bannerURL ?? self.bannerURL,
+            targetURL: targetURL ?? self.targetURL,
+            position: position ?? self.position,
+            width: width ?? self.width,
+            height: height ?? self.height,
+            method: method ?? self.method,
+            newtab: newtab ?? self.newtab
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Content
+public class Content: Codable {
+    var key, html: String?
+
+    init(key: String?, html: String?) {
+        self.key = key
+        self.html = html
+    }
+}
+
+// MARK: Content convenience initializers and mutators
+
+extension Content {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Content.self, from: data)
+        self.init(key: me.key, html: me.html)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        key: String?? = nil,
+        html: String?? = nil
+    ) -> Content {
+        return Content(
+            key: key ?? self.key,
+            html: html ?? self.html
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Facet
+public class Facet: Codable {
+    var property: String?
+    var items: [Item]?
+    var filtered: [JSONAny]?
+    var viewMode: String?
+
+    init(property: String?, items: [Item]?, filtered: [JSONAny]?, viewMode: String?) {
         self.property = property
         self.items = items
         self.filtered = filtered
@@ -41,33 +228,156 @@ class FacetElement: Codable {
     }
 }
 
-class Item: Codable {
-    let value: String
-    let count: Int
+// MARK: Facet convenience initializers and mutators
 
-    init(value: String, count: Int) {
+extension Facet {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Facet.self, from: data)
+        self.init(property: me.property, items: me.items, filtered: me.filtered, viewMode: me.viewMode)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        property: String?? = nil,
+        items: [Item]?? = nil,
+        filtered: [JSONAny]?? = nil,
+        viewMode: String?? = nil
+    ) -> Facet {
+        return Facet(
+            property: property ?? self.property,
+            items: items ?? self.items,
+            filtered: filtered ?? self.filtered,
+            viewMode: viewMode ?? self.viewMode
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Item
+public class Item: Codable {
+    var value: String?
+    var count: Int?
+
+    init(value: String?, count: Int?) {
         self.value = value
         self.count = count
     }
 }
 
-class Meta: Codable {
-    let total: Int
-    let page: Page
-    let params: MetaParams
+// MARK: Item convenience initializers and mutators
 
-    init(total: Int, page: Page, params: MetaParams) {
+extension Item {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Item.self, from: data)
+        self.init(value: me.value, count: me.count)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        value: String?? = nil,
+        count: Int?? = nil
+    ) -> Item {
+        return Item(
+            value: value ?? self.value,
+            count: count ?? self.count
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Meta
+public class Meta: Codable {
+    var total: Int?
+    var page: Page?
+    var params: Params?
+
+    init(total: Int?, page: Page?, params: Params?) {
         self.total = total
         self.page = page
         self.params = params
     }
 }
 
-class Page: Codable {
-    let current, rows: Int
-    let prev, next: Bool
+// MARK: Meta convenience initializers and mutators
 
-    init(current: Int, rows: Int, prev: Bool, next: Bool) {
+extension Meta {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Meta.self, from: data)
+        self.init(total: me.total, page: me.page, params: me.params)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        total: Int?? = nil,
+        page: Page?? = nil,
+        params: Params?? = nil
+    ) -> Meta {
+        return Meta(
+            total: total ?? self.total,
+            page: page ?? self.page,
+            params: params ?? self.params
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Page
+public class Page: Codable {
+    var current, rows: Int?
+    var prev, next: Bool?
+
+    init(current: Int?, rows: Int?, prev: Bool?, next: Bool?) {
         self.current = current
         self.rows = rows
         self.prev = prev
@@ -75,13 +385,56 @@ class Page: Codable {
     }
 }
 
-class MetaParams: Codable {
-    let defaultOrder: String
-    let currentRow: Int
-    let currency: String
-    let isCurrencyPlaceBefore: Bool
+// MARK: Page convenience initializers and mutators
 
-    init(defaultOrder: String, currentRow: Int, currency: String, isCurrencyPlaceBefore: Bool) {
+extension Page {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Page.self, from: data)
+        self.init(current: me.current, rows: me.rows, prev: me.prev, next: me.next)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        current: Int?? = nil,
+        rows: Int?? = nil,
+        prev: Bool?? = nil,
+        next: Bool?? = nil
+    ) -> Page {
+        return Page(
+            current: current ?? self.current,
+            rows: rows ?? self.rows,
+            prev: prev ?? self.prev,
+            next: next ?? self.next
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Params
+public class Params: Codable {
+    var defaultOrder: String?
+    var currentRow: Int?
+    var currency: String?
+    var isCurrencyPlaceBefore: Bool?
+
+    init(defaultOrder: String?, currentRow: Int?, currency: String?, isCurrencyPlaceBefore: Bool?) {
         self.defaultOrder = defaultOrder
         self.currentRow = currentRow
         self.currency = currency
@@ -89,65 +442,72 @@ class MetaParams: Codable {
     }
 }
 
-class Banners: Codable {
-    let id: String
-    let instanceId: String
-    let status: SearchBannerStatus
-    let searchType: SearchType
-    let name: String
-    let bannerUrl: String
-    let targetUrl: String
-    let position: SearchBannerPositionType
-    let width: String
-    let height: String
-    
-    init(id: String, instanceId: String, status: SearchBannerStatus, searchType: SearchType, name: String, bannerUrl: String, targetUrl: String, position: SearchBannerPositionType, width: String, height: String){
-        self.id = id
-        self.instanceId = instanceId
-        self.status = status
-        self.searchType = searchType
-        self.name = name
-        self.bannerUrl = bannerUrl
-        self.targetUrl = targetUrl
-        self.position = position
-        self.width = width
-        self.height = height
+// MARK: Params convenience initializers and mutators
+
+extension Params {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Params.self, from: data)
+        self.init(defaultOrder: me.defaultOrder, currentRow: me.currentRow, currency: me.currency, isCurrencyPlaceBefore: me.isCurrencyPlaceBefore)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        defaultOrder: String?? = nil,
+        currentRow: Int?? = nil,
+        currency: String?? = nil,
+        isCurrencyPlaceBefore: Bool?? = nil
+    ) -> Params {
+        return Params(
+            defaultOrder: defaultOrder ?? self.defaultOrder,
+            currentRow: currentRow ?? self.currentRow,
+            currency: currency ?? self.currency,
+            isCurrencyPlaceBefore: isCurrencyPlaceBefore ?? self.isCurrencyPlaceBefore
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
-enum SearchBannerStatus:String, Codable {
-    case ACTIVE, PASSIVE, DRAFT, DELETED
-}
+// MARK: - Product
+public class Product: Codable {
+    var productId: String?
+    var name: String?
+    var url: String?
+    var image: String?
+    var price: Double?
+    var priceText: String?
+    var oldPrice: Double?
+    var oldPriceText, specialPriceText: String?
+    var category: [String]?
+    var lastUpdateTime: Int?
+    var inStock: Bool?
+    var insertTime, publishTime: Int?
+    var brand: String?
+    var language: String?
+    var currency: String?
+    var params: [String:String]?
 
-enum SearchType:String, Codable {
-    case INSTANT, FACETED
-}
+    enum CodingKeys: String, CodingKey {
+        case productId, name, url, image, price, priceText, oldPrice, oldPriceText, specialPriceText, category, lastUpdateTime, inStock, insertTime, publishTime, brand, language, currency, params
+    }
 
-enum SearchBannerPositionType:String, Codable {
-    case RESULTS_FOOTER, RESULTS_HEADER, FILTERS_FOOTER, FILTERS_HEADER, ASSETS_FOOTER, ASSETS_HEADER
-}
-
-class Product: Codable {
-    let productId, name: String
-    let url: String
-    let image: String
-    let price: Double
-    let priceText: String
-    let oldPrice: Double?
-    let oldPriceText: String
-    let specialPriceText: String
-    let category: [String]
-    let lastUpdateTime: Int
-    let inStock: Bool
-    let stockCount, insertTime, publishTime: Int
-    let brand: String
-    let labels: [String]?
-    let params: [String:String]
-    let language: String
-    let currency: String
-    let lastBoughtTime: Int
-
-    init(productId: String, name: String, url: String, image: String, price: Double, priceText: String, oldPrice: Double?, oldPriceText: String, specialPriceText: String, category: [String], lastUpdateTime: Int, inStock: Bool, stockCount: Int, insertTime: Int, publishTime: Int, brand: String, labels: [String]?, params: [String:String], language: String, currency: String, lastBoughtTime: Int) {
+    init(productId: String?, name: String?, url: String?, image: String?, price: Double?, priceText: String?, oldPrice: Double?, oldPriceText: String?, specialPriceText: String?, category: [String]?, lastUpdateTime: Int?, inStock: Bool?, insertTime: Int?, publishTime: Int?, brand: String?, language: String?, currency: String?, params: [String:String]?) {
         self.productId = productId
         self.name = name
         self.url = url
@@ -160,26 +520,104 @@ class Product: Codable {
         self.category = category
         self.lastUpdateTime = lastUpdateTime
         self.inStock = inStock
-        self.stockCount = stockCount
         self.insertTime = insertTime
         self.publishTime = publishTime
         self.brand = brand
-        self.labels = labels
-        self.params = params
         self.language = language
         self.currency = currency
-        self.lastBoughtTime = lastBoughtTime
+        self.params = params
     }
 }
 
-class QueryVerboseLog: Codable {
-    init() {
+// MARK: Product convenience initializers and mutators
+
+extension Product {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Product.self, from: data)
+        self.init(productId: me.productId, name: me.name, url: me.url, image: me.image, price: me.price, priceText: me.priceText, oldPrice: me.oldPrice, oldPriceText: me.oldPriceText, specialPriceText: me.specialPriceText, category: me.category, lastUpdateTime: me.lastUpdateTime, inStock: me.inStock, insertTime: me.insertTime, publishTime: me.publishTime, brand: me.brand, language: me.language, currency: me.currency, params: me.params)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        productId: String?? = nil,
+        name: String?? = nil,
+        url: String?? = nil,
+        image: String?? = nil,
+        price: Double?? = nil,
+        priceText: String?? = nil,
+        oldPrice: Double?? = nil,
+        oldPriceText: String?? = nil,
+        specialPriceText: String?? = nil,
+        category: [String]?? = nil,
+        lastUpdateTime: Int?? = nil,
+        inStock: Bool?? = nil,
+        insertTime: Int?? = nil,
+        publishTime: Int?? = nil,
+        brand: String?? = nil,
+        language: String?? = nil,
+        currency: String?? = nil,
+        params: [String:String]?? = nil
+    ) -> Product {
+        return Product(
+            productId: productId ?? self.productId,
+            name: name ?? self.name,
+            url: url ?? self.url,
+            image: image ?? self.image,
+            price: price ?? self.price,
+            priceText: priceText ?? self.priceText,
+            oldPrice: oldPrice ?? self.oldPrice,
+            oldPriceText: oldPriceText ?? self.oldPriceText,
+            specialPriceText: specialPriceText ?? self.specialPriceText,
+            category: category ?? self.category,
+            lastUpdateTime: lastUpdateTime ?? self.lastUpdateTime,
+            inStock: inStock ?? self.inStock,
+            insertTime: insertTime ?? self.insertTime,
+            publishTime: publishTime ?? self.publishTime,
+            brand: brand ?? self.brand,
+            language: language ?? self.language,
+            currency: currency ?? self.currency,
+            params: params ?? self.params
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
-typealias Facets = [FacetedResponseModel]
+// MARK: - Helper functions for creating encoders and decoders
 
-// Encode/decode helpers
+func newJSONDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        decoder.dateDecodingStrategy = .iso8601
+    }
+    return decoder
+}
+
+func newJSONEncoder() -> JSONEncoder {
+    let encoder = JSONEncoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        encoder.dateEncodingStrategy = .iso8601
+    }
+    return encoder
+}
+
+// MARK: - Encode/decode helpers
 
 class JSONNull: Codable, Hashable {
 
