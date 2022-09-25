@@ -1598,6 +1598,14 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.ordering != nil {
             eventRequest.ordering = segmentifyObject.ordering
         }
+        if segmentifyObject.filters != nil {
+            var filtersArray = [Any]()
+            segmentifyObject.filters?.forEach {
+                filter in
+                filtersArray.append(filter.nsDictionary)
+            }
+            eventRequest.filters = filtersArray
+        }
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }

@@ -92,6 +92,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var label:String?
     var trigger:String?
     var ordering:FacetedOrdering?
+    var filters:[Any]?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -211,6 +212,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.urls = nil
         self.trigger = nil
         self.ordering = nil
+        self.filters = nil
     }
     
     
@@ -595,6 +597,11 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["type"] = type
             dictionary["trigger"] = trigger
             dictionary["ordering"] = ordering?.dictionary
+            if self.filters != nil{
+                dictionary["filters"] = filters as Any?
+            } else {
+                dictionary["filters"] = nil
+            }
         }
         return dictionary
     }

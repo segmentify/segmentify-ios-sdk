@@ -10,4 +10,5 @@ public class SearchFacetPageModel:SegmentifyObject {
     public var type:String?
     public var ordering:FacetedOrdering?
     public var trigger:String?
+    public var filters:[FacetedFilter]?
 }
