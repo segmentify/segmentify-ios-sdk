@@ -2190,6 +2190,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.type = SegmentifyManager.clickStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
+        
+        if instanceId.starts(with: "fcs_"){
+            eventRequest.interactionId = interactionId + "|product"
+        }
 
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
