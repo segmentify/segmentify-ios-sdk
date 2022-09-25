@@ -13,8 +13,9 @@ public class FacetedResponseModel: Codable {
     var meanings: [JSONAny]?
     var products: [Product]?
     var executable: Bool?
+    var instanceId: String?
 
-    init(facets: [Facet]?, meta: Meta?, contents: [Content]?, banners: [Banner]?, meanings: [JSONAny]?, products: [Product]?, executable: Bool?) {
+    init(facets: [Facet]?, meta: Meta?, contents: [Content]?, banners: [Banner]?, meanings: [JSONAny]?, products: [Product]?, executable: Bool?, instanceId: String?) {
         self.facets = facets
         self.meta = meta
         self.contents = contents
@@ -22,6 +23,7 @@ public class FacetedResponseModel: Codable {
         self.meanings = meanings
         self.products = products
         self.executable = executable
+        self.instanceId = instanceId
     }
 }
 
@@ -30,7 +32,7 @@ public class FacetedResponseModel: Codable {
 extension FacetedResponseModel {
     convenience init(data: Data) throws {
         let me = try newJSONDecoder().decode(FacetedResponseModel.self, from: data)
-        self.init(facets: me.facets, meta: me.meta, contents: me.contents, banners: me.banners, meanings: me.meanings, products: me.products, executable: me.executable)
+        self.init(facets: me.facets, meta: me.meta, contents: me.contents, banners: me.banners, meanings: me.meanings, products: me.products, executable: me.executable, instanceId: me.instanceId)
     }
 
     convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -51,7 +53,8 @@ extension FacetedResponseModel {
         banners: [Banner]?? = nil,
         meanings: [JSONAny]?? = nil,
         products: [Product]?? = nil,
-        executable: Bool?? = nil
+        executable: Bool?? = nil,
+        instanceId: String?? = nil
     ) -> FacetedResponseModel {
         return FacetedResponseModel(
             facets: facets ?? self.facets,
@@ -60,7 +63,8 @@ extension FacetedResponseModel {
             banners: banners ?? self.banners,
             meanings: meanings ?? self.meanings,
             products: products ?? self.products,
-            executable: executable ?? self.executable
+            executable: executable ?? self.executable,
+            instanceId: instanceId ?? self.instanceId
         )
     }
 

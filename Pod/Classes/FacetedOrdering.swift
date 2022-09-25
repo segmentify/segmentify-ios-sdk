@@ -11,7 +11,10 @@ public class FacetedOrdering:NSObject {
         return copy
     }
     
-    public override init() {}
+    public override init() {
+        page=1
+        sort="SMART_SORTING"
+    }
     public var page:Int?
     public var sort:String?
     

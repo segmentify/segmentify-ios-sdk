@@ -5,7 +5,10 @@
 import Foundation
 
 public class SearchFacetPageModel:SegmentifyObject {
-    public override init() {}
+    public override init() {
+        type="faceted"
+        trigger="keyword"
+    }
     public var query:String?
     public var type:String?
     public var ordering:FacetedOrdering?
