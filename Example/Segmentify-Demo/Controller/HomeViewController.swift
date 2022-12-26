@@ -47,7 +47,7 @@ class HomeViewController: UIViewController {
     
     func sendSearchPageViewRequest() {
         let pageViewObj = SearchPageModel()
-        pageViewObj.query = "peynir"
+        pageViewObj.query = "query1"
         pageViewObj.lang = "TR"
         pageViewObj.region = "TURKEY"
         SegmentifyManager.sharedManager().sendSearchPageView(segmentifyObject: pageViewObj){
@@ -58,9 +58,9 @@ class HomeViewController: UIViewController {
     
     func sendSearchFacetedPageViewRequest() {
         let pageViewObj = SearchFacetPageModel()
-        pageViewObj.query = "domates"
+        pageViewObj.query = "query"
         pageViewObj.lang = "TR"
-        pageViewObj.region = "3006.5000"
+        pageViewObj.region = "region-1"
         pageViewObj.trigger = "keyword"
         pageViewObj.type = "faceted"
         pageViewObj.ordering = FacetedOrdering()

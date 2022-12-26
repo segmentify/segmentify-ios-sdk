@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             // [END register_for_notifications]
         
-         SegmentifyManager.config(appkey: "ae272bfb-214b-4cdd-b5c4-1dddde09e95e", dataCenterUrl: "https://gandalf-dev.segmentify.com", subDomain: "ihalilaltun.me")
+         SegmentifyManager.config(appkey: "ae272bfb-214b-4cdd-b5c4-1dddde09e95e", dataCenterUrl: "https://gandalf-dev.segmentify.com", subDomain: "dev-segmentify.com")
          SegmentifyManager.setPushConfig(dataCenterUrlPush: "https://gimli-dev.segmentify.com")
         // option to show or hide console log
         let _ = SegmentifyManager.logStatus(isVisible: true)
