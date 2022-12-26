@@ -54,11 +54,11 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
-  - Segmentify (1.2.9)
+  - Segmentify (1.3.4-beta)
 
 DEPENDENCIES:
   - Firebase/Messaging
-  - Segmentify (from `/Users/ihalilaltun/Development/SEGMENTIFY_GIT/segmentify-ios-sdk`)
+  - Segmentify (= 1.3.4-beta)
 
 SPEC REPOS:
   trunk:
@@ -71,10 +71,7 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
     - PromisesObjC
-
-EXTERNAL SOURCES:
-  Segmentify:
-    :path: "/Users/ihalilaltun/Development/SEGMENTIFY_GIT/segmentify-ios-sdk"
+    - Segmentify
 
 SPEC CHECKSUMS:
   Firebase: 629510f1a9ddb235f3a7c5c8ceb23ba887f0f814
@@ -86,8 +83,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  Segmentify: 10a9b874462e71d73ce4a5b2ab37b34da429611e
+  Segmentify: d4aeb8a78bbb88c59c177acc680a9787a22e2958
 
-PODFILE CHECKSUM: 7596aa5c2a5db8b58742b9d20864fead20c99086
+PODFILE CHECKSUM: 59f85ff7bfafab7e5c05a221e413bfe5f5bf2ba0
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

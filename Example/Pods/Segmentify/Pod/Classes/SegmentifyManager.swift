@@ -25,6 +25,12 @@ public class SegmentifyManager : NSObject {
     static let customEventName = "CUSTOM_EVENT"
     static let interactionEventName = "INTERACTION"
     static let searchEventName = "SEARCH"
+    static let bannerOperationsEventName = "BANNER_OPERATIONS"
+    static let bannerGroupViewEventName = "BANNER_GROUP_VIEW"
+    static let internalBannerGroupEventName = "INTERNAL_BANNER_GROUP"
+    static let bannerImpressionStep = "impression"
+    static let bannerClickStep = "click"
+    static let bannerUpdateStep = "update"
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -54,12 +60,14 @@ public class SegmentifyManager : NSObject {
     private var searcResponseProductsArray = [ProductRecommendationModel]()
     private var recommendations :[RecommendationModel] = []
     private var searchResponse = SearchModel()
+    private var facetedResponse : FacetedResponseModel?
     private var currentKey : String?
     private var type : String?
     private var staticItemsArrayCount : Int = Int()
     private var currentNewArray : [RecommendationModel]?
     private var key : String = String()
     private var newRecommendationArray : [RecommendationModel] = []
+    private var clickedBanners: [ClickedBannerObject] = []
     
     private var testStaticProducts : [AnyHashable:Any]?
     private var testOtherProducts : [AnyHashable:Any]?
@@ -267,6 +275,30 @@ public class SegmentifyManager : NSObject {
                     }
                     self.createSearchCampaign(campaignParam: campaign)
                     
+                    if let _categoryProducts = obj["categoryProducts"] as?  Dictionary<AnyHashable, Any>{
+                        self.createCategoryProducts(categoryProducts: _categoryProducts)
+                    }
+                    
+                    if let _brandProducts = obj["brandProducts"] as?  Dictionary<AnyHashable, Any>{
+                        self.createBrandProducts(brandProducts: _brandProducts)
+                    }
+                    
+                    if let _keywordProducts = obj["keywords"] as?  Dictionary<AnyHashable, Any>{
+                        self.createKeywordProducts(keywordProducts: _keywordProducts)
+                    }
+                    
+                    if let _searchCategories = obj["categories"] as?  Dictionary<AnyHashable, Any>{
+                        self.createSearchCategories(categories: _searchCategories)
+                    }
+                    
+                    if let _searchBrands = obj["brands"] as?  Dictionary<AnyHashable, Any>{
+                        self.createSearchBrands(brands: _searchBrands)
+                    }
+                    
+                    if let _lastSearches = obj["lastSearches"] as? [String]{
+                        self.createLastSearches(lastSearches: _lastSearches)
+                    }
+                    
                 }
                 
                 var insId : String = String()
@@ -292,6 +324,40 @@ public class SegmentifyManager : NSObject {
             let errorRecModel = SearchModel()
             errorRecModel.errorString = "error"
             callback(self.searchResponse)
+        })
+    }
+    
+    func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedResponseModel) -> Void) {
+        SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
+            
+            guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
+                print("error : \(response["statusCode"]! as Any)")
+                return
+            }
+            
+            if(searches.isEmpty || searches[0].isEmpty){
+                print("error : search response is not valid or empty")
+                return
+            }
+            else{
+                for (_, obj) in searches[0].enumerated() {
+                    
+                    guard obj["products"] is [Dictionary<AnyHashable,Any>] else {
+                        return
+                    }
+                    let jsonData = try! JSONSerialization.data(withJSONObject: obj)
+                    let decodedData = try! FacetedResponseModel(data: jsonData)
+                    self.facetedResponse = decodedData
+                }
+            }
+            
+            callback(self.facetedResponse!)
+            
+        }, failure: {(error: Error) in
+            if (self.debugMode) {
+                print("Request failed : \(error)")
+            }
+            callback(self.facetedResponse!)
         })
     }
     
@@ -773,6 +839,67 @@ public class SegmentifyManager : NSObject {
         self.searchResponse.products = self.searcResponseProductsArray
     }
     
+    private func createCategoryProducts(categoryProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.categoryProducts.removeAll()
+        var _categoryProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in categoryProducts {
+            _categoryProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.categoryProducts = _categoryProducts
+    }
+    
+    private func createBrandProducts(brandProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.brandProducts.removeAll()
+        var _brandProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in brandProducts {
+            _brandProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.brandProducts = _brandProducts
+    }
+    
+    private func createKeywordProducts(keywordProducts: Dictionary<AnyHashable, Any>){
+        self.searchResponse.keywords.removeAll()
+        var _keywordProducts = [String:[ProductRecommendationModel]]()
+        
+        for(key, val) in keywordProducts {
+            _keywordProducts.updateValue(val as! [ProductRecommendationModel], forKey: key as! String)
+        }
+        self.searchResponse.keywords = _keywordProducts
+    }
+    
+    private func createSearchCategories(categories: Dictionary<AnyHashable, Any>){
+        self.searchResponse.categories.removeAll()
+        var _categories = [String:String]()
+        
+        for(key, val) in categories {
+            _categories.updateValue(val as! String, forKey: key as! String)
+        }
+        self.searchResponse.categories = _categories
+    }
+    
+    private func createSearchBrands(brands: Dictionary<AnyHashable, Any>){
+        self.searchResponse.brands.removeAll()
+        var _brands = [String:String]()
+        
+        for(key, val) in brands {
+            _brands.updateValue(val as! String, forKey: key as! String)
+        }
+        self.searchResponse.brands = _brands
+    }
+    
+    private func createLastSearches(lastSearches: [String]){
+        self.searchResponse.lastSearches.removeAll()
+        var _lastSearches = [String]()
+    
+        for(key) in lastSearches {
+            _lastSearches.append(key)
+        }
+        
+        self.searchResponse.lastSearches = _lastSearches
+    }
+    
     private func addProduct(proObj : ProductRecommendationModel) {
         if !self.products.contains(where: {$0.productId == proObj.productId}) {
             self.products.append(proObj)
@@ -1106,6 +1233,16 @@ public class SegmentifyManager : NSObject {
         eventRequest.totalPrice = totalPrice
         eventRequest.products  =  productList
         
+        // bannerify objects
+        if self.clickedBanners.count > 0 {
+            var clickedBannerArray = [Any]()
+            self.clickedBanners.forEach {
+                clickedBanner in
+                clickedBannerArray.append(clickedBanner.nsDictionary)
+            }
+            eventRequest.activeBanners = clickedBannerArray
+        }
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -1287,6 +1424,16 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.region != nil {
             eventRequest.region = segmentifyObject.region
         }
+        // bannerify objects
+        if self.clickedBanners.count > 0 {
+            var clickedBannerArray = [Any]()
+            self.clickedBanners.forEach {
+                clickedBanner in
+                clickedBannerArray.append(clickedBanner.nsDictionary)
+            }
+            eventRequest.activeBanners = clickedBannerArray
+        }
+        
         setIDAndSendEvent()
     }
     
@@ -1366,6 +1513,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.price = segmentifyObject.price
         eventRequest.image = segmentifyObject.image
         eventRequest.url = segmentifyObject.url
+        eventRequest.mUrl = segmentifyObject.mUrl
         eventRequest.imageL = segmentifyObject.imageL
         eventRequest.imageM = segmentifyObject.imageM
         eventRequest.imageS = segmentifyObject.imageS
@@ -1379,6 +1527,16 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldPrice = segmentifyObject.oldPrice
         eventRequest.noUpdate = segmentifyObject.noUpdate
         eventRequest.inStock = segmentifyObject.inStock
+        
+        // bannerify objects
+        if self.clickedBanners.count > 0 {
+            var clickedBannerArray = [Any]()
+            self.clickedBanners.forEach {
+                clickedBanner in
+                clickedBannerArray.append(clickedBanner.nsDictionary)
+            }
+            eventRequest.activeBanners = clickedBannerArray
+        }
         
         setIDAndSendEventWithCallback(callback: callback)
     }
@@ -1417,6 +1575,64 @@ public class SegmentifyManager : NSObject {
             })
         } else {
             self.sendSearchEvent(callback: { (response: SearchModel) in
+                callback(response)
+                self.clearData()
+            })
+        }
+    }
+    
+    open func sendFacetedSearchPageView(segmentifyObject : SearchFacetPageModel, callback: @escaping (_ facetedResponse : FacetedResponseModel) -> Void) {
+        eventRequest.eventName = SegmentifyManager.searchEventName
+        eventRequest.interactionId = nil
+        eventRequest.instanceId = nil
+        eventRequest.testMode = true
+        eventRequest.oldUserId = nil
+        eventRequest.query = segmentifyObject.query
+        
+        if segmentifyObject.trigger != nil{
+            eventRequest.trigger = segmentifyObject.trigger
+        }
+        if segmentifyObject.type != nil{
+            eventRequest.type = segmentifyObject.type
+        }
+        if segmentifyObject.ordering != nil {
+            eventRequest.ordering = segmentifyObject.ordering
+        }
+        if segmentifyObject.filters != nil {
+            var filtersArray = [Any]()
+            segmentifyObject.filters?.forEach {
+                filter in
+                filtersArray.append(filter.nsDictionary)
+            }
+            eventRequest.filters = filtersArray
+        }
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+        if segmentifyObject.region != nil {
+            eventRequest.region = segmentifyObject.region
+        }
+        if segmentifyObject.testMode != nil {
+            eventRequest.testMode = segmentifyObject.testMode
+        }
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        if self.eventRequest.sessionID == nil {
+            self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                self.sendSearchFacetedEvent(callback: { (response: FacetedResponseModel) in
+                    callback(response)
+                })
+            })
+        } else {
+            self.sendSearchFacetedEvent(callback: { (response: FacetedResponseModel) in
                 callback(response)
                 self.clearData()
             })
@@ -1974,6 +2190,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.type = SegmentifyManager.clickStep
         eventRequest.instanceId = instanceId
         eventRequest.interactionId = interactionId
+        
+        if instanceId.starts(with: "fcs_"){
+            eventRequest.interactionId = interactionId + "|product"
+        }
 
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1984,6 +2204,153 @@ public class SegmentifyManager : NSObject {
         }
         eventRequest.oldUserId = nil
         setIDAndSendEvent()
+    }
+    
+    /* bannerify events */
+    
+    //Banner Impression Event
+    open func sendBannerImpressionEvent(segmentifyObject : BannerOperationsModel) {
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerImpressionStep
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+        eventRequest.title = segmentifyObject.title
+        eventRequest.group = segmentifyObject.group
+        eventRequest.order = segmentifyObject.order
+        eventRequest.productID = segmentifyObject.productId
+        eventRequest.categories = segmentifyObject.category
+        eventRequest.brand = segmentifyObject.brand
+        eventRequest.label = segmentifyObject.label
+        eventRequest.type = segmentifyObject.type
+
+        setIDAndSendEvent()
+    }
+    
+    //Banner Click Event
+    open func sendBannerClickEvent(segmentifyObject : BannerOperationsModel) {
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerClickStep
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        self.addClickedBanner(banner: segmentifyObject)
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+        eventRequest.title = segmentifyObject.title
+        eventRequest.group = segmentifyObject.group
+        eventRequest.order = segmentifyObject.order
+        eventRequest.productID = segmentifyObject.productId
+        eventRequest.categories = segmentifyObject.category
+        eventRequest.brand = segmentifyObject.brand
+        eventRequest.label = segmentifyObject.label
+        eventRequest.type = segmentifyObject.type
+        
+        setIDAndSendEvent()
+    }
+    
+    //Banner Update Event
+    open func sendBannerUpdateEvent(segmentifyObject : BannerOperationsModel) {
+        
+        if segmentifyObject.type == nil {
+            segmentifyObject.type = SegmentifyManager.bannerUpdateStep
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        eventRequest.eventName = SegmentifyManager.bannerOperationsEventName
+
+        setIDAndSendEvent()
+    }
+    
+    //Banner GroupView Event
+    open func sendBannerGroupViewEvent(segmentifyObject : BannerGroupViewModel) {
+        
+        var bannerArray = [Any]()
+        segmentifyObject.banners?.forEach {
+            banner in
+            bannerArray.append(banner.nsDictionary)
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        eventRequest.group = segmentifyObject.group
+        eventRequest.banners = bannerArray
+        eventRequest.eventName = SegmentifyManager.internalBannerGroupEventName
+        
+        setIDAndSendEvent()
+    }
+    
+    //Banner InternalBannerGroup Event
+    open func sendInternalBannerGroupEvent(segmentifyObject : BannerGroupViewModel) {
+        
+        var bannerArray = [Any]()
+        segmentifyObject.banners?.forEach {
+            banner in
+            bannerArray.append(banner.nsDictionary)
+        }
+        
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+        
+        eventRequest.group = segmentifyObject.group
+        eventRequest.banners = bannerArray
+        eventRequest.eventName = SegmentifyManager.internalBannerGroupEventName
+        
+        setIDAndSendEvent()
+    }
+    
+    func addClickedBanner(banner: BannerOperationsModel) {
+        
+        let results = self.clickedBanners.filter {$0.group == banner.group && $0.title == banner.title && $0.order == banner.order }
+        let exists = results.isEmpty == false
+        if(exists){
+            return
+        }
+        
+        if (self.clickedBanners.count > 20) {
+            self.clickedBanners.removeFirst()
+        }
+        
+        let cbo = ClickedBannerObject()
+        cbo.group = banner.group
+        cbo.order = banner.order
+        cbo.title = banner.title
+        
+        self.clickedBanners.insert(cbo, at: 0)
     }
     
     func setAdvertisingIdentifier(adIdentifier: String?) {
@@ -2031,7 +2398,7 @@ public class SegmentifyManager : NSObject {
     private func getUserIdAndSessionIdRequest(success : @escaping () -> Void) {
         
         var requestURL : URL!
-        var dataCenterUrl:String = SegmentifyManager.setup.dataCenterUrl!
+        let dataCenterUrl:String = SegmentifyManager.setup.dataCenterUrl!
         if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
             requestURL = URL(string: dataCenterUrl + "/get/key?count=1")!
         } else {
