@@ -277,8 +277,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
 
         if self.eventName == "PAGE_VIEW" {
             dictionary["subCategory"] = subCategory as Any?
-        } else {
-            dictionary["subCategory"] = nil
         }
 
         if self.eventName == "PRODUCT_VIEW" || self.eventName == "BASKET_OPERATIONS" {
@@ -419,8 +417,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["category"] = category as Any?
-        } else {
-            dictionary["category"] = nil
         }
         
         if let url = self.url {
@@ -555,8 +551,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             }
             if self.category != nil {
                 dictionary["category"] = category as Any
-            } else {
-                dictionary["category"] = nil
             }
             if self.brand != nil {
                 dictionary["brand"] = brand as Any
