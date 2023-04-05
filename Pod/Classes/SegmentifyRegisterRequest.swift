@@ -62,6 +62,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var image:String?
     var url:String?
     var memberSince:String?
+    var lastSearchDeletedKeywords:String?
     var oldUserId:String?
     var lang:String?
     var mUrl:String?
@@ -183,6 +184,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.image = nil
         self.url = nil
         self.memberSince = nil
+        self.lastSearchDeletedKeywords = nil
         self.oldUserId = nil
         self.lang = nil
         self.mUrl = nil
@@ -315,22 +317,10 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["gender"] = nil
         }
 
-        if self.eventName == "USER_OPERATIONS" {
-            dictionary["age"] = age as Any?
-        } else {
-            dictionary["age"] = nil
-        }
-
         if self.eventName == "PRODUCT_VIEW" {
             dictionary["noUpdate"] = noUpdate as Any?
         } else {
             dictionary["noUpdate"] = nil
-        }
-
-        if self.eventName == "USER_OPERATIONS" {
-            dictionary["memberSince"] = memberSince as Any?
-        } else {
-            dictionary["memberSince"] = nil
         }
         
         if let lang = self.lang {
@@ -379,10 +369,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         
         if let sessionId = self.sessionID as Any? {
             dictionary["sessionId"] = sessionId as Any?
-        }
-        
-        if self.eventName == "USER_OPERATIONS" && self.userOperationStep != nil  {
-            dictionary["step"] = userOperationStep
         }
 
         if let pageUrl = self.pageUrl {
@@ -445,6 +431,10 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["oldUserId"] = oldUserId
         }
 
+        if self.eventName == "USER_OPERATIONS" && self.userOperationStep != nil {
+            dictionary["step"] = userOperationStep
+        }
+
         if self.eventName == "USER_OPERATIONS" {
             dictionary["username"] = username
         } else {
@@ -491,6 +481,24 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["isRegistered"] = isRegistered
         } else {
             dictionary["isRegistered"] = nil
+        }
+
+        if self.eventName == "USER_OPERATIONS" {
+            dictionary["age"] = age as Any?
+        } else {
+            dictionary["age"] = nil
+        }
+
+        if self.eventName == "USER_OPERATIONS" {
+            dictionary["memberSince"] = memberSince as Any?
+        } else {
+            dictionary["memberSince"] = nil
+        }
+
+        if self.eventName == "USER_OPERATIONS" {
+            dictionary["lastSearchDeletedKeywords"] = lastSearchDeletedKeywords as Any?
+        } else {
+            dictionary["lastSearchDeletedKeywords"] = nil
         }
 
         if self.eventName == "INTERACTION" {

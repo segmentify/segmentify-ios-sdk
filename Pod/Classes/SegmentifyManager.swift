@@ -40,6 +40,7 @@ public class SegmentifyManager : NSObject {
     static let registerStep = "signup"
     static let logoutStep = "signout"
     static let updateUserStep = "update"
+    static let deleteLastSearchStep = "delete_last_search"
     static let impressionStep = "impression"
     static let widgetViewStep = "widget-view"
     static let clickStep = "click"
@@ -1154,6 +1155,33 @@ public class SegmentifyManager : NSObject {
         eventRequest.location = segmentifyObject.location
         eventRequest.segments = segmentifyObject.segments
         
+        setIDAndSendEvent()
+    }
+
+    // Clear Last Search History Event
+    open func sendUserClearLastSearchHistory(segmentifyObject : UserModel) {
+        eventRequest.eventName = SegmentifyManager.userOperationEventName
+        eventRequest.userOperationStep = SegmentifyManager.deleteLastSearchStep
+
+        if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
+            eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+        } else {
+            if UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") != nil {
+                self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
+            }
+        }
+
+        if segmentifyObject.lang != nil {
+            eventRequest.lang = segmentifyObject.lang
+        }
+        if segmentifyObject.currency != nil {
+            eventRequest.currency = segmentifyObject.currency
+        }
+
+        eventRequest.instanceId = nil
+        eventRequest.oldUserId = nil
+        eventRequest.lastSearchDeletedKeywords = segmentifyObject.lastSearchDeletedKeywords
+
         setIDAndSendEvent()
     }
     
