@@ -21,4 +21,5 @@ public class UserModel : SegmentifyObject {
     public var location:String?
     public var segments:[String]?
     public var step:String?
+    public var lastSearchDeletedKeywords:String?
 }
