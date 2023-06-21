@@ -1573,9 +1573,9 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.testMode = true
         eventRequest.oldUserId = nil
         eventRequest.query = segmentifyObject.query
+        eventRequest.type = "instant"
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
@@ -1613,7 +1613,6 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.testMode = true
         eventRequest.oldUserId = nil
         eventRequest.query = segmentifyObject.query
         
