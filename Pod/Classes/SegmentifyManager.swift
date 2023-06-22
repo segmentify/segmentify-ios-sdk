@@ -256,22 +256,26 @@ public class SegmentifyManager : NSObject {
             
             guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
                 print("error : \(response["statusCode"]! as Any)")
+                callback(self.searchResponse)
                 return
             }
             
             if(searches.isEmpty){
                 print("error : search response is not valid or empty")
+                callback(self.searchResponse)
                 return
             }
             else{
                 for (_, obj) in searches[0].enumerated() {
                     
                     guard let products = obj["products"] as? [Dictionary<AnyHashable,Any>] else {
+                        callback(self.searchResponse)
                         return
                     }
                     self.createSearchProducts(products: products)
                     
                     guard let campaign = obj["campaign"] as?  Dictionary<AnyHashable, Any> else {
+                        callback(self.searchResponse)
                         return
                     }
                     self.createSearchCampaign(campaignParam: campaign)
