@@ -3,6 +3,7 @@
 //  Segmentify
 
 import Foundation
+import UIKit
 
 enum SearchCodingKeys: String, CodingKey {
     case search
