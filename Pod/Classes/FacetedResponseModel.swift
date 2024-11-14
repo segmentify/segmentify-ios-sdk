@@ -606,7 +606,7 @@ extension Product {
 // MARK: - Helper functions for creating encoders and decoders
 
 public func newJSONDecoder() -> JSONDecoder {
-    public let decoder = JSONDecoder()
+    let decoder = JSONDecoder()
     if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
         decoder.dateDecodingStrategy = .iso8601
     }
@@ -614,7 +614,7 @@ public func newJSONDecoder() -> JSONDecoder {
 }
 
 public func newJSONEncoder() -> JSONEncoder {
-    public let encoder = JSONEncoder()
+    let encoder = JSONEncoder()
     if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
         encoder.dateEncodingStrategy = .iso8601
     }
