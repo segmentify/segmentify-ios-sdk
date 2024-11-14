@@ -10,7 +10,7 @@ public class FacetedResponseModel: Codable {
     public var meta: Meta?
     public var contents: [Content]?
     public var banners: [Banner]?
-    public var meanings: [JSONAny]?
+    var meanings: [JSONAny]?
     public var products: [Product]?
     public var executable: Bool?
     public var instanceId: String?
@@ -221,7 +221,7 @@ extension Content {
 public class Facet: Codable {
     public var property: String?
     public var items: [Item]?
-    public var filtered: [JSONAny]?
+    var filtered: [JSONAny]?
     public var viewMode: String?
 
     public init(property: String?, items: [Item]?, filtered: [JSONAny]?, viewMode: String?) {
