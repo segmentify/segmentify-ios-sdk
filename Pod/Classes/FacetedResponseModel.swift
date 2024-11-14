@@ -6,16 +6,16 @@ import Foundation
 
 // MARK: - FacetedResponseModel
 public class FacetedResponseModel: Codable {
-    var facets: [Facet]?
-    var meta: Meta?
-    var contents: [Content]?
-    var banners: [Banner]?
-    var meanings: [JSONAny]?
-    var products: [Product]?
-    var executable: Bool?
-    var instanceId: String?
+    public var facets: [Facet]?
+    public var meta: Meta?
+    public var contents: [Content]?
+    public var banners: [Banner]?
+    public var meanings: [JSONAny]?
+    public var products: [Product]?
+    public var executable: Bool?
+    public var instanceId: String?
 
-    init(facets: [Facet]?, meta: Meta?, contents: [Content]?, banners: [Banner]?, meanings: [JSONAny]?, products: [Product]?, executable: Bool?, instanceId: String?) {
+    public init(facets: [Facet]?, meta: Meta?, contents: [Content]?, banners: [Banner]?, meanings: [JSONAny]?, products: [Product]?, executable: Bool?, instanceId: String?) {
         self.facets = facets
         self.meta = meta
         self.contents = contents
@@ -79,12 +79,12 @@ extension FacetedResponseModel {
 
 // MARK: - Banner
 public class Banner: Codable {
-    var id, instanceID, status, searchType: String?
-    var name: String?
-    var bannerURL: String?
-    var targetURL: String?
-    var position, width, height, method: String?
-    var newtab: Bool?
+    public var id, instanceID, status, searchType: String?
+    public var name: String?
+    public var bannerURL: String?
+    public var targetURL: String?
+    public var position, width, height, method: String?
+    public var newtab: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -95,7 +95,7 @@ public class Banner: Codable {
         case position, width, height, method, newtab
     }
 
-    init(id: String?, instanceID: String?, status: String?, searchType: String?, name: String?, bannerURL: String?, targetURL: String?, position: String?, width: String?, height: String?, method: String?, newtab: Bool?) {
+    public init(id: String?, instanceID: String?, status: String?, searchType: String?, name: String?, bannerURL: String?, targetURL: String?, position: String?, width: String?, height: String?, method: String?, newtab: Bool?) {
         self.id = id
         self.instanceID = instanceID
         self.status = status
@@ -171,9 +171,9 @@ extension Banner {
 
 // MARK: - Content
 public class Content: Codable {
-    var key, html: String?
+    public var key, html: String?
 
-    init(key: String?, html: String?) {
+    public init(key: String?, html: String?) {
         self.key = key
         self.html = html
     }
@@ -219,12 +219,12 @@ extension Content {
 
 // MARK: - Facet
 public class Facet: Codable {
-    var property: String?
-    var items: [Item]?
-    var filtered: [JSONAny]?
-    var viewMode: String?
+    public var property: String?
+    public var items: [Item]?
+    public var filtered: [JSONAny]?
+    public var viewMode: String?
 
-    init(property: String?, items: [Item]?, filtered: [JSONAny]?, viewMode: String?) {
+    public init(property: String?, items: [Item]?, filtered: [JSONAny]?, viewMode: String?) {
         self.property = property
         self.items = items
         self.filtered = filtered
@@ -276,10 +276,10 @@ extension Facet {
 
 // MARK: - Item
 public class Item: Codable {
-    var value: String?
-    var count: Int?
+    public var value: String?
+    public var count: Int?
 
-    init(value: String?, count: Int?) {
+    public init(value: String?, count: Int?) {
         self.value = value
         self.count = count
     }
@@ -325,11 +325,11 @@ extension Item {
 
 // MARK: - Meta
 public class Meta: Codable {
-    var total: Int?
-    var page: Page?
-    var params: Params?
+    public var total: Int?
+    public var page: Page?
+    public var params: Params?
 
-    init(total: Int?, page: Page?, params: Params?) {
+    public init(total: Int?, page: Page?, params: Params?) {
         self.total = total
         self.page = page
         self.params = params
@@ -378,10 +378,10 @@ extension Meta {
 
 // MARK: - Page
 public class Page: Codable {
-    var current, rows: Int?
-    var prev, next: Bool?
+    public var current, rows: Int?
+    public var prev, next: Bool?
 
-    init(current: Int?, rows: Int?, prev: Bool?, next: Bool?) {
+    public init(current: Int?, rows: Int?, prev: Bool?, next: Bool?) {
         self.current = current
         self.rows = rows
         self.prev = prev
@@ -433,12 +433,12 @@ extension Page {
 
 // MARK: - Params
 public class Params: Codable {
-    var defaultOrder: String?
-    var currentRow: Int?
-    var currency: String?
-    var isCurrencyPlaceBefore: Bool?
+    public var defaultOrder: String?
+    public var currentRow: Int?
+    public var currency: String?
+    public var isCurrencyPlaceBefore: Bool?
 
-    init(defaultOrder: String?, currentRow: Int?, currency: String?, isCurrencyPlaceBefore: Bool?) {
+    public init(defaultOrder: String?, currentRow: Int?, currency: String?, isCurrencyPlaceBefore: Bool?) {
         self.defaultOrder = defaultOrder
         self.currentRow = currentRow
         self.currency = currency
@@ -490,28 +490,28 @@ extension Params {
 
 // MARK: - Product
 public class Product: Codable {
-    var productId: String?
-    var name: String?
-    var url: String?
-    var image: String?
-    var price: Double?
-    var priceText: String?
-    var oldPrice: Double?
-    var oldPriceText, specialPriceText: String?
-    var category: [String]?
-    var lastUpdateTime: Int?
-    var inStock: Bool?
-    var insertTime, publishTime: Int?
-    var brand: String?
-    var language: String?
-    var currency: String?
-    var params: [String:String]?
+   public var productId: String?
+   public var name: String?
+   public var url: String?
+   public var image: String?
+   public var price: Double?
+   public var priceText: String?
+   public var oldPrice: Double?
+   public var oldPriceText, specialPriceText: String?
+   public var category: [String]?
+   public var lastUpdateTime: Int?
+   public var inStock: Bool?
+   public var insertTime, publishTime: Int?
+   public var brand: String?
+   public var language: String?
+   public var currency: String?
+   public var params: [String:String]?
 
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case productId, name, url, image, price, priceText, oldPrice, oldPriceText, specialPriceText, category, lastUpdateTime, inStock, insertTime, publishTime, brand, language, currency, params
     }
 
-    init(productId: String?, name: String?, url: String?, image: String?, price: Double?, priceText: String?, oldPrice: Double?, oldPriceText: String?, specialPriceText: String?, category: [String]?, lastUpdateTime: Int?, inStock: Bool?, insertTime: Int?, publishTime: Int?, brand: String?, language: String?, currency: String?, params: [String:String]?) {
+    public init(productId: String?, name: String?, url: String?, image: String?, price: Double?, priceText: String?, oldPrice: Double?, oldPriceText: String?, specialPriceText: String?, category: [String]?, lastUpdateTime: Int?, inStock: Bool?, insertTime: Int?, publishTime: Int?, brand: String?, language: String?, currency: String?, params: [String:String]?) {
         self.productId = productId
         self.name = name
         self.url = url
