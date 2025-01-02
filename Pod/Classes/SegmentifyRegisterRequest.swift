@@ -442,7 +442,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         }
 
         if self.eventName == "USER_OPERATIONS" {
-            dictionary["email"] = username
+            dictionary["email"] = email
         } else {
             dictionary["email"] = nil
         }
