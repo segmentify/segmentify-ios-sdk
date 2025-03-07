@@ -1,6 +1,0 @@
-module Pods_Segmentify_Demo {
-  umbrella header "Pods-Segmentify-Demo-umbrella.h"
-
-  export *
-  module * { export * }
-}
