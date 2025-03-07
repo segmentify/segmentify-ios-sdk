@@ -1,18 +1,32 @@
-// swift-tools-version: 5.9
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
-    name: "segmentify-ios-sdk",
+    name: "Segmentify",
     platforms: [.iOS(.v12)],
     products: [
         .library(
-            name: "segmentify",
-            targets: ["segmentify"]),
+            name: "Segmentify",
+            targets: ["Segmentify"]
+        )
     ],
+    dependencies: [],
     targets: [
         .target(
-            name: "segmentify")
+            name: "Segmentify",
+            path: "Sources/Segmentify",
+            exclude: [
+                "Info.plist"
+            ],
+            resources: [
+                .process("Resources")
+            ],
+            publicHeadersPath: "include"
+        ),
+        .testTarget(
+            name: "SegmentifyTests",
+            dependencies: ["Segmentify"],
+            path: "Tests"
+        )
     ]
 )
