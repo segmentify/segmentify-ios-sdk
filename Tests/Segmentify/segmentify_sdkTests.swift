@@ -1,5 +1,5 @@
 import XCTest
-@testable import segmentify_ios_sdk
+@testable import Segmentify
 
 final class segmentify_ios_sdkTests: XCTestCase {
     func testExample() throws {
