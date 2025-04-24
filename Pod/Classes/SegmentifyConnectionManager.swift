@@ -49,7 +49,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
     }
     
     func request<R: SegmentifyRequestProtocol>(requestModel: R, success: @escaping (_ response: [String:AnyObject]) -> Void, failure: @escaping (_ error: Error) -> Void) {
-        
         var url: URL?
         url = URL.init(string: "\(requestModel.dataCenterUrl)\(SegmentifyConnectionManager.baseUrl)\(requestModel.apiKey)")
         
@@ -67,8 +66,16 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
             print("request header : \(String(describing: (request.allHTTPHeaderFields)!))")
         }
         
-        if (requestModel.method == "POST" || requestModel.method == "PUT") {
-            request.httpBody = try! JSONSerialization.data(withJSONObject: requestModel.toDictionary(), options: [])
+        if requestModel.method == "POST" || requestModel.method == "PUT" {
+            do {
+                request.httpBody = try JSONSerialization.data(
+                    withJSONObject: requestModel.toDictionary(),
+                    options: []
+                )
+            } catch {
+                print("Serialization failure : \(error)")
+                return
+            }
         }
         
         if (request.httpBody != nil) {
@@ -83,7 +90,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
             }
             if connectionError == nil {
                 let remoteResponse = response as! HTTPURLResponse
-                
                 DispatchQueue.main.async {
                     if (connectionError == nil && (remoteResponse.statusCode == 200 || remoteResponse.statusCode == 201)) {
                         if (self.debugMode) {
@@ -91,30 +97,24 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                                 print("Server response code : \(remoteResponse.statusCode)")
                             }
                         }
-                        
                         do {
                             let jsonObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String:AnyObject]
                             if SegmentifyManager.logStatus == true {
                                 print("response : \(String(describing: jsonObject))")
                             }
-                            
                             success(jsonObject!)
-                            
                         } catch {
                             success(([String:AnyObject]() as AnyObject) as! [String : AnyObject])
                         }
                     }
                     else {
-                        
                         if (self.debugMode) {
                             print("Server response with failure : \(remoteResponse.statusCode)")
                         }
-
                         do{
                             print("Server response with failure : \(remoteResponse.statusCode)")
                             return
                         }
-                        
                     }
                 }
             } else {
@@ -123,6 +123,4 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         }
         dataTask.resume()
     }
-    
-    
 }
