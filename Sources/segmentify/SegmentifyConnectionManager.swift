@@ -67,8 +67,16 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
             print("request header : \(String(describing: (request.allHTTPHeaderFields)!))")
         }
         
-        if (requestModel.method == "POST" || requestModel.method == "PUT") {
-            request.httpBody = try! JSONSerialization.data(withJSONObject: requestModel.toDictionary(), options: [])
+        if requestModel.method == "POST" || requestModel.method == "PUT" {
+            do {
+                request.httpBody = try JSONSerialization.data(
+                    withJSONObject: requestModel.toDictionary(),
+                    options: []
+                )
+            } catch {
+                print("Serialization failure : \(error)")
+                return
+            }
         }
         
         if (request.httpBody != nil) {
@@ -105,7 +113,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                         }
                     }
                     else {
-                        
                         if (self.debugMode) {
                             print("Server response with failure : \(remoteResponse.statusCode)")
                         }
@@ -114,7 +121,6 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                             print("Server response with failure : \(remoteResponse.statusCode)")
                             return
                         }
-                        
                     }
                 }
             } else {
@@ -123,6 +129,4 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         }
         dataTask.resume()
     }
-    
-    
 }
