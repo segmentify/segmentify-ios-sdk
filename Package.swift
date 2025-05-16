@@ -14,7 +14,7 @@ let package = Package(
     targets: [
         .target(
             name: "Segmentify",
-            path: "Sources/Segmentify",
+            path: "Sources/segmentify",
             resources: [
                 .process("Resources")
             ],
