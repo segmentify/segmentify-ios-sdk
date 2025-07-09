@@ -1687,6 +1687,9 @@ public class SegmentifyManager : NSObject {
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
         }
+        if segmentifyObject.pageUrl != nil {
+            eventRequest.pageUrl = segmentifyObject.pageUrl
+        }
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
