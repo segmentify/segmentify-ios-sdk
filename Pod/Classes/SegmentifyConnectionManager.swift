@@ -67,9 +67,16 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         }
         
         if requestModel.method == "POST" || requestModel.method == "PUT" {
+            let jsonObject = requestModel.toDictionary();
+
+            guard JSONSerialization.isValidJSONObject(jsonObject) else {
+                print("Invalid JSON object: \(jsonObject)")
+                return
+            }
+
             do {
                 request.httpBody = try JSONSerialization.data(
-                    withJSONObject: requestModel.toDictionary(),
+                    withJSONObject: jsonObject,
                     options: []
                 )
             } catch {
