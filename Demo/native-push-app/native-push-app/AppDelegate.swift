@@ -38,17 +38,37 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
 // MARK: - UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    // Triggered if notification arrives while the app is in the foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // send delivered event to segmentify
+        let obj = NotificationModel()
+        obj.type = NotificationType.VIEW
+        obj.providerType = ProviderType.FIREBASE
+        obj.instanceId = userInfo["instanceId"] as? String ?? ""
+        SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
         completionHandler([.banner, .sound, .badge])
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         let userInfo = response.notification.request.content.userInfo
-        print("Notification granted, userInfo: \(userInfo)")
+        // send click info to Segmentify
+        let obj = NotificationModel()
+        obj.deviceToken = ""
+        obj.type = NotificationType.CLICK
+        obj.providerType = ProviderType.FIREBASE
+        obj.instanceId = userInfo["instanceId"] as? String ?? ""
+        obj.productId = userInfo["productId"] as? String ?? ""
+
+        SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
+        
         completionHandler()
     }
 }
