@@ -31,9 +31,6 @@ Inside your Xcode project's root folder run the following commands.
 - Run ```pod install``` to add Cocoapods to your project
 - Run open ```YourProject.xcworkspace``` to your new Xcode project's workspace.
 
-![Example Usage GIF](https://media.giphy.com/media/l4pTc1UzXiMIz58OY/giphy.gif)
-
-
 ## License
 
 Segmentify iOS SDK is available under the BSD-2 license.
