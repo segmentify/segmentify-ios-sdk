@@ -3,10 +3,13 @@ Segmentify  SDK for sending events and rendering recommendations for iOS based d
 
 > **Supports iOS 9 and higher devices.**
 
-> **Current Version 1.3.12**
+> **Current Version 1.4.0**
 
+## Installation and Usage
+You can directly use Swift Package Manager to add and use Segmentify in your project. 
+To learn more about how to integrate Segmentify iOS SDK to your application, please check [Integration Guide](https://www.segmentify.com/dev/integration_ios/).
 
-## Installation
+## Installation - Legacy
 
 You can install Segmentify iOS SDK to your application by using [Pod Module](https://cocoapods.org/?q=segmentify).
 
@@ -16,7 +19,7 @@ Please add following line to your Podfile:
 pod "Segmentify"
 ```
 
-## Usage
+## Usage - Legacy
 
 To learn more about how to integrate Segmentify iOS SDK to your application, please check [Integration Guide](https://www.segmentify.com/dev/integration_ios/).
 
