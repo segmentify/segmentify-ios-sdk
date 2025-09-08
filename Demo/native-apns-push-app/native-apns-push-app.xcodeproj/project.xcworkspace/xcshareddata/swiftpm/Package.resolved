@@ -1,0 +1,15 @@
+{
+  "originHash" : "0af37eee39eccca5caf08423624cc9240e8f658870c2b9e480c4bf89ef6c6683",
+  "pins" : [
+    {
+      "identity" : "segmentify-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/segmentify/segmentify-ios-sdk",
+      "state" : {
+        "revision" : "71631e9aa96f19c3b44a45d99fffa98d1cfaff45",
+        "version" : "1.4.0-spm"
+      }
+    }
+  ],
+  "version" : 3
+}
