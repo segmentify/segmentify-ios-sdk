@@ -3,7 +3,7 @@
 //  Segmentify
 
 import Foundation
-import UIDevice
+import UIKit
 
 public class NotificationModel: Codable {
 

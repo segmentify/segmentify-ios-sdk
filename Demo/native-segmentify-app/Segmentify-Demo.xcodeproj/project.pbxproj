@@ -458,7 +458,7 @@
 			repositoryURL = "https://github.com/segmentify/segmentify-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.2;
+				minimumVersion = 1.4.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
