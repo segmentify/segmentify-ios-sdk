@@ -18,7 +18,7 @@ let package = Package(
             exclude: [
                 "Info.plist",
                 "Example",
-                "../Demo"
+                "Demo"
             ],
             resources: [
                 .process("Resources")
