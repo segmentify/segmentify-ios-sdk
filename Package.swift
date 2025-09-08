@@ -17,7 +17,8 @@ let package = Package(
             path: "Sources/Segmentify",
             exclude: [
                 "Info.plist",
-                "Example"
+                "Example",
+                "../Demo"
             ],
             resources: [
                 .process("Resources")
