@@ -3,6 +3,9 @@
 //  Segmentify
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 enum SearchCodingKeys: String, CodingKey {
     case search
@@ -158,62 +161,48 @@ public class SegmentifyManager : NSObject {
         }
         self.currentKey = "RECOMMENDATION_SOURCE_STATIC_ITEMS"
 
-        #if swift(>=4.2)
-
-        NotificationCenter.default.addObserver(self,
-                selector: #selector(applicationDidBecomeActive),
-                name: UIApplication.didBecomeActiveNotification,
-                object: nil)
-        NotificationCenter.default.addObserver(self,
-                selector: #selector(applicationDidBecomeDeactive),
-                name: UIApplication.didEnterBackgroundNotification,
-                object: nil)
-
-        #else
-
-        NotificationCenter.default.addObserver(self,
-                selector: #selector(applicationDidBecomeActive),
-                name: .UIApplicationDidBecomeActive,
-                object: nil)
-        NotificationCenter.default.addObserver(self,
-                selector: #selector(applicationDidBecomeDeactive),
-                name: .UIApplicationDidEnterBackground,
-                object: nil)
-
+        #if canImport(UIKit)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeDeactive),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
         #endif
     }
     
     deinit {
-        #if swift(>=4.2)
-        NotificationCenter.default.removeObserver(self,
+            #if canImport(UIKit)
+            NotificationCenter.default.removeObserver(
+                self,
                 name: UIApplication.didBecomeActiveNotification,
-                object: nil)
-        NotificationCenter.default.removeObserver(self,
+                object: nil
+            )
+            NotificationCenter.default.removeObserver(
+                self,
                 name: UIApplication.didEnterBackgroundNotification,
-                object: nil)
-        #else
-
-        NotificationCenter.default.removeObserver(self,
-                name: .UIApplicationDidBecomeActive,
-                object: nil)
-        NotificationCenter.default.removeObserver(self,
-                name: .UIApplicationDidEnterBackground,
-                object: nil)
-
-        #endif
-    }
+                object: nil
+            )
+            #endif
+        }
     
     @objc private func applicationDidBecomeActive() {
-        print("applicationDidBecomeActive")
-        self.getUserIdAndSessionIdRequest( success: { () -> Void in
-            print("received user id and session id")
-        })
-    }
-    
-    @objc private func applicationDidBecomeDeactive() {
-        print("applicationDidBecomeDeactive")
-        self.eventRequest.sessionID = nil
-    }
+            print("applicationDidBecomeActive")
+            self.getUserIdAndSessionIdRequest {
+                print("received user id and session id")
+            }
+        }
+
+        @objc private func applicationDidBecomeDeactive() {
+            print("applicationDidBecomeDeactive")
+            self.eventRequest.sessionID = nil
+        }
     
     // MARK: Request Builders
     func setIDAndSendEvent() {

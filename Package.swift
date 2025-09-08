@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "Segmentify",
-    platforms: [.iOS(.v12)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "Segmentify",
@@ -17,8 +17,7 @@ let package = Package(
             path: "Sources/Segmentify",
             exclude: [
                 "Info.plist",
-                "Example",
-                "Demo"
+                "Example"
             ],
             resources: [
                 .process("Resources")
