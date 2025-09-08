@@ -360,8 +360,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/segmentify/segmentify-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.3;
+				kind = exactVersion;
+				version = 1.4.1;
 			};
 		};
 		06875F5C2E69A5DE00A65B4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
