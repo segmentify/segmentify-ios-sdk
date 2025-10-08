@@ -24,7 +24,6 @@ public class SegmentifyManager : NSObject {
     static let basketOperationsEventName = "BASKET_OPERATIONS"
     static let checkoutEventName = "CHECKOUT"
     static let userOperationEventName = "USER_OPERATIONS"
-    static let userChangeEventName = "USER_CHANGE"
     static let customEventName = "CUSTOM_EVENT"
     static let interactionEventName = "INTERACTION"
     static let searchEventName = "SEARCH"
@@ -1179,35 +1178,10 @@ public class SegmentifyManager : NSObject {
     }
     
     //Change User Event
+    @available(*, deprecated)
     open func sendChangeUser(segmentifyObject : UserChangeModel) {
-        eventRequest.eventName = SegmentifyManager.userChangeEventName
-        UserDefaults.standard.set(Constant.IS_USER_SENT_USER_ID, forKey: Constant.IS_USER_SENT_USER_ID)
-        
-        let userId = segmentifyObject.userId
-        guard userId != nil else {
-            print("Error - you must fill userId before accessing change user event")
-            return
-        }
-
-        if segmentifyObject.lang != nil {
-            eventRequest.lang = segmentifyObject.lang
-        }
-        if segmentifyObject.currency != nil {
-            eventRequest.currency = segmentifyObject.currency
-        }
-
-        eventRequest.instanceId = nil
-        eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
-        eventRequest.userID = userId
-        let lastUserID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
-        eventRequest.oldUserId = lastUserID
-        UserDefaults.standard.set(segmentifyObject.userId, forKey: "UserSentUserId")
-        UserDefaults.standard.set(userId, forKey: "SEGMENTIFY_USER_ID")
-        
-        if(lastUserID != userId){
-            setIDAndSendEvent()
-        }
+        print("Deprecated - This method is deprecated")
+        return
     }
     
     //Checkout Purchase Event

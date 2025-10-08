@@ -427,10 +427,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["orderNo"] = nil
         }
         
-        if self.eventName == "USER_CHANGE" {
-            dictionary["oldUserId"] = oldUserId
-        }
-
         if self.eventName == "USER_OPERATIONS" && self.userOperationStep != nil {
             dictionary["step"] = userOperationStep
         }
