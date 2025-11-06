@@ -36,3 +36,13 @@ Inside your Xcode project's root folder run the following commands.
 Segmentify iOS SDK is available under the BSD-2 license.
 Please check LICENSE file to learn more about details.
 
+
+
+
+## Push Permission Updates 1.4.2
+
+1.4.2 updates includes auto userId for pushNotification request. It means if you are standalone push user you do NOT require to assign user id to `SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)` anymore.
+
+Good Luck!
+
+
