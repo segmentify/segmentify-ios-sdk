@@ -15,12 +15,13 @@ public class NotificationModel: Codable {
     public var type:NotificationType?
     public var topic:String?
     public var params:[String:String] = [String:String]()
+    public var userId : String?
+    public var providerType:ProviderType?
+    
     private var email:String?
     private  var userName:String?
-    private  var userId : String?
     private  var osVersion:String?
     private  var os:String?
-    public var providerType:ProviderType?
 
     public  init() {
         

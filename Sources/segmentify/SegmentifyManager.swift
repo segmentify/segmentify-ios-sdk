@@ -900,7 +900,13 @@ public class SegmentifyManager : NSObject {
     }
 
     open func sendNotification(segmentifyObject : NotificationModel) {
-
+        
+        if (segmentifyObject.userId == nil) {
+            self.getUserIdAndSessionIdRequest( success: { () -> Void in
+                segmentifyObject.userId = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
+            })
+        }
+        
         if(segmentifyObject.type == NotificationType.PERMISSION_INFO){
             
             let deviceToken = segmentifyObject.deviceToken
