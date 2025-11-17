@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0618EBFF2E699F2F00104CA2 /* Segmentify in Frameworks */ = {isa = PBXBuildFile; productRef = 0618EBFE2E699F2F00104CA2 /* Segmentify */; };
 		06875F5E2E69A5DE00A65B4E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 06875F5D2E69A5DE00A65B4E /* FirebaseMessaging */; };
+		06DF07672ECB397400118759 /* Segmentify in Frameworks */ = {isa = PBXBuildFile; productRef = 06DF07662ECB397400118759 /* Segmentify */; };
+		06DF076A2ECB3B3000118759 /* Segmentify in Frameworks */ = {isa = PBXBuildFile; productRef = 06DF07692ECB3B3000118759 /* Segmentify */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06DF076A2ECB3B3000118759 /* Segmentify in Frameworks */,
 				06875F5E2E69A5DE00A65B4E /* FirebaseMessaging in Frameworks */,
-				0618EBFF2E699F2F00104CA2 /* Segmentify in Frameworks */,
+				06DF07672ECB397400118759 /* Segmentify in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +87,9 @@
 			);
 			name = "native-push-app";
 			packageProductDependencies = (
-				0618EBFE2E699F2F00104CA2 /* Segmentify */,
 				06875F5D2E69A5DE00A65B4E /* FirebaseMessaging */,
+				06DF07662ECB397400118759 /* Segmentify */,
+				06DF07692ECB3B3000118759 /* Segmentify */,
 			);
 			productName = "native-push-app";
 			productReference = 067CFAE42E6983A1006F496E /* native-push-app.app */;
@@ -100,7 +103,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					067CFAE32E6983A1006F496E = {
 						CreatedOnToolsVersion = 16.3;
@@ -117,8 +120,8 @@
 			mainGroup = 067CFADB2E6983A1006F496E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0618EBFD2E699F2F00104CA2 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */,
 				06875F5C2E69A5DE00A65B4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				06DF07682ECB3B3000118759 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 067CFAE52E6983A1006F496E /* Products */;
@@ -210,6 +213,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -267,6 +271,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -356,34 +361,38 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0618EBFD2E699F2F00104CA2 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/segmentify/segmentify-ios-sdk";
-			requirement = {
-				kind = exactVersion;
-				version = 1.4.1;
-			};
-		};
 		06875F5C2E69A5DE00A65B4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 12.2.0;
+				minimumVersion = 12.6.0;
+			};
+		};
+		06DF07682ECB3B3000118759 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/segmentify/segmentify-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0618EBFE2E699F2F00104CA2 /* Segmentify */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0618EBFD2E699F2F00104CA2 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */;
-			productName = Segmentify;
-		};
 		06875F5D2E69A5DE00A65B4E /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 06875F5C2E69A5DE00A65B4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		06DF07662ECB397400118759 /* Segmentify */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Segmentify;
+		};
+		06DF07692ECB3B3000118759 /* Segmentify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06DF07682ECB3B3000118759 /* XCRemoteSwiftPackageReference "segmentify-ios-sdk" */;
+			productName = Segmentify;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

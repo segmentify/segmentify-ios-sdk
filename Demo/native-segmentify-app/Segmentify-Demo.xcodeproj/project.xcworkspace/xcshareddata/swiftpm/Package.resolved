@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/segmentify/segmentify-ios-sdk",
       "state" : {
-        "revision" : "51198663a40726fbe3c1be1bf825d2e864c05ed9",
-        "version" : "1.4.1"
+        "revision" : "bb747dbc3c96becc7dc7e46d89150db878ef7fd3",
+        "version" : "1.4.2"
       }
     }
   ],

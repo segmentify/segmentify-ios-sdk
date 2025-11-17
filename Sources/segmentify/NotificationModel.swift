@@ -19,11 +19,11 @@ public class NotificationModel: Codable {
     public var providerType:ProviderType?
     
     private var email:String?
-    private  var userName:String?
-    private  var osVersion:String?
-    private  var os:String?
+    private var userName:String?
+    private var osVersion:String?
+    private var os:String?
 
-    public  init() {
+    public init() {
         
         if(self.type != NotificationType.PERMISSION_INFO){
             self.deviceToken = nil
