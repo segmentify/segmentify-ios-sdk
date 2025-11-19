@@ -47,6 +47,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var products:[Any]?
     var checkoutStep:String?
     var username:String?
+    var externalId:String?
     var userID:String?
     var sessionID:String?
     var email:String?
@@ -170,6 +171,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.products = nil
         self.checkoutStep = nil
         self.username = nil
+        self.externalId = nil
         self.userID = nil
         self.sessionID = nil
         self.email = nil
@@ -216,7 +218,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.trigger = nil
         self.ordering = nil
         self.filters = nil
-        self.externalId = nil
     }
     
     
