@@ -965,7 +965,8 @@ public class SegmentifyManager : NSObject {
             UserDefaults.standard.set(segmentifyObject.instanceId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_ID")
             
             let model  = InteractionModel()
-            model.impressionId = instanceId
+            model.instanceId = instanceId
+            model.interactionId = instanceId
 
             sendClick(segmentifyObject: model)
         }

@@ -10,6 +10,7 @@ public class NotificationModel: Codable {
     
     public var deviceToken:String?
     public var instanceId:String?
+    public var interactionId:String?
     public var firebaseServerKey:String?
     public var type:NotificationType?
     public var topic:String?
