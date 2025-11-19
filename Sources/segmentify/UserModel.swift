@@ -7,6 +7,7 @@ import Foundation
 public class UserModel : SegmentifyObject {
     public override init() {}
     public var username:String?
+    public var externalId:String?
     public var email:String?
     public var age:String?
     public var birthdate:String?
