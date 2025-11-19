@@ -50,6 +50,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var userID:String?
     var sessionID:String?
     var email:String?
+    var externalId:String?
     var age:String?
     var birthdate:String?
     var gender:String?
@@ -215,6 +216,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.trigger = nil
         self.ordering = nil
         self.filters = nil
+        self.externalId = nil
     }
     
     
@@ -435,6 +437,12 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             dictionary["username"] = username
         } else {
             dictionary["username"] = nil
+        }
+        
+        if self.eventName == "USER_OPERATIONS" {
+            dictionary["externalId"] = externalId
+        } else {
+            dictionary["externalId"] = nil
         }
 
         if self.eventName == "USER_OPERATIONS" {
