@@ -955,24 +955,18 @@ public class SegmentifyManager : NSObject {
 
         if(segmentifyObject.type == NotificationType.CLICK){
             let instanceId = segmentifyObject.instanceId
-            let productId = segmentifyObject.productId
             
             guard instanceId != nil  else {
                 print("Error - you must fill instanceId or deviceToken before accessing sendNotification click event")
                 return
             }
             
-            guard productId != nil  else {
-                print("Error - you must fill instanceId or product before accessing sendNotification click event")
-                return
-            }
 
             UserDefaults.standard.set(segmentifyObject.instanceId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_ID")
-            UserDefaults.standard.set(segmentifyObject.productId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_PRODUCT_ID")
             
             let model  = InteractionModel()
-            model.impressionId = instanceId
-            model.interactionId = productId
+            model.instanceId = instanceId
+            model.interactionId = instanceId
 
             sendClick(segmentifyObject: model)
         }
@@ -1005,8 +999,10 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.registerStep
         eventRequest.oldUserId = nil
+        
         let email = segmentifyObject.email
-        let username = segmentifyObject.username
+        let username = segmentifyObject.externalId
+        
         guard email != nil || username != nil else {
             print("Error - you must fill userId or email before accessing sendUserLogout event")
             return
@@ -1017,6 +1013,7 @@ public class SegmentifyManager : NSObject {
 
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -1042,7 +1039,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.userOperationStep = SegmentifyManager.signInStep
         
         let email = segmentifyObject.email
-        let username = segmentifyObject.username
+        let username = segmentifyObject.externalId
         
         guard email != nil || username != nil else {
             print("Error - you must fill userId or email before accessing sendUserLogin event")
@@ -1070,7 +1067,7 @@ public class SegmentifyManager : NSObject {
 
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
-        eventRequest.username = username
+        eventRequest.externalId = username
         eventRequest.email  = email
         
         setIDAndSendEvent()
@@ -1080,8 +1077,10 @@ public class SegmentifyManager : NSObject {
     open func sendUserLogout(segmentifyObject : UserModel) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.logoutStep
+        
         let email = segmentifyObject.email
-        let username = segmentifyObject.username
+        let username = segmentifyObject.externalId
+        
         guard email != nil || username != nil else {
             print("Error - you must fill userId or email before accessing sendUserLogout event")
             return
@@ -1104,7 +1103,7 @@ public class SegmentifyManager : NSObject {
 
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
-        eventRequest.username = username
+        eventRequest.externalId = username
         eventRequest.email  = email
         
         setIDAndSendEvent()
@@ -1114,8 +1113,10 @@ public class SegmentifyManager : NSObject {
     open func sendUserUpdate(segmentifyObject : UserModel) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.updateUserStep
+        
         let email = segmentifyObject.email
-        let username = segmentifyObject.username
+        let username = segmentifyObject.externalId
+        
         guard email != nil || username != nil else {
             print("Error - you must fill username or email before accessing sendUserUpdate event")
             return
@@ -1142,7 +1143,7 @@ public class SegmentifyManager : NSObject {
         
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
-        eventRequest.username = username
+        eventRequest.externalId = username
         eventRequest.email  = email
         eventRequest.fullName = segmentifyObject.fullName
         eventRequest.mobilePhone = segmentifyObject.mobilePhone
@@ -1741,7 +1742,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         if let username = username {
-            eventRequest.username = username
+            eventRequest.externalId = username
         }
         if let fullName = fullName {
             eventRequest.fullName = fullName
@@ -1779,7 +1780,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         if let username = username {
-            eventRequest.username = username
+            eventRequest.externalId = username
         }
         if let email = email {
             eventRequest.email = email
@@ -1801,8 +1802,9 @@ public class SegmentifyManager : NSObject {
         eventRequest.oldUserId = nil
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
+        
         if let username = username {
-            eventRequest.username = username
+            eventRequest.externalId = username
         }
         if let email = email {
             eventRequest.email = email
@@ -1821,7 +1823,7 @@ public class SegmentifyManager : NSObject {
     open func sendUserUpdate(username : String?, fullName : String?, email : String?, mobilePhone : String?, gender : String?, age : String?, birthdate : String?, isRegistered : AnyObject?, isLogin : AnyObject?) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.updateUserStep
-        eventRequest.username = username
+        eventRequest.externalId = username
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.oldUserId = nil
@@ -1836,7 +1838,7 @@ public class SegmentifyManager : NSObject {
             eventRequest.fullName = fullName
         }
         if let username = username {
-            eventRequest.username = username
+            eventRequest.externalId = username
         }
         if let email = email {
             eventRequest.email = email
