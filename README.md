@@ -3,7 +3,7 @@ Segmentify  SDK for sending events and rendering recommendations for iOS based d
 
 > **Supports iOS 13 and higher devices.**
 
-> **Current Version 1.4.1**
+> **Current Version 1.4.4**
 
 ## Installation and Usage
 You can directly use Swift Package Manager to add and use Segmentify in your project. 
