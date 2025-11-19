@@ -51,7 +51,6 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var userID:String?
     var sessionID:String?
     var email:String?
-    var externalId:String?
     var age:String?
     var birthdate:String?
     var gender:String?
