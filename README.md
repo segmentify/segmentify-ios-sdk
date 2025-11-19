@@ -41,8 +41,11 @@ Please check LICENSE file to learn more about details.
 
 ## Push Permission Updates 1.4.2
 
-1.4.2 updates includes auto userId for pushNotification request. It means if you are standalone push user you do NOT require to assign user id to `SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)` anymore.
+1.4.2 update includes auto userId for pushNotification request. It means if you are standalone push user you do NOT require to assign user id to `SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)` anymore.
 
 Good Luck!
 
 
+## Push & User Updates 1.4.3
+
+1.4.3 update changes user events in the background. This is a completely internal and will not effect sdk users. Also productId parameter has been removed from push interaction event. 
