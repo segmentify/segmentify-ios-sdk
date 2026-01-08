@@ -9,16 +9,20 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
-        FirebaseApp.configure()
-        UNUserNotificationCenter.current().delegate = self
-
-        Messaging.messaging().delegate = self
-        
+        // Segmentify Config
         // Change your appKey, dataCenterUrl and subDomain values with suitable one
         SegmentifyManager.config(appkey: "5c571072-068e-40c5-8dbc-d8448158de19", dataCenterUrl: "https://gandalf-qa.segmentify.com", subDomain: "demo.segmentify.com")
         SegmentifyManager.setPushConfig(dataCenterUrlPush: "https://gimli-qa.segmentify.com")
         let _ = SegmentifyManager.logStatus(isVisible: true)
         let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)
+
+    
+        FirebaseApp.configure()
+        
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        
+        application.registerForRemoteNotifications()
 
         return true
     }
@@ -39,13 +43,13 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    // Triggered if notification arrives while the app is in the foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         let userInfo = notification.request.content.userInfo
         
-        // send delivered event to segmentify
+        // Segmentify Event
         let obj = NotificationModel()
         obj.type = NotificationType.VIEW
         obj.providerType = ProviderType.FIREBASE
@@ -59,14 +63,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
-        // send click info to Segmentify
+
+        if let deepLinkString = userInfo["deeplink"] as? String,
+           var components = URLComponents(string: deepLinkString) {
+            var queryItems = components.queryItems ?? []
+            let image = userInfo["image"] as? String
+            let newQueryItem = URLQueryItem(name: "image", value: image)
+            queryItems.append(newQueryItem)
+            components.queryItems = queryItems
+            if let finalUrl = components.url {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(finalUrl)
+                }
+            }
+        } else {
+            print("⚠️ 'deeplink' cannot be found")
+        }
+        
         let obj = NotificationModel()
         obj.deviceToken = ""
         obj.type = NotificationType.CLICK
         obj.providerType = ProviderType.FIREBASE
         obj.instanceId = userInfo["instanceId"] as? String ?? ""
-        obj.productId = userInfo["productId"] as? String ?? ""
-
         SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
         
         completionHandler()
@@ -76,18 +94,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 // MARK: - MessagingDelegate
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("FCM registration token retrieved: \(String(describing: fcmToken))")
+        print("FCM Token: \(String(describing: fcmToken))")
         NotificationCenter.default.post(name: .fcmTokenUpdated, object: fcmToken)
 
-        // Send FCM token info to Segmentify
+        // Segmentify Permission Info
         let obj = NotificationModel()
         obj.deviceToken = fcmToken ?? ""
         obj.type = NotificationType.PERMISSION_INFO
         obj.providerType = ProviderType.FIREBASE
+        obj.userId = "2"
         SegmentifyManager.sharedManager().sendNotification(segmentifyObject: obj)
     }
-}
-
-extension Notification.Name {
-    static let fcmTokenUpdated = Notification.Name("fcmTokenUpdated")
 }

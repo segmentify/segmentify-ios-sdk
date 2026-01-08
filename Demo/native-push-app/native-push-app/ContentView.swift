@@ -7,139 +7,146 @@ import SwiftUI
 import UserNotifications
 import FirebaseMessaging
 
+struct ProductData: Identifiable, Hashable {
+    let id: String
+    let imageUrl: String
+}
+
 struct ContentView: View {
+    @State private var path = NavigationPath()
+    
     @State private var fcmToken: String = "No Recieved Yet"
-        @State private var authStatus: UNAuthorizationStatus = .notDetermined
-        @State private var isRegisteredForRemote: Bool = false
-        @State private var lastLog: String = ""
+    @State private var authStatus: UNAuthorizationStatus = .notDetermined
+    @State private var isRegisteredForRemote: Bool = false
+    @State private var lastLog: String = ""
 
-        var body: some View {
-            NavigationView {
-                Form {
-                    Section(header: Text("Notification and Registration Status")) {
-                        HStack {
-                            Text("Notification Permission:")
-                            Spacer()
-                            Text(statusText(authStatus))
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("APNs Registration:")
-                            Spacer()
-                            Text(isRegisteredForRemote ? "Registered" : "Not Registered")
-                                .foregroundColor(.secondary)
-                        }
-                        Button("Request permission and Register APNS") {
-                            requestNotificationsAndRegister()
-                        }
+    var body: some View {
+        NavigationStack(path: $path) {
+            Form {
+                Section(header: Text("Notification Status")) {
+                    HStack {
+                        Text("Permission:")
+                        Spacer()
+                        Text(statusText(authStatus)).foregroundColor(.secondary)
                     }
-
-                    Section(header: Text("FCM Token")) {
-                        ScrollView(.vertical) {
-                            Text(fcmToken)
-                                .font(.footnote)
-                                .textSelection(.enabled)
-                                .padding(.vertical, 4)
-                        }
-                        HStack {
-                            Button("Refresh Token") {
-                                refreshFcmToken()
-                            }
-                            Spacer()
-                            Button("Copy") {
-                                UIPasteboard.general.string = fcmToken
-                            }
-                        }
+                    HStack {
+                        Text("APNs Reg:")
+                        Spacer()
+                        Text(isRegisteredForRemote ? "Yes" : "No").foregroundColor(.secondary)
                     }
-
-                    Section(header: Text("Test Assistants")) {
-                        Button("Open Notification Settings") {
-                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                UIApplication.shared.open(url)
-                            }
-                        }
-                        Button("Write Foreground Test Log") {
-                            lastLog = "Date: \(Date())"
-                            print("Test log: \(lastLog)")
-                        }
+                    Button("Request & Register") {
+                        requestNotificationsAndRegister()
                     }
+                }
 
+                Section(header: Text("FCM Token")) {
+                    ScrollView(.vertical) {
+                        Text(fcmToken).font(.caption).textSelection(.enabled)
+                    }
+                    Button("Copy Token") {
+                        UIPasteboard.general.string = fcmToken
+                    }
+                }
+
+                Section(header: Text("Tests")) {
+                    Button("Simulate Deep Link (Local Test)") {
+                        let demoProduct = ProductData(id: "999", imageUrl: "https://via.placeholder.com/300")
+                        path.append(demoProduct)
+                    }
+                    
                     if !lastLog.isEmpty {
-                        Section(header: Text("Log")) {
-                            Text(lastLog).font(.footnote)
-                        }
+                        Text("Log: \(lastLog)").font(.caption).foregroundColor(.red)
                     }
                 }
-                .navigationTitle("FCM iOS Demo")
             }
-            .onAppear {
-                observeAuthorizationStatus()
-                observeRemoteRegistration()
-                observeFcmTokenUpdates()
-                refreshFcmToken()
+            .navigationTitle("Segmentify Demo")
+            .navigationDestination(for: ProductData.self) { product in
+                ProductDetailView(product: product)
             }
         }
-
-        private func statusText(_ status: UNAuthorizationStatus) -> String {
-            switch status {
-            case .notDetermined: return "Not Determined"
-            case .denied:        return "Denied"
-            case .authorized:    return "Authorized"
-            case .provisional:   return "Provisional"
-            case .ephemeral:     return "Ephemeral"
-            @unknown default:    return "N/A"
-            }
+        .onOpenURL { url in
+            handleDeepLink(url)
         }
-
-        private func observeAuthorizationStatus() {
-            UNUserNotificationCenter.current().getNotificationSettings { settings in
-                DispatchQueue.main.async {
-                    self.authStatus = settings.authorizationStatus
-                }
-            }
+        .onAppear {
+            checkPermissions()
         }
-
-        private func observeRemoteRegistration() {
-            // APNs kayıt sonucu AppDelegate’de loglanır; burada kabaca durum yansıtalım
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.isRegisteredForRemote = UIApplication.shared.isRegisteredForRemoteNotifications
-            }
+    }
+    
+    private func handleDeepLink(_ url: URL) {
+        // sample link: myapp://product?id=10&image=http...
+        guard url.scheme == "myapp" else {
+            lastLog = "Hata: Yanlış şema -> \(url.scheme ?? "yok")"
+            return
         }
-
-        private func observeFcmTokenUpdates() {
-            NotificationCenter.default.addObserver(forName: .fcmTokenUpdated, object: nil, queue: .main) { note in
-                if let token = note.object as? String {
-                    self.fcmToken = token
-                }
-            }
-        }
-
-        private func requestNotificationsAndRegister() {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-                DispatchQueue.main.async {
-                    if let error = error {
-                        self.lastLog = "Permission Error: \(error.localizedDescription)"
-                    } else {
-                        self.lastLog = "Permission granted? \(granted)"
-                    }
-                    self.observeAuthorizationStatus()
-                    UIApplication.shared.registerForRemoteNotifications()
-                    self.observeRemoteRegistration()
-                }
-            }
-        }
-
-        private func refreshFcmToken() {
-            Messaging.messaging().token { token, error in
-                DispatchQueue.main.async {
-                    if let error = error {
-                        self.fcmToken = "Token cannot be retrieved: \(error.localizedDescription)"
-                    } else if let token = token {
-                        self.fcmToken = token
-                    } else {
-                        self.fcmToken = "Token returned empty"
-                    }
-                }
+        
+        if url.host == "product" {
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            let pId = components?.queryItems?.first(where: { $0.name == "id" })?.value
+            let pImg = components?.queryItems?.first(where: { $0.name == "image" })?.value
+            
+            if let safeId = pId, let safeImg = pImg {
+                let newProduct = ProductData(id: safeId, imageUrl: safeImg)
+                path.append(newProduct)
+                lastLog = "Gidiliyor -> ID: \(safeId)"
             }
         }
     }
+
+
+    private func checkPermissions() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async { self.authStatus = settings.authorizationStatus }
+        }
+        NotificationCenter.default.addObserver(forName: .fcmTokenUpdated, object: nil, queue: .main) { note in
+            if let token = note.object as? String { self.fcmToken = token }
+        }
+        Messaging.messaging().token { token, _ in
+            if let t = token { self.fcmToken = t }
+        }
+    }
+
+    private func requestNotificationsAndRegister() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            DispatchQueue.main.async {
+                self.checkPermissions()
+                if granted { UIApplication.shared.registerForRemoteNotifications() }
+            }
+        }
+    }
+    
+    private func statusText(_ status: UNAuthorizationStatus) -> String {
+        switch status {
+        case .authorized: return "Authorized"
+        case .denied: return "Denied"
+        case .notDetermined: return "Not Determined"
+        default: return "Unknown"
+        }
+    }
+}
+
+struct ProductDetailView: View {
+    let product: ProductData
+    var body: some View {
+        VStack {
+            Text("Product ID: \(product.id)").font(.headline)
+            
+            AsyncImage(url: URL(string: product.imageUrl)) { phase in
+                if let image = phase.image {
+                    image.resizable().aspectRatio(contentMode: .fit)
+                } else if phase.error != nil {
+                    Image(systemName: "photo.fill").foregroundColor(.gray)
+                } else {
+                    ProgressView()
+                }
+            }
+            .frame(height: 250)
+            .cornerRadius(10)
+            .padding()
+        }
+        .navigationTitle("Details")
+    }
+}
+
+extension Notification.Name {
+    static let fcmTokenUpdated = Notification.Name("fcmTokenUpdated")
+}
