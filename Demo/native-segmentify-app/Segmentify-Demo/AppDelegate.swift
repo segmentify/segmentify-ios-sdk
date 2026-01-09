@@ -146,16 +146,10 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-    
-
                 
         let apns_instanceId = userInfo["instanceId"]
         let f_instanceId = userInfo["gcm.notification.instanceId"]
         var instanceId_  = ""
-        
-        let apns_productId = userInfo["productId"]
-        let f_productId = userInfo["gcm.notification.productId"]
-        var productId_  = ""
         
         if(apns_instanceId != nil){
             instanceId_ = apns_instanceId as! String
@@ -163,19 +157,11 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         else if(f_instanceId != nil){
             instanceId_ = f_instanceId as! String
         }
-        
-        if(apns_productId != nil){
-            productId_ = apns_productId as! String
-        }
-        else if(f_productId  != nil){
-            productId_ = f_productId  as! String
-        }
    
 
         _ = SegmentifyManager.sharedManager().getTrackingParameters();
         let obj = NotificationModel()
         obj.instanceId = instanceId_
-        obj.productId = productId_
         obj.type = NotificationType.CLICK
 
         SegmentifyManager.sharedManager().sendNotificationInteraction(segmentifyObject: obj)
