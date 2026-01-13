@@ -168,6 +168,11 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         
         // Print full message.
         print(userInfo)
+        
+        if let deepLinkString = userInfo["deeplink"] as? String,
+           let url = URL(string: deepLinkString) {
+            UIApplication.shared.open(url)
+        }
 
         completionHandler()
     }
