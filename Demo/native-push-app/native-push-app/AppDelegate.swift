@@ -12,7 +12,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // Segmentify Config
         // Change your appKey, dataCenterUrl and subDomain values with suitable one
         SegmentifyManager.config(appkey: "5c571072-068e-40c5-8dbc-d8448158de19", dataCenterUrl: "https://gandalf-qa.segmentify.com", subDomain: "demo.segmentify.com")
-        SegmentifyManager.setPushConfig(dataCenterUrlPush: "https://psh2.segmentify.com")
+        SegmentifyManager.setPushConfig(dataCenterUrlPush: "https://gimli-qa.segmentify.com")
         let _ = SegmentifyManager.logStatus(isVisible: true)
         let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)
 
