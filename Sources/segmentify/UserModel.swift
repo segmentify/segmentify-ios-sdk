@@ -23,4 +23,7 @@ public class UserModel : SegmentifyObject {
     public var segments:[String]?
     public var step:String?
     public var lastSearchDeletedKeywords:String?
+    public var emailNtf:Bool?
+    public var smsNtf:Bool?
+    public var whatsappNtf:Bool?
 }
