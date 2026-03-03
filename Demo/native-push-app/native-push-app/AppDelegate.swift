@@ -16,6 +16,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         let _ = SegmentifyManager.logStatus(isVisible: true)
         let _ = SegmentifyManager.setSessionKeepSecond(sessionKeepSecond: 604800)
 
+        
     
         FirebaseApp.configure()
         
