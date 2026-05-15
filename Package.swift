@@ -20,7 +20,8 @@ let package = Package(
                 "Example"
             ],
             resources: [
-                .process("Resources")
+                .process("Resources"),
+                .copy("version")
             ],
             publicHeadersPath: "include"
         ),

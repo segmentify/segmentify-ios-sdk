@@ -13,7 +13,7 @@ enum SearchCodingKeys: String, CodingKey {
 
 public class SegmentifyManager : NSObject {
     
-    static let sdkVersion = "1.0"
+    static let sdkVersion = SDKVersion.value
 
     static let tokenKey = "SEGMENTIFY_TOKEN_KEY"
     static let registerKey = "SEGMENTIFY_REGISTER_KEY"
