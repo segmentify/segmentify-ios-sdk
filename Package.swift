@@ -14,13 +14,9 @@ let package = Package(
     targets: [
         .target(
             name: "Segmentify",
-            path: "Sources/Segmentify",
-            exclude: [
-                "Info.plist",
-                "Example"
-            ],
+            path: "Sources/segmentify",
             resources: [
-                .process("Resources")
+                .copy("version")
             ],
             publicHeadersPath: "include"
         ),
