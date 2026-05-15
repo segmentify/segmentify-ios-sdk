@@ -14,7 +14,7 @@ let package = Package(
     targets: [
         .target(
             name: "Segmentify",
-            path: "Sources/segmentify",
+            path: "Sources/Segmentify",
             exclude: [
                 "Info.plist",
                 "Example"
