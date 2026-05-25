@@ -33,7 +33,7 @@ public class SegmentifyManager : NSObject {
     static let bannerImpressionStep = "impression"
     static let bannerClickStep = "click"
     static let bannerUpdateStep = "update"
-    static let userTraitsEventName = "user:traits"
+    static let userTraitsEventName = "USER_TRAITS"
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
