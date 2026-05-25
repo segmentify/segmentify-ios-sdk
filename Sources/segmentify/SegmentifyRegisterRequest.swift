@@ -95,6 +95,7 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     var trigger:String?
     var ordering:FacetedOrdering?
     var filters:[Any]?
+    var userTraitsProperties: [String: Any]?
     
     var extra: [AnyHashable: Any] = [AnyHashable: Any]()
     
@@ -217,10 +218,14 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
         self.trigger = nil
         self.ordering = nil
         self.filters = nil
+        self.userTraitsProperties = nil
     }
     
     
     func toDictionary() -> Dictionary<AnyHashable, Any> {
+        if self.eventName != "user:traits" {
+            self.userTraitsProperties = nil
+        }
         var dictionary = [AnyHashable: Any]()
         
         if let token = self.token {
@@ -606,6 +611,10 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             } else {
                 dictionary["filters"] = nil
             }
+        }
+
+        if self.eventName == "user:traits", let userTraitsProperties = self.userTraitsProperties {
+            dictionary["properties"] = userTraitsProperties
         }
         return dictionary
     }
