@@ -55,4 +55,28 @@ final class CdpEventSerializationTests: XCTestCase {
 
         XCTAssertNil(request.userTraitsProperties)
     }
+
+    func testPageViewAfterSubscribePayloadDoesNotIncludeProperties() {
+        let request = SegmentifyRegisterRequest()
+        request.apiKey = "test-api-key"
+        request.dataCenterUrl = "https://example.com"
+        request.subdomain = "example.com"
+        request.eventName = CdpEventName.userSubscribe
+        request.userTraitsProperties = CdpSubscribePayload.iosPush(
+            pushSubscriptionId: "device-token"
+        ).toDictionary()
+
+        request.eventName = "PAGE_VIEW"
+        request.category = "Home Page"
+        if let eventName = request.eventName,
+           !CdpEventName.eventsWithProperties.contains(eventName) {
+            request.userTraitsProperties = nil
+        }
+
+        let dictionary = request.toDictionary()
+
+        XCTAssertEqual(dictionary["name"] as? String, "PAGE_VIEW")
+        XCTAssertNil(dictionary["properties"])
+        XCTAssertEqual(dictionary["category"] as? String, "Home Page")
+    }
 }

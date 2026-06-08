@@ -71,7 +71,7 @@ public class SegmentifyManager : NSObject {
     private var searcResponseProductsArray = [ProductRecommendationModel]()
     private var recommendations :[RecommendationModel] = []
     private var searchResponse = SearchModel()
-    private var facetedResponse : FacetedResponseModel?
+    private var facetedResponse = SegmentifyManager.createEmptyFacetedResponse()
     private var currentKey : String?
     private var type : String?
     private var staticItemsArrayCount : Int = Int()
@@ -355,38 +355,75 @@ public class SegmentifyManager : NSObject {
         })
     }
     
+    private static func createEmptyFacetedResponse() -> FacetedResponseModel {
+        FacetedResponseModel(
+            facets: nil,
+            meta: nil,
+            contents: nil,
+            banners: nil,
+            meanings: nil,
+            products: [],
+            executable: nil,
+            instanceId: nil
+        )
+    }
+
+    private func makeEmptyFacetedResponse() -> FacetedResponseModel {
+        Self.createEmptyFacetedResponse()
+    }
+
+    private func parseFacetedSearchResponse(_ response: [String: AnyObject]) -> FacetedResponseModel? {
+        guard let searches = response["search"] as? [[Dictionary<AnyHashable, Any>]],
+              let searchResults = searches.first,
+              !searchResults.isEmpty else {
+            return nil
+        }
+
+        for obj in searchResults {
+            guard obj["products"] is [Any] else {
+                continue
+            }
+            guard JSONSerialization.isValidJSONObject(obj),
+                  let jsonData = try? JSONSerialization.data(withJSONObject: obj),
+                  let decoded = try? FacetedResponseModel(data: jsonData) else {
+                continue
+            }
+            return decoded
+        }
+
+        return nil
+    }
+
+    private func deliverFacetedSearchCallback(
+        _ callback: @escaping (_ recommendation: FacetedResponseModel) -> Void,
+        response: FacetedResponseModel
+    ) {
+        DispatchQueue.main.async {
+            callback(response)
+        }
+    }
+
     func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedResponseModel) -> Void) {
         clearUserTraitsPropertiesForNonTraitsEvents()
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
-            
-            guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
-                print("error : \(response["statusCode"]! as Any)")
+            if let decoded = self.parseFacetedSearchResponse(response) {
+                self.facetedResponse = decoded
+                self.deliverFacetedSearchCallback(callback, response: decoded)
                 return
             }
-            
-            if(searches.isEmpty || searches[0].isEmpty){
+
+            if let statusCode = response["statusCode"] {
+                print("error : \(statusCode)")
+            } else {
                 print("error : search response is not valid or empty")
-                return
             }
-            else{
-                for (_, obj) in searches[0].enumerated() {
-                    
-                    guard obj["products"] is [Dictionary<AnyHashable,Any>] else {
-                        return
-                    }
-                    let jsonData = try! JSONSerialization.data(withJSONObject: obj)
-                    let decodedData = try! FacetedResponseModel(data: jsonData)
-                    self.facetedResponse = decodedData
-                }
-            }
-            
-            callback(self.facetedResponse!)
-            
+            self.deliverFacetedSearchCallback(callback, response: self.makeEmptyFacetedResponse())
+
         }, failure: {(error: Error) in
-            if (self.debugMode) {
+            if self.debugMode {
                 print("Request failed : \(error)")
             }
-            callback(self.facetedResponse!)
+            self.deliverFacetedSearchCallback(callback, response: self.makeEmptyFacetedResponse())
         })
     }
     
@@ -530,6 +567,7 @@ public class SegmentifyManager : NSObject {
         self.recommendationArray.removeAll()
         self.recommendations.removeAll()
         self.searchResponse = SearchModel()
+        self.facetedResponse = Self.createEmptyFacetedResponse()
         self.currentKey = nil
         self.type = nil
         self.staticItemsArrayCount = Int()
@@ -2526,8 +2564,7 @@ public class SegmentifyManager : NSObject {
             requestURL = URL(string: dataCenterUrl + "/get/key?count=2")!
         }
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest as URLRequest) {
+        let task = SegmentifyConnectionManager.urlSession.dataTask(with: urlRequest as URLRequest) {
             (data, response, error) -> Void in
             
             if response == nil {
@@ -2586,6 +2623,43 @@ public class SegmentifyManager : NSObject {
             }
         }
         task.resume()
+    }
+
+    func testingPrepareNetworkSession(
+        userId: String = "test-user",
+        sessionId: String = "test-session"
+    ) {
+        eventRequest.userID = userId
+        eventRequest.sessionID = sessionId
+    }
+
+    func testingClearNetworkSession() {
+        eventRequest.sessionID = nil
+        eventRequest.userTraitsProperties = nil
+    }
+
+    func testingConfigureFacetedSearch(
+        query: String,
+        type: String? = nil,
+        lang: String? = "EN"
+    ) {
+        eventRequest.eventName = SegmentifyManager.searchEventName
+        eventRequest.interactionId = nil
+        eventRequest.instanceId = nil
+        eventRequest.oldUserId = nil
+        eventRequest.userTraitsProperties = nil
+        eventRequest.query = query
+        eventRequest.type = type
+        eventRequest.lang = lang
+    }
+
+    func testingCurrentRequestDictionary() -> Dictionary<AnyHashable, Any> {
+        eventRequest.toDictionary()
+    }
+
+    func testingResetSearchResponses() {
+        searchResponse = SearchModel()
+        facetedResponse = Self.createEmptyFacetedResponse()
     }
 }
 

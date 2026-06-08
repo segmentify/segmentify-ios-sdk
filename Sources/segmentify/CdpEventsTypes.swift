@@ -1,7 +1,7 @@
 import Foundation
 
 public enum CdpChannel: String {
-    case apns = "apns"
+    case iosPush = "app_push"
     case email = "email"
     case whatsapp = "whatsapp"
     case sms = "sms"
@@ -11,7 +11,7 @@ public enum CdpChannel: String {
 public typealias CdpEventsPayload = [String: Any]
 
 public enum CdpSubscribePayload {
-    case apns(pushSubscriptionId: String)
+    case iosPush(pushSubscriptionId: String)
     case email(email: String, purpose: String)
     case whatsapp(phoneNumber: String)
     case sms(phoneNumber: String)
@@ -19,9 +19,9 @@ public enum CdpSubscribePayload {
 
     public func toDictionary() -> [String: Any] {
         switch self {
-        case let .apns(pushSubscriptionId):
+        case let .iosPush(pushSubscriptionId):
             return [
-                "channel": CdpChannel.apns.rawValue,
+                "channel": CdpChannel.iosPush.rawValue,
                 "pushSubscriptionId": pushSubscriptionId,
             ]
         case let .email(email, purpose):
