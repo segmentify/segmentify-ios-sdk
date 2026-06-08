@@ -223,7 +223,8 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
     
     
     func toDictionary() -> Dictionary<AnyHashable, Any> {
-        if self.eventName != "USER_TRAITS" {
+        if let eventName = self.eventName,
+           !CdpEventName.eventsWithProperties.contains(eventName) {
             self.userTraitsProperties = nil
         }
         var dictionary = [AnyHashable: Any]()
@@ -613,7 +614,9 @@ public class SegmentifyRegisterRequest : NSObject,SegmentifyRequestProtocol {
             }
         }
 
-        if self.eventName == "USER_TRAITS", let userTraitsProperties = self.userTraitsProperties {
+        if let eventName = self.eventName,
+           CdpEventName.eventsWithProperties.contains(eventName),
+           let userTraitsProperties = self.userTraitsProperties {
             dictionary["properties"] = userTraitsProperties
         }
         return dictionary

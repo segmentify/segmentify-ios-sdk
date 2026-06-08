@@ -34,6 +34,13 @@ public class SegmentifyManager : NSObject {
     static let bannerClickStep = "click"
     static let bannerUpdateStep = "update"
     static let userTraitsEventName = "USER_TRAITS"
+    static let userIdentifyEventName = "USER_IDENTIFY"
+    static let userRegisterCdpEventName = "USER_REGISTER"
+    static let userLoginCdpEventName = "USER_LOGIN"
+    static let userLogoutCdpEventName = "USER_LOGOUT"
+    static let userSubscribeEventName = "USER_SUBSCRIBE"
+    static let userUnsubscribeEventName = "USER_UNSUBSCRIBE"
+    static let cdpEventsWithProperties = CdpEventName.eventsWithProperties
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -72,6 +79,7 @@ public class SegmentifyManager : NSObject {
     private var key : String = String()
     private var newRecommendationArray : [RecommendationModel] = []
     private var clickedBanners: [ClickedBannerObject] = []
+    private let secureUserProfileStore = SecureUserProfileStore()
     
     private var testStaticProducts : [AnyHashable:Any]?
     private var testOtherProducts : [AnyHashable:Any]?
@@ -206,9 +214,25 @@ public class SegmentifyManager : NSObject {
     
     // MARK: Request Builders
     private func clearUserTraitsPropertiesForNonTraitsEvents() {
-        if eventRequest.eventName != SegmentifyManager.userTraitsEventName {
+        guard let eventName = eventRequest.eventName,
+              SegmentifyManager.cdpEventsWithProperties.contains(eventName) else {
             eventRequest.userTraitsProperties = nil
+            return
         }
+    }
+
+    private func sendCdpEvent(name: String, properties: [String: Any]) {
+        guard !properties.isEmpty else { return }
+
+        eventRequest.eventName = name
+        eventRequest.userTraitsProperties = properties
+        eventRequest.instanceId = nil
+        eventRequest.interactionId = nil
+        eventRequest.oldUserId = nil
+        eventRequest.userOperationStep = nil
+        eventRequest.params = nil
+
+        setIDAndSendEvent()
     }
 
     func setIDAndSendEvent() {
@@ -1061,6 +1085,69 @@ public class SegmentifyManager : NSObject {
         eventRequest.params = nil
 
         setIDAndSendEvent()
+    }
+
+    // MARK: - CDP User Events
+
+    open func userTraits(_ params: CdpEventsPayload) {
+        guard let configuredParams = withConsentDefaults(params) else { return }
+        sendCdpEvent(name: SegmentifyManager.userTraitsEventName, properties: configuredParams)
+    }
+
+    open func identifyUser(_ params: CdpEventsPayload, completion: (() -> Void)? = nil) {
+        guard let configuredParams = withConsentDefaults(params) else {
+            completion?()
+            return
+        }
+
+        secureUserProfileStore.shouldSendIdentify(configuredParams) { [weak self] shouldSend in
+            guard let self else {
+                completion?()
+                return
+            }
+
+            guard shouldSend else {
+                completion?()
+                return
+            }
+
+            self.secureUserProfileStore.saveSnapshot(configuredParams) {
+                self.sendCdpEvent(
+                    name: SegmentifyManager.userIdentifyEventName,
+                    properties: configuredParams
+                )
+                completion?()
+            }
+        }
+    }
+
+    open func registerUser(_ params: CdpEventsPayload) {
+        guard let configuredParams = withConsentDefaults(params) else { return }
+        sendCdpEvent(name: SegmentifyManager.userRegisterCdpEventName, properties: configuredParams)
+    }
+
+    open func loginUser(_ params: CdpEventsPayload) {
+        guard let configuredParams = withConsentDefaults(params) else { return }
+        sendCdpEvent(name: SegmentifyManager.userLoginCdpEventName, properties: configuredParams)
+    }
+
+    open func logoutUser(_ params: CdpEventsPayload) {
+        guard let configuredParams = withConsentDefaults(params) else { return }
+        sendCdpEvent(name: SegmentifyManager.userLogoutCdpEventName, properties: configuredParams)
+    }
+
+    open func subscribeUser(_ params: CdpSubscribePayload) {
+        sendCdpEvent(
+            name: SegmentifyManager.userSubscribeEventName,
+            properties: params.toDictionary()
+        )
+    }
+
+    open func unsubscribeUser(_ params: CdpUnsubscribePayload) {
+        sendCdpEvent(
+            name: SegmentifyManager.userUnsubscribeEventName,
+            properties: params.toDictionary()
+        )
     }
 
     
