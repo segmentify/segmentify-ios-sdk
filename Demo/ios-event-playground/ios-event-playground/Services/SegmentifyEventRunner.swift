@@ -219,12 +219,8 @@ enum SegmentifyEventRunner {
                 eventType: .push,
                 action: {
                     let token = try await pushService.ensureToken()
-                    let userId = try requireSegmentifyUserId()
-                    sendPushPermissionInfo(deviceToken: token, userId: userId)
-                    return EventRunResult(
-                        payload: permissionInfoPayload(deviceToken: token, userId: userId),
-                        responseSummary: dispatched
-                    )
+                    sendPushPermissionInfo(deviceToken: token)
+                    return EventRunResult(payload: permissionInfoPayload(deviceToken: token), responseSummary: dispatched)
                 }
             )
         )
@@ -363,26 +359,12 @@ enum SegmentifyEventRunner {
         ]
     }
 
-    private static func requireSegmentifyUserId() throws -> String {
-        guard let userId = SegmentifyIdentityReader.currentUserId() else {
-            throw NSError(
-                domain: "SegmentifyEventRunner",
-                code: 1,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "Segmentify user ID is not available yet. Send any SDK event first so the playground can read the assigned identity.",
-                ]
-            )
-        }
-        return userId
-    }
-
-    private static func permissionInfoPayload(deviceToken: String, userId: String) -> [String: Any] {
+    private static func permissionInfoPayload(deviceToken: String) -> [String: Any] {
         [
             "deviceToken": deviceToken,
             "type": "PERMISSION_INFO",
             "providerType": "FIREBASE",
-            "userId": userId,
+            "userId": SegmentifyMockData.Push.permissionInfoUserId,
         ]
     }
 
@@ -567,12 +549,12 @@ enum SegmentifyEventRunner {
         manager.sendSearchClickView(instanceId: instanceId, interactionId: interactionId)
     }
 
-    private static func sendPushPermissionInfo(deviceToken: String, userId: String) {
+    private static func sendPushPermissionInfo(deviceToken: String) {
         let notification = NotificationModel()
         notification.deviceToken = deviceToken
         notification.type = NotificationType.PERMISSION_INFO
         notification.providerType = ProviderType.FIREBASE
-        notification.userId = userId
+        notification.userId = SegmentifyMockData.Push.permissionInfoUserId
         manager.sendNotification(segmentifyObject: notification)
     }
 

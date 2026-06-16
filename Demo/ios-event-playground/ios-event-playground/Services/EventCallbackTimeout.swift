@@ -1,12 +1,8 @@
 import Foundation
 
 enum EventCallbackTimeout {
-    /// Matches SegmentifyConnectionManager's 10s request timeout plus a small buffer
-    /// so the playground fallback appears only after the network call can finish.
-    private static let defaultSeconds: TimeInterval = 12
-
     static func run<T>(
-        seconds: TimeInterval = defaultSeconds,
+        seconds: TimeInterval = 12,
         fallback: T,
         operation: (@escaping (T) -> Void) -> Void
     ) async -> T {
@@ -31,7 +27,7 @@ enum EventCallbackTimeout {
     }
 
     static func runVoid(
-        seconds: TimeInterval = defaultSeconds,
+        seconds: TimeInterval = 12,
         operation: (@escaping () -> Void) -> Void
     ) async {
         _ = await run(seconds: seconds, fallback: ()) { complete in

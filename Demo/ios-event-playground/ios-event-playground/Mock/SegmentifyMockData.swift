@@ -156,6 +156,10 @@ enum SegmentifyMockData {
         static let pushClickInstanceId = ""
     }
 
+    enum Push {
+        static let permissionInfoUserId = SegmentifyPushConfiguration.permissionInfoUserId
+    }
+
     enum Search {
         static let beforeKeywordInstanceId = "BEFORE_SEARCH"
         static let beforeClickInstanceId = "bs_product"
