@@ -7,7 +7,6 @@ enum SegmentifyPushConfiguration {
     static let dataCenterUrl = "https://gandalf-qa.segmentify.com"
     static let pushDataCenterUrl = "https://gimli-qa.segmentify.com"
     static let subDomain = "demo.segmentify.com"
-    static let permissionInfoUserId = "2"
 
     static func apply() {
         SegmentifyManager.config(

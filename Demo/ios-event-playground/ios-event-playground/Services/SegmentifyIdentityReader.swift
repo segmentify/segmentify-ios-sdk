@@ -10,4 +10,9 @@ enum SegmentifyIdentityReader {
         let sessionId = defaults.string(forKey: "SEGMENTIFY_SESSION_ID") ?? "—"
         return (userId, sessionId)
     }
+
+    static func currentUserId() -> String? {
+        let userId = currentIdentity().userId
+        return userId == "—" ? nil : userId
+    }
 }
