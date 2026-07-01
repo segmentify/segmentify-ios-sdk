@@ -40,7 +40,6 @@ public class SegmentifyManager : NSObject {
     static let userLogoutCdpEventName = "USER_LOGOUT"
     static let userSubscribeEventName = "USER_SUBSCRIBE"
     static let userUnsubscribeEventName = "USER_UNSUBSCRIBE"
-    static let cdpEventsWithProperties = CdpEventName.eventsWithProperties
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -79,7 +78,18 @@ public class SegmentifyManager : NSObject {
     private var key : String = String()
     private var newRecommendationArray : [RecommendationModel] = []
     private var clickedBanners: [ClickedBannerObject] = []
-    private let secureUserProfileStore = SecureUserProfileStore()
+    private lazy var cdpEventService: CdpEventService = CdpEventService(
+        sessionResolver: self,
+        requestBuilder: self,
+        profileStore: SecureUserProfileStore(),
+        dispatcher: { request, success, failure in
+            SegmentifyConnectionManager.sharedInstance.request(
+                requestModel: request,
+                success: { _ in success() },
+                failure: { _ in failure() }
+            )
+        }
+    )
     
     private var testStaticProducts : [AnyHashable:Any]?
     private var testOtherProducts : [AnyHashable:Any]?
@@ -213,31 +223,7 @@ public class SegmentifyManager : NSObject {
         }
     
     // MARK: Request Builders
-    private func clearUserTraitsPropertiesForNonTraitsEvents() {
-        guard let eventName = eventRequest.eventName,
-              SegmentifyManager.cdpEventsWithProperties.contains(eventName) else {
-            eventRequest.userTraitsProperties = nil
-            return
-        }
-    }
-
-    private func sendCdpEvent(name: String, properties: [String: Any]) {
-        guard !properties.isEmpty else { return }
-
-        eventRequest.eventName = name
-        eventRequest.userTraitsProperties = properties
-        eventRequest.instanceId = nil
-        eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
-        eventRequest.userOperationStep = nil
-        eventRequest.params = nil
-
-        setIDAndSendEvent()
-    }
-
     func setIDAndSendEvent() {
-        clearUserTraitsPropertiesForNonTraitsEvents()
-
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -256,8 +242,6 @@ public class SegmentifyManager : NSObject {
     }
     
     func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
-        clearUserTraitsPropertiesForNonTraitsEvents()
-
         if self.eventRequest.sessionID == nil {
             self.getUserIdAndSessionIdRequest( success: { () -> Void in
                 self.sendEvent(callback: { (response: [RecommendationModel]) in
@@ -274,7 +258,6 @@ public class SegmentifyManager : NSObject {
     }
     
     func sendSearchEvent(callback: @escaping (_ recommendation: SearchModel) -> Void) {
-        clearUserTraitsPropertiesForNonTraitsEvents()
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -404,7 +387,6 @@ public class SegmentifyManager : NSObject {
     }
 
     func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedResponseModel) -> Void) {
-        clearUserTraitsPropertiesForNonTraitsEvents()
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             if let decoded = self.parseFacetedSearchResponse(response) {
                 self.facetedResponse = decoded
@@ -1072,7 +1054,7 @@ public class SegmentifyManager : NSObject {
         
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.registerStep
-        eventRequest.oldUserId = nil
+        
         
         let email = segmentifyObject.email
         let username = segmentifyObject.externalId
@@ -1086,7 +1068,7 @@ public class SegmentifyManager : NSObject {
         UserDefaults.standard.set(username, forKey: "SEGMENTIFY_USERNAME")
 
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -1107,29 +1089,21 @@ public class SegmentifyManager : NSObject {
     }
 
     // User Traits Event
+    @available(*, deprecated, message: "Use userTraits(_:) instead. This legacy API forwards to the CDP USER_TRAITS pipeline.")
     open func sendUserTraits(segmentifyObject: UserTraitsModel) {
-        sendUserTraits(properties: segmentifyObject.properties)
+        userTraits(segmentifyObject.properties)
     }
 
+    @available(*, deprecated, message: "Use userTraits(_:) instead. This legacy API forwards to the CDP USER_TRAITS pipeline.")
     open func sendUserTraits(properties: [String: Any]) {
-        guard !properties.isEmpty else { return }
-
-        eventRequest.eventName = SegmentifyManager.userTraitsEventName
-        eventRequest.userTraitsProperties = properties
-        eventRequest.instanceId = nil
-        eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
-        eventRequest.userOperationStep = nil
-        eventRequest.params = nil
-
-        setIDAndSendEvent()
+        userTraits(properties)
     }
 
     // MARK: - CDP User Events
 
     open func userTraits(_ params: CdpEventsPayload) {
         guard let configuredParams = withConsentDefaults(params) else { return }
-        sendCdpEvent(name: SegmentifyManager.userTraitsEventName, properties: configuredParams)
+        cdpEventService.send(name: SegmentifyManager.userTraitsEventName, properties: configuredParams)
     }
 
     open func identifyUser(_ params: CdpEventsPayload, completion: (() -> Void)? = nil) {
@@ -1138,51 +1112,33 @@ public class SegmentifyManager : NSObject {
             return
         }
 
-        secureUserProfileStore.shouldSendIdentify(configuredParams) { [weak self] shouldSend in
-            guard let self else {
-                completion?()
-                return
-            }
-
-            guard shouldSend else {
-                completion?()
-                return
-            }
-
-            self.secureUserProfileStore.saveSnapshot(configuredParams) {
-                self.sendCdpEvent(
-                    name: SegmentifyManager.userIdentifyEventName,
-                    properties: configuredParams
-                )
-                completion?()
-            }
-        }
+        cdpEventService.identify(properties: configuredParams, completion: completion)
     }
 
     open func registerUser(_ params: CdpEventsPayload) {
         guard let configuredParams = withConsentDefaults(params) else { return }
-        sendCdpEvent(name: SegmentifyManager.userRegisterCdpEventName, properties: configuredParams)
+        cdpEventService.send(name: SegmentifyManager.userRegisterCdpEventName, properties: configuredParams)
     }
 
     open func loginUser(_ params: CdpEventsPayload) {
         guard let configuredParams = withConsentDefaults(params) else { return }
-        sendCdpEvent(name: SegmentifyManager.userLoginCdpEventName, properties: configuredParams)
+        cdpEventService.send(name: SegmentifyManager.userLoginCdpEventName, properties: configuredParams)
     }
 
     open func logoutUser(_ params: CdpEventsPayload) {
         guard let configuredParams = withConsentDefaults(params) else { return }
-        sendCdpEvent(name: SegmentifyManager.userLogoutCdpEventName, properties: configuredParams)
+        cdpEventService.send(name: SegmentifyManager.userLogoutCdpEventName, properties: configuredParams)
     }
 
     open func subscribeUser(_ params: CdpSubscribePayload) {
-        sendCdpEvent(
+        cdpEventService.send(
             name: SegmentifyManager.userSubscribeEventName,
             properties: params.toDictionary()
         )
     }
 
     open func unsubscribeUser(_ params: CdpUnsubscribePayload) {
-        sendCdpEvent(
+        cdpEventService.send(
             name: SegmentifyManager.userUnsubscribeEventName,
             properties: params.toDictionary()
         )
@@ -1223,7 +1179,7 @@ public class SegmentifyManager : NSObject {
         }
 
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.externalId = username
         eventRequest.email  = email
         
@@ -1259,7 +1215,7 @@ public class SegmentifyManager : NSObject {
         }
 
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.externalId = username
         eventRequest.email  = email
         
@@ -1299,7 +1255,7 @@ public class SegmentifyManager : NSObject {
         }
         
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.externalId = username
         eventRequest.email  = email
         eventRequest.fullName = segmentifyObject.fullName
@@ -1335,7 +1291,7 @@ public class SegmentifyManager : NSObject {
         }
 
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.lastSearchDeletedKeywords = segmentifyObject.lastSearchDeletedKeywords
 
         setIDAndSendEvent()
@@ -1354,7 +1310,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.paymentPurchaseStep
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         
         
         let totalPrice = segmentifyObject.totalPrice
@@ -1411,7 +1367,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         
         let totalPrice = segmentifyObject.totalPrice
         guard totalPrice != nil else {
@@ -1454,7 +1410,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.customerInformationStep
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         if segmentifyObject.params != nil {
             eventRequest.params = segmentifyObject.params
         }
@@ -1498,7 +1454,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.category = nil
         eventRequest.type = nil
         
@@ -1545,7 +1501,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.basketOperationsEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         
         let step = segmentifyObject.step
         guard step != nil else {
@@ -1602,7 +1558,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.productViewEventName
         eventRequest.instanceId = nil
         eventRequest.interactionId = nil
-        eventRequest.oldUserId = nil
+        
         
         if segmentifyObject.testMode != nil {
             eventRequest.testMode = segmentifyObject.testMode
@@ -1704,7 +1660,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.query = segmentifyObject.query
         eventRequest.type = "instant"
         if segmentifyObject.lang != nil {
@@ -1744,7 +1700,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.query = segmentifyObject.query
         
         if segmentifyObject.trigger != nil{
@@ -1803,7 +1759,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.pageViewEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if segmentifyObject.lang != nil {
             eventRequest.lang = segmentifyObject.lang
         }
@@ -1857,7 +1813,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        eventRequest.oldUserId = nil
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         eventRequest.type = segmentifyObject.type
@@ -1895,7 +1851,7 @@ public class SegmentifyManager : NSObject {
     open func sendUserRegister(username : String?, fullName : String?, email : String?, mobilePhone : String?, gender : String?, age : String?, birthdate : String?) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.updateUserStep
-        eventRequest.oldUserId = nil
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         if let username = username {
@@ -1933,7 +1889,7 @@ public class SegmentifyManager : NSObject {
     open func sendUserLogin(username: String?, email: String?) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.signInStep
-        eventRequest.oldUserId = nil
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         if let username = username {
@@ -1956,7 +1912,7 @@ public class SegmentifyManager : NSObject {
     open func sendUserLogout(username: String?, email: String?) {
         eventRequest.eventName = SegmentifyManager.userOperationEventName
         eventRequest.userOperationStep = SegmentifyManager.signInStep
-        eventRequest.oldUserId = nil
+        
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
         
@@ -1983,7 +1939,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.externalId = username
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -2029,7 +1985,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.paymentPurchaseStep
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -2059,7 +2015,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.paymentInformationStep
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -2087,7 +2043,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.customerInformationStep
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -2115,7 +2071,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.checkoutStep = SegmentifyManager.viewBasketStep
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         }
@@ -2146,7 +2102,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.quantity = quantity
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
         } else {
@@ -2172,7 +2128,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.url = url
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         
         if let lang = lang {
             eventRequest.lang = lang
@@ -2235,7 +2191,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.category = category
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         
         if let lang = lang {
             eventRequest.lang = lang
@@ -2289,7 +2245,7 @@ public class SegmentifyManager : NSObject {
 
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         setIDAndSendEventWithCallback(callback: callback)
     }
     
@@ -2306,7 +2262,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        eventRequest.oldUserId = nil
+        
         setIDAndSendEvent()
     }
     
@@ -2323,7 +2279,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        eventRequest.oldUserId = nil
+        
         setIDAndSendEvent()
     }
 
@@ -2340,7 +2296,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        eventRequest.oldUserId = nil
+        
         setIDAndSendEvent()
     }
     
@@ -2361,7 +2317,7 @@ public class SegmentifyManager : NSObject {
                 self.eventRequest.userID = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String
             }
         }
-        eventRequest.oldUserId = nil
+        
         setIDAndSendEvent()
     }
     
@@ -2646,7 +2602,7 @@ public class SegmentifyManager : NSObject {
         eventRequest.eventName = SegmentifyManager.searchEventName
         eventRequest.interactionId = nil
         eventRequest.instanceId = nil
-        eventRequest.oldUserId = nil
+        
         eventRequest.userTraitsProperties = nil
         eventRequest.query = query
         eventRequest.type = type
@@ -2660,6 +2616,41 @@ public class SegmentifyManager : NSObject {
     func testingResetSearchResponses() {
         searchResponse = SearchModel()
         facetedResponse = Self.createEmptyFacetedResponse()
+    }
+}
+
+// MARK: - CDP Event Pipeline Support
+
+extension SegmentifyManager: CdpSessionResolving, CdpRequestBuilding {
+    /// Resolves the current user / session for a CDP event. Mirrors the session
+    /// bootstrapping in `setIDAndSendEvent`, but returns the identifiers instead
+    /// of routing CDP payloads through the shared request state.
+    func resolveCdpSession(completion: @escaping (String?, String?) -> Void) {
+        if let sentUserId = UserDefaults.standard.object(forKey: "UserSentUserId") as? String {
+            eventRequest.userID = sentUserId
+        }
+
+        if eventRequest.sessionID == nil {
+            getUserIdAndSessionIdRequest {
+                completion(self.eventRequest.userID, self.eventRequest.sessionID)
+            }
+        } else {
+            completion(eventRequest.userID, eventRequest.sessionID)
+        }
+    }
+
+    /// Builds a fresh request carrying only connection-level configuration, so a
+    /// CDP event never inherits event-specific state from a previous send.
+    func makeCdpRequest() -> SegmentifyRegisterRequest {
+        let request = SegmentifyRegisterRequest()
+        request.apiKey = eventRequest.apiKey
+        request.dataCenterUrl = eventRequest.dataCenterUrl
+        request.subdomain = eventRequest.subdomain
+        request.sdkVersion = eventRequest.sdkVersion
+        request.token = eventRequest.token
+        request.testMode = eventRequest.testMode
+        request.extra = eventRequest.extra
+        return request
     }
 }
 
