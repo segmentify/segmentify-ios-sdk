@@ -25,15 +25,40 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
         sessionDelegate = SegmentifyUrlSessionDelegate()
     }
     
+    private static var cachedTestingURLSession: URLSession?
+
     static var urlSession: URLSession {
-        
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = 30
         configuration.timeoutIntervalForResource = 30
         configuration.httpMaximumConnectionsPerHost = 3
-        
-        return URLSession.init(configuration: configuration, delegate: SegmentifyUrlSessionDelegate(), delegateQueue: nil)
-        
+        if let testing_protocolClasses {
+            configuration.protocolClasses = testing_protocolClasses
+            if let cachedTestingURLSession {
+                return cachedTestingURLSession
+            }
+            let session = URLSession(
+                configuration: configuration,
+                delegate: SegmentifyUrlSessionDelegate(),
+                delegateQueue: nil
+            )
+            cachedTestingURLSession = session
+            return session
+        }
+
+        return URLSession(
+            configuration: configuration,
+            delegate: SegmentifyUrlSessionDelegate(),
+            delegateQueue: nil
+        )
+    }
+
+    static var testing_protocolClasses: [AnyClass]?
+
+    static func resetTestingURLSession() {
+        cachedTestingURLSession?.invalidateAndCancel()
+        cachedTestingURLSession = nil
+        testing_protocolClasses = nil
     }
     
     func request(urlString: String) {
@@ -119,6 +144,9 @@ class SegmentifyConnectionManager : NSObject, URLSessionDelegate  {
                 }
             } else {
                 print("Connection error \(String(describing: connectionError))")
+                DispatchQueue.main.async {
+                    failure(connectionError ?? URLError(.unknown))
+                }
             }
         }
         dataTask.resume()
