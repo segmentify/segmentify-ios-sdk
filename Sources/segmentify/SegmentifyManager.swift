@@ -33,6 +33,7 @@ public class SegmentifyManager : NSObject {
     static let bannerImpressionStep = "impression"
     static let bannerClickStep = "click"
     static let bannerUpdateStep = "update"
+    static let userTraitsEventName = "USER_TRAITS"
     
     static let customerInformationStep = "customer"
     static let viewBasketStep = "view-basket"
@@ -204,7 +205,14 @@ public class SegmentifyManager : NSObject {
         }
     
     // MARK: Request Builders
+    private func clearUserTraitsPropertiesForNonTraitsEvents() {
+        if eventRequest.eventName != SegmentifyManager.userTraitsEventName {
+            eventRequest.userTraitsProperties = nil
+        }
+    }
+
     func setIDAndSendEvent() {
+        clearUserTraitsPropertiesForNonTraitsEvents()
 
         if UserDefaults.standard.object(forKey: "UserSentUserId") != nil {
             eventRequest.userID = UserDefaults.standard.object(forKey: "UserSentUserId") as? String
@@ -224,6 +232,8 @@ public class SegmentifyManager : NSObject {
     }
     
     func setIDAndSendEventWithCallback(callback: @escaping (_ recommendation: [RecommendationModel]) -> Void) {
+        clearUserTraitsPropertiesForNonTraitsEvents()
+
         if self.eventRequest.sessionID == nil {
             self.getUserIdAndSessionIdRequest( success: { () -> Void in
                 self.sendEvent(callback: { (response: [RecommendationModel]) in
@@ -240,6 +250,7 @@ public class SegmentifyManager : NSObject {
     }
     
     func sendSearchEvent(callback: @escaping (_ recommendation: SearchModel) -> Void) {
+        clearUserTraitsPropertiesForNonTraitsEvents()
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -321,6 +332,7 @@ public class SegmentifyManager : NSObject {
     }
     
     func sendSearchFacetedEvent(callback: @escaping (_ recommendation: FacetedResponseModel) -> Void) {
+        clearUserTraitsPropertiesForNonTraitsEvents()
         SegmentifyConnectionManager.sharedInstance.request(requestModel: eventRequest, success: {(response: [String:AnyObject]) in
             
             guard let searches = response["search"] as? [[Dictionary<AnyHashable,Any>]] else {
@@ -1031,6 +1043,26 @@ public class SegmentifyManager : NSObject {
 
         setIDAndSendEvent()
     }
+
+    // User Traits Event
+    open func sendUserTraits(segmentifyObject: UserTraitsModel) {
+        sendUserTraits(properties: segmentifyObject.properties)
+    }
+
+    open func sendUserTraits(properties: [String: Any]) {
+        guard !properties.isEmpty else { return }
+
+        eventRequest.eventName = SegmentifyManager.userTraitsEventName
+        eventRequest.userTraitsProperties = properties
+        eventRequest.instanceId = nil
+        eventRequest.interactionId = nil
+        eventRequest.oldUserId = nil
+        eventRequest.userOperationStep = nil
+        eventRequest.params = nil
+
+        setIDAndSendEvent()
+    }
+
     
     //Login Event
     open func sendUserLogin(segmentifyObject : UserModel) {
