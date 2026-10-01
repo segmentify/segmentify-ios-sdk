@@ -53,6 +53,8 @@ public class SegmentifyManager : NSObject {
     static let impressionStep = "impression"
     static let widgetViewStep = "widget-view"
     static let clickStep = "click"
+    static let pushStep = "push"
+    static let pushClickStep = "push-click"
     static let searchStep = "search"
     static let startIndex = 0
     
@@ -1040,11 +1042,17 @@ public class SegmentifyManager : NSObject {
 
             UserDefaults.standard.set(segmentifyObject.instanceId, forKey: "SEGMENTIFY_PUSH_CAMPAIGN_ID")
             
-            let model  = InteractionModel()
-            model.instanceId = instanceId
-            model.interactionId = instanceId
+            let interactionId = segmentifyObject.interactionId ?? instanceId!
 
-            sendClick(segmentifyObject: model)
+            // Option B - SFY-20518
+            // 1. Send type: "push-click" for click metrics (deduplicated)
+            self.sendInteractionEvent(type: SegmentifyManager.pushClickStep, instanceId: instanceId!, interactionId: interactionId)
+            
+            // 2. Send type: "push" for attribution (stamps user record)
+            self.sendInteractionEvent(type: SegmentifyManager.pushStep, instanceId: instanceId!, interactionId: interactionId)
+            
+            // In Option B, we don't call the native endpoint for clicks.
+            return
         }
 
         let encodedData = try? JSONEncoder().encode(segmentifyObject)
@@ -1876,6 +1884,22 @@ public class SegmentifyManager : NSObject {
     func sendClick(segmentifyObject : InteractionModel) {
         eventRequest.eventName = SegmentifyManager.interactionEventName
         eventRequest.userOperationStep = SegmentifyManager.clickStep
+    }
+    
+    private func sendInteractionEvent(type: String, instanceId: String, interactionId: String) {
+        eventRequest.eventName = SegmentifyManager.interactionEventName
+        eventRequest.type = type
+        eventRequest.instanceId = instanceId
+        eventRequest.interactionId = interactionId
+        eventRequest.oldUserId = nil
+        
+        if let userSentId = UserDefaults.standard.object(forKey: "UserSentUserId") as? String {
+            eventRequest.userID = userSentId
+        } else if let segmentifyUserId = UserDefaults.standard.object(forKey: "SEGMENTIFY_USER_ID") as? String {
+            eventRequest.userID = segmentifyUserId
+        }
+        
+        setIDAndSendEvent()
     }
     
     //Alternative Events
